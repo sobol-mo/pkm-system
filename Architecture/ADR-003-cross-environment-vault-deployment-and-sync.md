@@ -69,6 +69,7 @@ This layer is delivered from development to production through a controlled git-
 
 - development changes are committed and pushed to GitHub
 - production receives updates through an explicit deploy/update workflow
+- current Hermes production implementation uses a host-managed `systemd` sync timer that fast-forwards the production repo from GitHub
 - production must not depend on manual copying into ad hoc server paths
 
 The production copy of the PKM system is a deployed system artifact, not the canonical knowledge state.
