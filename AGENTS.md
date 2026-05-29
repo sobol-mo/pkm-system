@@ -90,6 +90,7 @@ Current project-owned skill set:
 - `skills/multimodal-source-ingest/`
 - `skills/pkm-system-boundaries/`
 - `skills/obsidian/`
+- `skills/sync-vault/`
 
 On the VPS Hermes runtime, the compatibility paths under `~/.hermes/skills/note-taking/` are symlink bridges back to these project directories.
 

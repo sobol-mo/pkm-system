@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [pkm, digital-mind, routing, orchestration, wiki]
-    related_skills: [pkm-ingest, pkm-query, pkm-lint, multimodal-source-ingest, pkm-system-boundaries, obsidian]
+    related_skills: [pkm-ingest, pkm-query, pkm-lint, multimodal-source-ingest, pkm-system-boundaries, obsidian, sync-vault]
 ---
 
 # PKM
@@ -45,6 +45,7 @@ If already read in the current turn, do not repeat.
 - "Что мы знаем", "расскажи про", retrieval from existing wiki -> pkm-query
 - "Проверь wiki", "lint", consistency audit, orphan-page detection -> pkm-lint
 - Questions about repo shape, git vs state, system vs content boundaries -> pkm-system-boundaries
+- Set up vault sync on a new device, verify sync health, pair Syncthing peers -> sync-vault
 - Low-level vault operations -> obsidian
 
 ## Multi-message Pattern

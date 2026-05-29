@@ -15,6 +15,7 @@ These skills are stored here so agents working directly in the project clone can
 | `multimodal-source-ingest/` | Overlay for image/audio/video source ingestion |
 | `pkm-system-boundaries/` | Boundary decisions between system artifacts and PKM knowledge state |
 | `obsidian/` | Low-level vault filesystem operations used by PKM workflows |
+| `sync-vault/` | Set up Knowledge Vault synchronization across devices via Syncthing |
 
 ## Source-of-Truth Rule
 
