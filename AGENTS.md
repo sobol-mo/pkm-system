@@ -73,8 +73,8 @@ Your responsibilities:
 
 Migration note:
 
-- repo-local `/home/maxim/dev/projects/agents-projects/PKM/raw/` is now a frozen legacy mirror/reference set, not the preferred canonical write target
-- repo-local `/home/maxim/dev/projects/agents-projects/PKM/wiki/` is now a frozen legacy mirror/reference set, not the preferred canonical write target
+- repo-local `/home/maxim/dev/projects/agents-projects/pkm-system/raw/` is now a frozen legacy mirror/reference set, not the preferred canonical write target
+- repo-local `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/` is now a frozen legacy mirror/reference set, not the preferred canonical write target
 - normal ingest and wiki maintenance should write to the resolved canonical vault path, not to repo-local `raw/` or `wiki/`
 
 ## Workflow References

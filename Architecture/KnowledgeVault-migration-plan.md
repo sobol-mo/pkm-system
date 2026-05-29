@@ -17,7 +17,7 @@ This is a migration plan, not a replacement for those ADRs.
 
 In scope:
 
-- move canonical PKM content from `/home/maxim/dev/projects/agents-projects/PKM/raw/` and `/home/maxim/dev/projects/agents-projects/PKM/wiki/` into `/home/maxim/KnowledgeVault/`
+- move canonical PKM content from `/home/maxim/dev/projects/agents-projects/pkm-system/raw/` and `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/` into `/home/maxim/KnowledgeVault/`
 - preserve folder semantics and file identity where possible
 - define the cutover sequence for `Dev` first, then `Prod`
 - define rollback and verification rules
@@ -33,8 +33,8 @@ Out of scope:
 
 Source content roots in the current repo:
 
-- `/home/maxim/dev/projects/agents-projects/PKM/raw/`
-- `/home/maxim/dev/projects/agents-projects/PKM/wiki/`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/raw/`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/`
 
 Target canonical vault root on `Dev`:
 
@@ -50,7 +50,7 @@ Target derived runtime root on `Prod`:
 
 System repo remains at:
 
-- `/home/maxim/dev/projects/agents-projects/PKM/`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/`
 
 ## Migration Principle
 
@@ -70,43 +70,43 @@ Rules:
 
 | Current | Target | Notes |
 |---------|--------|-------|
-| `/home/maxim/dev/projects/agents-projects/PKM/raw/*.md` | `/home/maxim/KnowledgeVault/raw/*.md` | Raw source captures move without semantic rewrite |
-| `/home/maxim/dev/projects/agents-projects/PKM/raw/assets/**` | `/home/maxim/KnowledgeVault/assets/raw/**` | Raw-media attachments stay separate from curated note assets |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/raw/*.md` | `/home/maxim/KnowledgeVault/raw/*.md` | Raw source captures move without semantic rewrite |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/raw/assets/**` | `/home/maxim/KnowledgeVault/assets/raw/**` | Raw-media attachments stay separate from curated note assets |
 
 ### Curated Wiki Root Files
 
 | Current | Target | Notes |
 |---------|--------|-------|
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/index.md` | `/home/maxim/KnowledgeVault/index.md` | Root vault entry point |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/overview.md` | `/home/maxim/KnowledgeVault/overview.md` | Project-level vault overview |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/glossary.md` | `/home/maxim/KnowledgeVault/glossary.md` | Root glossary |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/connection-map.md` | `/home/maxim/KnowledgeVault/connection-map.md` | Root relation map |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/log.md` | `/home/maxim/KnowledgeVault/log.md` | Chronological ingest log |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/schema.md` | `/home/maxim/KnowledgeVault/schema.md` | Transitional generated/copied reference until schema fully lives in system layer |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/index.md` | `/home/maxim/KnowledgeVault/index.md` | Root vault entry point |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/overview.md` | `/home/maxim/KnowledgeVault/overview.md` | Project-level vault overview |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/glossary.md` | `/home/maxim/KnowledgeVault/glossary.md` | Root glossary |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/connection-map.md` | `/home/maxim/KnowledgeVault/connection-map.md` | Root relation map |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/log.md` | `/home/maxim/KnowledgeVault/log.md` | Chronological ingest log |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/schema.md` | `/home/maxim/KnowledgeVault/schema.md` | Transitional generated/copied reference until schema fully lives in system layer |
 
 ### Curated Wiki Entity Folders
 
 | Current | Target | Notes |
 |---------|--------|-------|
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/concepts/**` | `/home/maxim/KnowledgeVault/concepts/**` | Direct move |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/people/**` | `/home/maxim/KnowledgeVault/people/**` | Direct move |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/quotes/**` | `/home/maxim/KnowledgeVault/quotes/**` | Direct move if/when present |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/thoughts/**` | `/home/maxim/KnowledgeVault/thoughts/**` | Direct move |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/sources/**` | `/home/maxim/KnowledgeVault/sources/**` | Direct move |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/analyses/**` | `/home/maxim/KnowledgeVault/analyses/**` | Direct move |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/implementations/**` | `/home/maxim/KnowledgeVault/implementations/**` | Direct move if/when present |
-| `/home/maxim/dev/projects/agents-projects/PKM/wiki/mocs/**` | `/home/maxim/KnowledgeVault/mocs/**` | Reserved, move if created later |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/concepts/**` | `/home/maxim/KnowledgeVault/concepts/**` | Direct move |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/people/**` | `/home/maxim/KnowledgeVault/people/**` | Direct move |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/quotes/**` | `/home/maxim/KnowledgeVault/quotes/**` | Direct move if/when present |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/thoughts/**` | `/home/maxim/KnowledgeVault/thoughts/**` | Direct move |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/sources/**` | `/home/maxim/KnowledgeVault/sources/**` | Direct move |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/analyses/**` | `/home/maxim/KnowledgeVault/analyses/**` | Direct move |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/implementations/**` | `/home/maxim/KnowledgeVault/implementations/**` | Direct move if/when present |
+| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/mocs/**` | `/home/maxim/KnowledgeVault/mocs/**` | Reserved, move if created later |
 
 ### Not Moved Into The Vault
 
 These stay in the system repo:
 
-- `/home/maxim/dev/projects/agents-projects/PKM/AGENTS.md`
-- `/home/maxim/dev/projects/agents-projects/PKM/BACKLOG.md`
-- `/home/maxim/dev/projects/agents-projects/PKM/Architecture/`
-- `/home/maxim/dev/projects/agents-projects/PKM/Requirements/`
-- `/home/maxim/dev/projects/agents-projects/PKM/skills/`
-- `/home/maxim/dev/projects/agents-projects/PKM/PKM-idea.md`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/AGENTS.md`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/BACKLOG.md`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/Architecture/`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/Requirements/`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/skills/`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/PKM-idea.md`
 
 `PKM-idea.md` remains a system-side raw capture scratchpad until there is an explicit later decision to move or replace it.
 
@@ -169,8 +169,8 @@ The repo remains the working fallback until verification completes.
 After content exists in `/home/maxim/KnowledgeVault/`:
 
 - update PKM skills and tooling to resolve the vault through `PKM_VAULT_PATH`
-- stop treating `/home/maxim/dev/projects/agents-projects/PKM/wiki/` as the live canonical curated location
-- stop treating `/home/maxim/dev/projects/agents-projects/PKM/raw/` as the live canonical raw location
+- stop treating `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/` as the live canonical curated location
+- stop treating `/home/maxim/dev/projects/agents-projects/pkm-system/raw/` as the live canonical raw location
 
 During transition, repo-local `wiki/` and `raw/` are legacy mirrors/reference state, not the long-term canonical home.
 
@@ -229,7 +229,7 @@ Rollback trigger examples:
 
 Rollback actions:
 
-1. stop cutover and treat `/home/maxim/dev/projects/agents-projects/PKM/raw/` and `/home/maxim/dev/projects/agents-projects/PKM/wiki/` as the active source again
+1. stop cutover and treat `/home/maxim/dev/projects/agents-projects/pkm-system/raw/` and `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/` as the active source again
 2. revert path-consumer configuration to repo-local paths if already switched
 3. do not delete repo-local content until a later verified retry window
 4. preserve `/home/maxim/KnowledgeVault/` as a failed migration candidate for inspection, not as the active source
@@ -259,6 +259,6 @@ PKM-008 can be considered complete when:
 
 ## References
 
-- `/home/maxim/dev/projects/agents-projects/PKM/Architecture/ADR-001-folder-organization-and-system-state-separation.md`
-- `/home/maxim/dev/projects/agents-projects/PKM/Architecture/ADR-003-cross-environment-vault-deployment-and-sync.md`
-- `/home/maxim/dev/projects/agents-projects/PKM/BACKLOG.md`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/Architecture/ADR-001-folder-organization-and-system-state-separation.md`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/Architecture/ADR-003-cross-environment-vault-deployment-and-sync.md`
+- `/home/maxim/dev/projects/agents-projects/pkm-system/BACKLOG.md`
