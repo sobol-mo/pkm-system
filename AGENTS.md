@@ -91,8 +91,12 @@ Current project-owned skill set:
 - `skills/pkm-system-boundaries/`
 - `skills/obsidian/`
 - `skills/sync-vault/`
+- `skills/comparative-source-ingestion/`
+- `skills/schema-driven-vault-maintenance/`
 
 On the VPS Hermes runtime, the compatibility paths under `~/.hermes/skills/note-taking/` are symlink bridges back to these project directories.
+
+Prefer configuring Hermes with `skills.external_dirs` pointing to this `skills/` directory and treat `~/.hermes/skills/note-taking/` only as a compatibility bridge layer.
 
 For agents working directly in the project clone, `skills/` should be treated as the skill root. Do not assume the Hermes runtime path is the source of truth.
 

@@ -39,6 +39,10 @@ skills/
   pkm-query/
   pkm-lint/
   multimodal-source-ingest/
+  pkm-system-boundaries/
+  obsidian/
+  comparative-source-ingestion/
+  schema-driven-vault-maintenance/
 ```
 
 Runtime environments may load these skills directly if supported, or receive deployed/synced copies into their own skill directories.
@@ -82,6 +86,7 @@ They are not vault content and not runtime state.
 
 - Do not copy VPS skills blindly without review; treat the first import as migration of operational source code.
 - Keep PKM-specific assumptions inside `skills/` for this project.
+- Keep PKM-comparison and vault-governance skills in the same project-owned `skills/` tree when they operate on the Digital Mind system.
 - Extract truly generic note-taking skills only if there is a clear reuse need.
 - Runtime-specific configuration should point to project-owned skills or deploy them from the project tree.
 

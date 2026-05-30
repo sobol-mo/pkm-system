@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "vault_name": "KnowledgeVault",
+  "ignore_dirs": [
+    ".obsidian",
+    ".git",
+    "assets"
+  ],
+  "special_root_files": {
+    "index.md": "index",
+    "overview.md": "overview",
+    "glossary.md": "glossary",
+    "log.md": "log",
+    "schema.md": "schema",
+    "connection-map.md": "connection-map"
+  },
+  "curated_folders": {
+    "concepts": "concept",
+    "implementations": "implementation",
+    "people": "person",
+    "quotes": "quote",
+    "thoughts": "thought",
+    "sources": "source",
+    "analyses": "analysis"
+  },
+  "required_frontmatter_fields": {
+    "default": ["title", "type", "created", "updated", "tags"],
+    "source": ["title", "type", "created", "updated", "author", "url", "date", "tags"],
+    "index": ["title", "type", "created", "updated", "sources", "tags"],
+    "overview": ["title", "type", "created", "updated", "sources", "tags"],
+    "glossary": ["title", "type", "created", "updated", "sources", "tags"],
+    "log": ["title", "type", "created", "updated", "sources", "tags"],
+    "schema": ["title", "type", "created", "updated", "sources", "tags"],
+    "connection-map": ["title", "type", "created", "updated", "sources", "tags"]
+  },
+  "relations_required_in": [
+    "concepts",
+    "implementations",
+    "people",
+    "quotes",
+    "thoughts",
+    "sources",
+    "analyses"
+  ],
+  "score_weights": {
+    "missing_frontmatter": 25,
+    "missing_required_fields": 20,
+    "type_mismatch": 15,
+    "missing_relations": 10,
+    "broken_relative_links": 30
+  },
+  "report_samples_per_category": 20,
+  "legacy_tolerance": {
+    "raw_frontmatter_optional": true
+  }
+}

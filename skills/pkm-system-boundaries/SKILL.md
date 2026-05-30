@@ -82,6 +82,23 @@ For systems built around Obsidian or markdown-first workflows, the usual recomme
 Version the system.
 Do not force source-control semantics onto the full live knowledge state unless there is a specific operational reason.
 
+## Project-owned skill boundary for PKM systems
+
+When a PKM project has its own agent workflows, treat those skills as part of the PKM system layer, not as ad hoc runtime state.
+
+Default rule:
+- canonical PKM project skills live in the project repo under `skills/`
+- Hermes runtime paths such as `~/.hermes/skills/...` are deployment or compatibility bridges, not the source of truth
+- avoid two writable copies of the same PKM skill in both places
+
+Practical pattern:
+- keep the canonical skill package in the project repo
+- point Hermes at that repo-owned directory via `skills.external_dirs` when appropriate
+- if old runtime paths must keep working, make them symlink bridges back to the project-owned directories
+
+Pitfall:
+Agents often drift back to `~/.hermes/skills/` because default skill-creation flows write there unless explicitly redirected. For PKM-system work, after creating or modifying a skill, verify that the canonical edit landed in the project-owned `skills/` tree rather than only in the runtime bridge path.
+
 Git is a good fit for:
 - code
 - config
