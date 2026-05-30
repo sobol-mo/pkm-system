@@ -55,11 +55,26 @@ Use a simple additive penalty model with explicit weights. Weight semantic-struc
 Safe repair rules
 Safe to auto-fix:
 - path rewrites when the replacement target exists on disk
+- legacy path normalization, for example stripping stale `../wiki/` prefixes when the same target exists directly under the canonical vault
 - adding missing structural sections when the required content can be inferred confidently
+- filling missing frontmatter fields from existing page evidence, for example H1 title, folder-to-type mapping, filename date prefixes, or linked raw-capture metadata
 Not safe to auto-fix without review:
 - creating missing target notes just to remove link errors
 - inventing metadata values with no evidence
 - changing ontology or note type assignments to fit the checker
+
+Practical repair order
+1. Re-run the checker and classify issues into deterministic versus semantic.
+2. Clear metadata debt first: missing frontmatter, missing required fields, missing `## Relations`.
+3. Normalize mechanically stale links next, especially legacy repository-era prefixes like `../wiki/`.
+4. Re-run the checker immediately after the mechanical pass.
+5. Treat the remaining broken links as semantic backlog unless the correct target exists unambiguously.
+
+Frontmatter completion guidance
+- Prefer values derivable from the file itself: H1 for `title`, folder mapping for `type`, filename date prefix for `created`/`updated` when no better source exists.
+- For `source` pages, look to the linked raw capture first for `author`, `url`, and `date`.
+- If authorship is genuinely unavailable but the page still needs a value for schema completeness, use a neutral provenance marker such as `forwarded note` rather than inventing a person.
+- Keep list-valued fields in a checker-friendly form that the local validator actually parses consistently.
 
 Important pitfall
 When the user says add an external repo to the knowledge base as a source and compare it with our approach, do two outputs, not one:
