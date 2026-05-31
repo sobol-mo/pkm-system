@@ -34,6 +34,12 @@ Decide whether the source should be modeled as one multimodal source or multiple
 2. Extract both channels.
 Capture the text content and inspect attached images separately. Do not assume the text preview already contains the image information.
 
+For Telegram or similar social-post ingests, prefer a layered extraction path:
+- fetch the public post text from the web view or embed view first so the raw note preserves the exact post framing
+- treat attached images as a second channel and run OCR when the useful content is a cover, table of contents, diagram, or workflow screenshot
+- if the post points to an attachment in comments or a secondary location, save the public pointer even when the file itself is not yet directly retrievable
+- record the attachment state precisely: captured file vs public pointer only vs unverifiable mention
+
 3. Classify the source value.
 Decide what the source is useful for in the knowledge system:
 - terminology reference
