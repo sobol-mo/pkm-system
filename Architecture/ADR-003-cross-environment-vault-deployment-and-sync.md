@@ -87,11 +87,17 @@ It must not be treated as:
 
 The canonical vault is replicated through a sync-oriented transport suitable for cross-device use.
 
-This ADR intentionally does not select a specific sync product. It fixes the boundary and responsibility model:
+This ADR fixes the boundary and responsibility model first. The current reference implementation uses Syncthing, but the architectural rule is broader than one product:
 
 - sync is a first-class infrastructure concern
 - sync is not the same thing as backup
 - sync health must be visible from the host maintenance plane
+
+For Syncthing-based implementations, one operational rule is non-negotiable:
+
+- device-level connectivity and folder-level membership are different things
+- seeing a peer as `connected` does not prove that the canonical folder is actually shared with that peer
+- verification must check both the peer connection and the `pkm-vault` folder device list
 
 ### 4. Canonical path contract: logical name + environment binding
 
@@ -145,6 +151,23 @@ At minimum, monitoring must be able to surface:
 - whether the sync command exited successfully
 - whether lock/conflict/stuck states exist
 - whether the configured remote/peer is reachable enough for the expected operating mode
+
+Monitoring alone is not sufficient to prove correct multi-device replication.
+
+For Syncthing, host-visible health can still look green when:
+
+- the Syncthing daemon is running
+- at least one peer device is connected
+- the local folder is `idle`
+
+but the intended target host is missing from the `pkm-vault` folder membership.
+
+Therefore the operator verification contract for new hosts must include:
+
+- device exists in Syncthing peer list
+- device is explicitly present in the `pkm-vault` folder device membership
+- folder completion is 100 percent after initial convergence
+- spot-check of real files on disk confirms that current content reached the host
 
 ### 7. Derived runtime remains rebuildable and downstream
 
@@ -203,7 +226,33 @@ KnowledgeVault -> rebuild -> runtime
 - Add production infrastructure variables for vault path, sync workflow, and sync-health state paths in the Hermes infrastructure project
 - Keep the production PKM vault outside `/home/hermes/.hermes`
 - Treat sync and backup as separate workflows with separate health semantics
-- Keep the sync product decision open until the operational constraints are documented clearly
+- Document the scaling/bootstrap procedure for every additional Syncthing host
+
+### Current Syncthing implementation note
+
+The current operational model is:
+
+```text
+Prod <-> SWC
+Prod <-> MWC3
+Prod <-> future MWC2
+optional laptop-to-laptop links when convenient
+```
+
+Scaling rule:
+
+- adding a new host is not complete when the device is merely registered
+- the new device must also be added to the `pkm-vault` folder membership on the relevant existing peers
+- the new device must reciprocally share `pkm-vault` back to those peers
+
+Failure mode observed in practice:
+
+- WebUI and API can show an active Syncthing connection while `KnowledgeVault` files stay stale on disk
+- root cause: the host was connected as a device, but was not included in the `pkm-vault` folder membership on the peer
+
+Operational takeaway:
+
+- for multi-host scaling, treat `connected peer` and `folder participant` as separate checks
 
 ## Decision Log
 

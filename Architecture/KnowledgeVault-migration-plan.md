@@ -192,6 +192,20 @@ After `Dev` is the canonical source:
 - verify `Prod` sees the same folder structure and content set
 - only then allow runtime rebuild/index workflows to depend on the new `Prod` vault
 
+If Syncthing is the chosen transport, multi-host rollout is not complete when the new device merely appears in the remote device list.
+
+For every host added after the first Prod bootstrap:
+
+- register the new host as a Syncthing device on the relevant peers
+- add the new host to the `pkm-vault` folder membership on the relevant peers
+- add the relevant peers to the new host's own `pkm-vault` folder membership
+- verify real files on disk, not just transport health
+
+Known operational pitfall:
+
+- a host can show as connected in Syncthing WebUI while `KnowledgeVault` remains stale on disk
+- root cause is incomplete folder membership for `pkm-vault`, not lack of network connectivity
+
 ### Phase 6: Cut Over Rebuild Targets
 
 After `Prod` vault replication is verified:
@@ -215,8 +229,17 @@ Minimum cutover verification on `Prod`:
 
 - target root exists at `/home/hermes/KnowledgeVault/`
 - sync transport reports healthy replication
+- `pkm-vault` folder membership includes all intended hosts for this rollout wave
 - a sample of expected vault files exists on `Prod`
 - derived runtime rebuild reads from `/home/hermes/KnowledgeVault/`, not from repo-local paths
+
+Minimum verification for each additional host after Prod is already live:
+
+- target root exists at the resolved canonical vault path for that host
+- Syncthing peer connection exists to `Prod`
+- `pkm-vault` folder membership includes both `Prod` and the host itself, plus any additional intended peers
+- root files such as `index.md`, `log.md`, and `connection-map.md` match expected timestamps or sizes after convergence
+- transport reports `completion=100%` and `needFiles=0`
 
 ## Rollback Strategy
 

@@ -40,6 +40,12 @@ Dev KnowledgeVault <--Syncthing--> Other Dev KnowledgeVault
 
 Each device is a Syncthing peer. Peers discover each other and sync the `pkm-vault` folder bidirectionally over encrypted connections. No central server required.
 
+Important distinction:
+
+- a Syncthing device can be connected at the transport level without actually participating in the `pkm-vault` folder
+- `KnowledgeVault` content moves only when the peer is both registered as a device and included in the `pkm-vault` folder device membership
+- a green WebUI connection or healthy timer alone does not prove the right folder is shared to the right host
+
 ### Canonical Path Resolution
 
 1. `PKM_VAULT_PATH` environment variable
@@ -114,8 +120,52 @@ curl -s -H "X-API-Key: <key>" 'http://127.0.0.1:8384/rest/db/status?folder=pkm-v
 
 What must be true after pairing:
 - `/rest/system/connections` shows the peer devices
+- `/rest/config/folders` for `pkm-vault` includes the intended device IDs
 - `/rest/db/status?folder=pkm-vault` shows `state` != `error`, `errors` == 0
 - Completion converges to 100% on both sides
+
+Recommended extra verification for real hosts:
+
+```bash
+# Verify the folder membership, not just the live connection
+curl -s -H "X-API-Key: <key>" http://127.0.0.1:8384/rest/config/folders \
+  | jq '.[] | select(.id=="pkm-vault") | {id, path, devices}'
+
+# Spot-check a real file on disk
+stat "$HOME/KnowledgeVault/index.md" "$HOME/KnowledgeVault/log.md"
+```
+
+If file timestamps or sizes differ between peers after Syncthing reports `completion=100%`, suspect wrong folder membership before suspecting filesystem issues.
+
+### Scaling To Additional Hosts
+
+Canonical pattern for multiple operator machines:
+
+- `Prod` stays the always-on anchor
+- each new host such as `SWC`, `MWC3`, or future `MWC2` must be paired with `Prod`
+- optional host-to-host links are allowed, but `Prod` remains the minimum common peer
+
+For every newly added host, complete all of these steps:
+
+1. Install and bootstrap Syncthing on the new host with `setup_vault_sync_localhost.sh`
+2. Obtain the new device ID
+3. Add the new device to each relevant existing peer's device registry
+4. Add the new device to the `pkm-vault` folder membership on each relevant existing peer
+5. Add each existing peer to the new host's device registry
+6. Add each existing peer to the new host's `pkm-vault` folder membership
+7. Verify completion and real files on disk
+
+The critical pitfall is step 4 or step 6 being skipped.
+
+Observed failure mode:
+
+- Syncthing connection is visible in WebUI
+- healthcheck looks healthy or mostly healthy
+- `KnowledgeVault` files on disk remain stale
+
+Root cause:
+
+- device registration existed, but folder membership for `pkm-vault` was incomplete
 
 ### Syncthing WebUI
 
@@ -125,6 +175,11 @@ Use the WebUI for:
 - One-time device pairing and folder sharing
 - Visual confirmation of sync state
 - Inspecting out-of-sync items or errors
+
+Use the WebUI carefully for multi-host scale-out:
+
+- check that each intended host appears inside the `pkm-vault` folder share list
+- do not assume that a device shown under `Remote Devices` is already a participant in `pkm-vault`
 
 Do not change casually in the WebUI:
 - Folder path or folder ID
@@ -151,6 +206,12 @@ The runner queries Syncthing REST API and writes state with:
 - `pairing_required`: true when no peers are configured
 - `consecutive_failures`: counter for escalation
 - `last_success_at`: timestamp of last successful check
+
+Operational caveat:
+
+- the runner is a health observer, not the sync transport itself
+- it confirms Syncthing API state, not semantic correctness of your intended multi-host folder membership
+- after adding a new host, always perform one explicit folder-membership check and one real-file spot-check
 
 ### Operator Commands
 
@@ -188,6 +249,17 @@ All devices share the same `pkm-vault` folder ID. Syncthing handles conflict res
 
 For N devices, each device should connect to at least the VPS (which is always online) and ideally to one other laptop for direct LAN sync when available.
 
+For the current real deployment family, the intended scale path is:
+
+```text
+SWC  <---->
+            Prod
+MWC3 <---->
+MWC2 <---->   (future)
+```
+
+This means `Prod` must keep `pkm-vault` shared to all intended operator hosts, not just to one currently connected laptop.
+
 ## Troubleshooting
 
 ### Sync stuck or slow
@@ -206,6 +278,17 @@ systemctl --user restart syncthing
 ### Pairing required after deploy
 
 State file shows `pairing_required: true`. This is expected until you complete the one-time device pairing with at least one peer. Follow the pairing procedure above.
+
+### WebUI says connected, but local files are stale
+
+Check in this order:
+
+1. `rest/system/connections` - is the intended peer connected
+2. `rest/config/folders` - is the intended peer included in `pkm-vault.devices`
+3. `rest/db/status?folder=pkm-vault` - is the folder healthy and idle
+4. `stat` or `ls -la` on real files such as `index.md` and `log.md`
+
+If step 1 is green but step 2 is wrong, Syncthing can look healthy while `KnowledgeVault` content does not update on disk.
 
 ### Conflicts
 
