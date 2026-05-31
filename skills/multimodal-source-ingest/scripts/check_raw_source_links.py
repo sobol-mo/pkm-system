@@ -101,10 +101,19 @@ def check(root: Path, layout: str):
     for path in iter_md_files(raw_root):
         text = path.read_text(encoding="utf-8")
         rel = rel_for_report(path, root)
+        if layout == "vault" and "(assets/" in text:
+            issues.append(f"BAD_PATH {rel}: uses assets/ from raw/; expected ../assets/raw/")
+
         for target in extract_links(text):
             if is_external(target):
                 continue
-            if target.startswith(raw_to_sources) or target.startswith("../wiki/sources/") or target.startswith("../sources/"):
+            if layout == "vault" and target.startswith("assets/"):
+                resolved = resolve_target(path, target)
+                issues.append(f"BAD_PATH {rel}: uses {target}; expected ../assets/raw/{Path(target).name}")
+                if not resolved.exists():
+                    issues.append(f"MISSING_TARGET {rel}: {target} -> {resolved}")
+                continue
+            if target.startswith(raw_to_sources) or target.startswith("../wiki/sources/") or target.startswith("../sources/") or (layout == "vault" and target.startswith("../assets/raw/")):
                 resolved = resolve_target(path, target)
                 if not resolved.exists():
                     issues.append(f"MISSING_TARGET {rel}: {target} -> {resolved}")
@@ -133,6 +142,7 @@ def fix(root: Path, layout: str):
         for path in iter_md_files(raw_root):
             text = path.read_text(encoding="utf-8")
             new_text = text.replace("(../wiki/sources/", "(../sources/")
+            new_text = new_text.replace("(assets/", "(../assets/raw/")
             if new_text != text:
                 path.write_text(new_text, encoding="utf-8")
                 changed.append(path)

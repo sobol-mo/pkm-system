@@ -44,6 +44,15 @@ Use `search_files` for both filename and content searches. Prefer this over `gre
 
 Use `write_file` with the resolved absolute path and the full markdown content. Prefer this over shell heredocs or `echo` because it avoids shell quoting issues and returns structured results.
 
+### YAML frontmatter for Obsidian properties
+
+If a note uses frontmatter, it must be valid YAML or Obsidian will show the block as plain text instead of properties.
+
+Rules:
+- Wrap string values in quotes when they contain `:` or other YAML-sensitive characters. Example: `title: "AI Agents: The Illustrated Guidebook"`.
+- If Obsidian stops recognizing `url`, `tags`, or other properties, suspect broken frontmatter first, not an Obsidian indexing issue.
+- For notes created by ingestion workflows, prefer a quick YAML parse validation when the frontmatter was assembled manually or from extracted source text.
+
 ## Append to a note
 
 Prefer a native file-tool workflow when it is not awkward:

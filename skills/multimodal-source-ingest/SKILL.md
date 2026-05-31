@@ -67,7 +67,9 @@ For PKM projects with raw/ plus wiki/sources/ split:
 - verify relative paths from the file's real location, not from the conceptual layer name
   - from wiki/sources/<note>.md to raw/<note>.md the relative link is ../../raw/<note>.md
   - from raw/<note>.md back to wiki/sources/<note>.md the relative link is ../wiki/sources/<note>.md
-  - from wiki/sources/<note>.md to raw/assets/<file> the relative link is ../../raw/assets/<file>
+  - from sources/<note>.md to assets/raw/<file> the relative link is ../assets/raw/<file> in the canonical vault layout
+  - from raw/<note>.md to assets/raw/<file> the relative link is ../assets/raw/<file> in the canonical vault layout
+  - from wiki/sources/<note>.md to raw/assets/<file> the relative link is ../../raw/assets/<file> only in the legacy repo layout
 - if the source includes an infographic, screenshot, or slide that carries meaning, store the asset in the raw layer and embed a preview or direct link from the source page
 - avoid source pages that only point to themselves via frontmatter identifiers; preserve human-navigable links between raw and curated layers
 - do not trust copied link patterns from older notes; a wrong relative path can replicate across many source pages unchanged
@@ -75,7 +77,7 @@ For PKM projects with raw/ plus wiki/sources/ split:
 - when the repo uses a stable raw/wiki split, add a deterministic pre-commit or audit check for suspicious path shapes rather than relying on the model to remember them
 
 - do not rely on a frontmatter id or link text that looks correct if the markdown target path is wrong
-- for assets stored under raw/assets/, a source page in wiki/sources/ will usually embed them via ../../raw/assets/<file>
+- in the canonical vault layout, do not create raw/assets/ as a second asset tree; use assets/raw/ only
 - add a backlink from the raw note to both the source page and the stored asset when the asset itself carries information
 
 6. Prefer integration over duplication.
@@ -95,6 +97,8 @@ Pitfalls
 - Creating many tiny concept pages when the source is better kept as a source-centric taxonomy
 - Copying a taxonomy without stating how it should be used in the target PKM
 - Failing to distinguish quoted source content from your framing of its relevance
+- In the canonical vault layout, accidentally creating a second asset tree under raw/assets/ instead of using assets/raw/
+- In raw notes under the canonical vault layout, using relative links like assets/<file> instead of ../assets/raw/<file>; treat that as a bug and run the checker before closing the task
 
 For PKM-style projects
 

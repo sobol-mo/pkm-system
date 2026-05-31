@@ -113,6 +113,8 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 - If the source contradicts existing wiki content, flag it before resolving.
 - If entity extraction is unclear, ask the user what should be preserved rather than inventing ontology.
 - If a fetch fails, retry once before falling back to asking for pasted content.
+- For commerce and marketplace URLs, normalize to a canonical clean URL before storing it in curated notes. Strip affiliate/tracking query parameters from the primary `url` field, and keep the originally submitted URL only in raw capture when provenance matters.
+- If the canonical page is bot-guarded but a readable text-access proxy or mirror is used for verification, record that explicitly in raw notes as a verification method and limitation. Do not pretend the direct page fetch worked if it actually returned captcha/interstitial content.
 - Do not run plain git commit when the project provides a helper with explicit authorship conventions.
 
 ## Common Pitfalls
