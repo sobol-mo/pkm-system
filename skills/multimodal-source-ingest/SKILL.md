@@ -34,6 +34,10 @@ Decide whether the source should be modeled as one multimodal source or multiple
 2. Extract both channels.
 Capture the text content and inspect attached images separately. Do not assume the text preview already contains the image information.
 
+If the user attaches an image while sharing a link or source, preserve that image as a companion asset and state its provenance clearly.
+Do not automatically treat a user-attached image as native media from the linked source unless that origin is separately verified.
+Label it explicitly as user-attached, companion, article-native, or source-native depending on what was actually verified.
+
 For Telegram or similar social-post ingests, prefer a layered extraction path:
 - fetch the public post text from the web view or embed view first so the raw note preserves the exact post framing
 - treat attached images as a second channel and run OCR when the useful content is a cover, table of contents, diagram, or workflow screenshot

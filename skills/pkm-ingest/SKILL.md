@@ -62,6 +62,11 @@ Do not silently rewrite the source into a cleaner narrative and call that raw.
 If the project treats raw as immutable after creation, preserve that rule.
 Do not default to writing new canonical raw captures into repo-local `PKM/raw/` after vault cutover.
 
+Publication date is a first-class metadata field for this project.
+When ingesting a source, always try to establish the original publication date of the source itself, not just the date it was found, forwarded, or saved into the vault.
+If the publication date cannot be verified, say so explicitly in both the raw note and the curated source page rather than leaving the reader to assume recency.
+For fast-moving AI topics, treat publication date as part of the meaning of the source, not as optional bibliography fluff.
+
 ## Curated Layer Rules
 
 Update existing pages before creating new ones.
@@ -115,7 +120,13 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 - If a fetch fails, retry once before falling back to asking for pasted content.
 - For commerce and marketplace URLs, normalize to a canonical clean URL before storing it in curated notes. Strip affiliate/tracking query parameters from the primary `url` field, and keep the originally submitted URL only in raw capture when provenance matters.
 - If the canonical page is bot-guarded but a readable text-access proxy or mirror is used for verification, record that explicitly in raw notes as a verification method and limitation. Do not pretend the direct page fetch worked if it actually returned captcha/interstitial content.
+- If the accessible preview is image-based rather than text-based, extract evidence from the preview images and preserve the access path. Typical pattern: clean product page URL -> text proxy or mobile page -> sample/preview reader -> preview image URLs -> OCR -> raw evidence block + curated summary + explicit limitations.
+- For partial-access books and commercial sources, distinguish verified preview-derived contents from unverified full-book claims. Label them as sample-derived or preview-derived, not as the complete table of contents unless fully verified.
 - Do not run plain git commit when the project provides a helper with explicit authorship conventions.
+
+## Support Files
+
+- references/commerce-sample-ocr.md — fallback pattern for bot-guarded commercial/book pages where useful content is only visible in preview images.
 
 ## Common Pitfalls
 
