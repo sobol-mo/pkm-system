@@ -104,6 +104,19 @@ Folders encode ENTITY TYPE (what a page IS), not TOPIC (what it's ABOUT). This i
 | `implementations/` | Tool, system, project, codebase | A specific working system or product that instantiates a concept | The content is just an idea about how something could work (→ concepts/) |
 | `quotes/` | Verbatim quote | A quotable formulation that Maxim endorses as personality signal | A paraphrased observation (→ thoughts/ or enrich existing concept) |
 | `thoughts/` | Maxim's own dated reflection | A first-person insight, opinion, or synthesis by Maxim | A third-party source (→ sources/ + concepts/) |
+
+For quote-anthology ingests, do not store the quote as an isolated fragment.
+If the user explicitly says a quote reflects their worldview or that they endorse it, preserve three layers together:
+- the quote page in `quotes/`
+- the author page in `people/` if the person matters and is not already present
+- at least one concept/value/principle page capturing what the quote expresses
+
+Also encode the user's stance explicitly:
+- quote `--endorsed_by-->` the user's person node
+- quote `--expresses-->` the relevant concept pages
+- when justified, the user's person page should carry a worldview relation such as `--values-->` to the concept with temporal scope
+
+This turns a saved quote into a retrievable worldview signal rather than a disconnected citation.
 | `analyses/` | Comparative or synthetic study | A comparison of approaches, design decisions, or publication directions | Raw findings from a single source (→ sources/ + concepts/) |
 | `sources/` | Curated summary of an external document | A complex source with multiple ideas extracted across several pages | A single idea already captured in a concept page |
 
