@@ -54,6 +54,18 @@ Outputs:
 9. Verify links and changed pages.
 10. Commit and push when the project workflow expects it.
 
+## Automation Boundary for Curated Thought Ingest
+
+Automate only the deterministic routine.
+Semantic preparation stays with intelligence: interpretation, note shaping, conservative attribution decisions, and linking choices are not the part to force into a brittle script.
+
+For curated thought ingest, the intended split is:
+- AI prepares the curated payload or edit decision
+- deterministic automation applies the repeatable vault side effects
+
+Do not report success until the production vault contains the note and the expected registry files were updated and verified.
+When reporting completion, say explicitly whether the run was end-to-end automated or semi-automated with AI-prepared payload plus script-applied updates.
+
 ## Raw Layer Rules
 
 Raw is the capture layer.
@@ -133,6 +145,12 @@ This turns a saved quote into a retrievable worldview signal rather than a disco
 | `analyses/` | Comparative or synthetic study | A comparison of approaches, design decisions, or publication directions | Raw findings from a single source (→ sources/ + concepts/) |
 | `sources/` | Curated summary of an external document | A complex source with multiple ideas extracted across several pages | A single idea already captured in a concept page |
 
+### Thought-note rules
+
+Thoughts belong in `thoughts/YYYY-MM-DD-slug.md`.
+If a quote appears inside a thought but attribution is not verified, keep it inside the thought note instead of creating a standalone quote note.
+Only create a separate quote note when attribution and source are verified enough for the vault's quote conventions.
+
 ### The Principle: Type over Topic
 
 `concepts/agent-memory.md` lives in `concepts/` because it IS a concept — not because it's "about AI" (topic). The topic emerges from its links to other pages (execution-loop, digital-mind, mempalace), not from folder placement. This is the wiki's concrete implementation of the Linking Over Categorizing principle.
@@ -153,6 +171,7 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 ## Support Files
 
 - references/commerce-sample-ocr.md — fallback pattern for bot-guarded commercial/book pages where useful content is only visible in preview images.
+- references/thought-ingest-verification-checklist.md — deterministic side-effect checks for curated thought ingest into the production vault.
 
 ## Common Pitfalls
 
@@ -170,3 +189,9 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 - [ ] Global retrieval surfaces updated where needed
 - [ ] Raw/source links verified
 - [ ] Commit helper used when commit was required
+
+For curated thoughts, also verify:
+- [ ] The real file exists at `thoughts/YYYY-MM-DD-slug.md` in the canonical vault
+- [ ] The note preserves the user-provided thought unless rewriting was requested
+- [ ] `index.md`, `connection-map.md`, and `log.md` were updated when expected
+- [ ] The user-facing report includes exact created and updated paths
