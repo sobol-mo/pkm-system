@@ -38,7 +38,8 @@ Recommended workflow
 4. Design a separate operational schema file that complements the semantic schema.
 5. Before building new automation, define the acceptance harness first: fixtures, manifest/oracle format, deterministic checker output, and pass/fail gates.
 6. Implement deterministic local scripts for checks. Prefer Python and JSON output.
-7. Store reusable skills, scripts, and schemas in the owning PKM system project skill tree, not inside the live knowledge vault.
+7. Once the user approves the next harness step, build the runnable artifacts immediately in the same session — at minimum the fixture runner and result checker — and execute a real temp-vault run before reporting completion.
+8. Store reusable skills, scripts, and schemas in the owning PKM system project skill tree, not inside the live knowledge vault.
 8. Allow legacy tolerance where the corpus justifies it, especially raw capture folders.
 9. Auto-repair only when the fix is mechanically provable, for example broken relative links whose correct existing target can be resolved unambiguously.
 10. Re-run the checker after changes and report the real delta in score and issue counts.
@@ -175,3 +176,6 @@ KnowledgeVault run examples
 
 Verification standard
 The deliverable is not the script alone. Run it on the real vault, capture the actual score and issue counts, and save a machine-readable report when automation is part of the goal.
+
+Execution pitfall
+If you told the user 'say the word and I will build the runner/checker and run it', then a reply like 'ок' or 'ok' is approval to execute, not a cue for a passive acknowledgement. Build the artifacts and run the harness immediately; do not answer with a placeholder confirmation and leave the implementation undone.

@@ -19,9 +19,10 @@ MVP principle:
 - verify raw-first handling before any aggressive curation
 - keep semantics conservative
 
-Out of scope for this first commit:
-- executable runner
-- real vault mutation engine
-- judge-model semantic review
+Current MVP scripts:
+- `run_fixture.py` — runs a deterministic stub implementation against an isolated temp vault
+- `check_results.py` — validates diff and workflow-contract expectations against the manifest
 
-Those come after the fixture and manifest contract stabilizes.
+Still out of scope:
+- real vault mutation engine beyond the deterministic stub
+- judge-model semantic review
