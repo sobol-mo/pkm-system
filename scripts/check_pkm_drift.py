@@ -6,9 +6,8 @@ Checks whether ~/.hermes/skills/note-taking/ contains any real
 the pkm-system project.
 
 Exit codes:
-  0 = clean (no drift)
-  1 = drift detected
- 82 = error (can't read paths)
+  0 = clean (no drift) or drift alert emitted successfully
+  82 = error (can't read paths)
 """
 
 from __future__ import annotations
@@ -68,13 +67,12 @@ def main() -> int:
                 drifted.append(f"{child.name} (real dir, no matching project skill)")
 
     if not drifted:
-        print("CLEAN: all PKM skill bridges point to pkm-system project")
         return 0
 
     print(f"DRIFT: {len(drifted)} item(s) outside pkm-system project")
     for item in drifted:
         print(f"  {item}")
-    return 1
+    return 0
 
 
 if __name__ == "__main__":
