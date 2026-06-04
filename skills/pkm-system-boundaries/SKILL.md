@@ -149,6 +149,38 @@ Practical default for Obsidian-style PKM:
 - synced vault: canonical notes, sources, idea dumps, domain folders
 - server runtime: rebuildable retrieval/indexing layer fed from the synced vault
 
+## Drift Guardrail
+
+This project has an automated drift guard to catch when PKM skills end up outside the project-owned tree.
+
+### Deterministic check
+
+`scripts/check_pkm_drift.py` — checks whether `~/.hermes/skills/note-taking/` contains any real (non-symlink) directories that look like PKM skills not owned by `pkm-system`.
+
+- Exit 0 = clean
+- Exit 1 = drift detected
+- Exit 82 = error
+
+A cron job (`pkm-drift-detector`, runs every 60m) alerts this topic when drift is found.
+The cron uses a trampoline at `~/.hermes/scripts/check-pkm-drift.sh`; the real implementation stays project-owned.
+
+### Rules for agents in this topic
+
+This Telegram topic is dedicated to PKM project work only.
+Before any action:
+
+1. Load `pkm-system/AGENTS.md` and the relevant PKM skills (`pkm-ingest`, `pkm-system-boundaries`, etc.)
+2. Run `check_pkm_drift.py` (or verify the cron shows clean) before creating new PKM scripts or skills
+3. Before `skill_manage(action='create')` for anything PKM-related, check whether an existing project skill covers the need — extend it rather than create a standalone copy
+4. If you must create a new skill, put it in `~/.hermes/agents-projects/pkm-system/skills/<name>/`, NOT in `~/.hermes/skills/note-taking/` directly
+5. If you write a reusable script, put it in `~/.hermes/agents-projects/pkm-system/scripts/`. Use a minimal trampoline in `~/.hermes/scripts/` only when a Hermes runtime constraint (e.g. cron) requires it
+6. After any PKM-related write, verify it landed in the project-owned tree, not only in a runtime bridge path
+
+### What drift looks like
+
+A real directory (not a symlink) inside `~/.hermes/skills/note-taking/` whose name overlaps with PKM project concerns.
+The opposite — a project-owned skill that has no bridge symlink — is not drift, just a missing bridge.
+
 ## Pitfalls
 
 - Calling the drift a mistake. Often it is discovery of the real system boundary.

@@ -104,9 +104,12 @@ For agents working directly in the project clone, `skills/` should be treated as
 
 1. Read this file.
 2. Read `Requirements/README.md`.
-3. Read only the canonical files needed for the user's request.
-4. For vault work, read `index.md` and the last 5 entries in `log.md` from the resolved canonical vault path.
-5. Check `BACKLOG.md` only when the task involves planning, status, or next actions.
+3. Run `scripts/check_pkm_drift.py` to verify no PKM skills have drifted outside the project-owned tree.
+4. Read only the canonical files needed for the user's request.
+5. For vault work, read `index.md` and the last 5 entries in `log.md` from the resolved canonical vault path.
+6. Check `BACKLOG.md` only when the task involves planning, status, or next actions.
+7. Before creating any new PKM skill or script, check whether an existing project skill covers the need.
+8. After any PKM-related write, verify it landed in the project-owned tree, not only in a runtime bridge path.
 
 ## Multi-Message Delivery Pattern
 
