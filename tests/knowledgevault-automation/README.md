@@ -20,9 +20,10 @@ MVP principle:
 - keep semantics conservative
 
 Current MVP scripts:
-- `run_fixture.py` — runs a deterministic stub implementation against an isolated temp vault
+- `../../scripts/knowledgevault_automation.py` — real automation entrypoint
+- `run_fixture.py` — runs fixture inputs against the real automation entrypoint on an isolated temp vault
 - `check_results.py` — validates diff and workflow-contract expectations against the manifest
 
 Still out of scope:
-- real vault mutation engine beyond the deterministic stub
+- source/quote/link/enrichment workflows beyond thought capture
 - judge-model semantic review

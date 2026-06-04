@@ -38,12 +38,19 @@ Recommended workflow
 4. Design a separate operational schema file that complements the semantic schema.
 5. Before building new automation, define the acceptance harness first: fixtures, manifest/oracle format, deterministic checker output, and pass/fail gates.
 6. Implement deterministic local scripts for checks. Prefer Python and JSON output.
-7. Once the user approves the next harness step, build the runnable artifacts immediately in the same session — at minimum the fixture runner and result checker — and execute a real temp-vault run before reporting completion.
-8. Store reusable skills, scripts, and schemas in the owning PKM system project skill tree, not inside the live knowledge vault.
-8. Allow legacy tolerance where the corpus justifies it, especially raw capture folders.
-9. Auto-repair only when the fix is mechanically provable, for example broken relative links whose correct existing target can be resolved unambiguously.
-10. Re-run the checker after changes and report the real delta in score and issue counts.
-11. Record the improvement in the vault's own log/changelog if it has one.
+7. Implement the real project-owned automation entrypoint in the system layer as soon as the fixture contract is stable. Do not leave the harness coupled to an in-test stub longer than necessary.
+8. Make the fixture runner call the real entrypoint on an isolated temp vault, then diff the resulting filesystem state. This keeps the harness honest and prevents the test runner from silently drifting away from production behavior.
+9. Store reusable skills, scripts, and schemas in the owning PKM system project skill tree, not inside the live knowledge vault.
+10. Allow legacy tolerance where the corpus justifies it, especially raw capture folders.
+11. Auto-repair only when the fix is mechanically provable, for example broken relative links whose correct existing target can be resolved unambiguously.
+12. Re-run the checker after changes and report the real delta in score and issue counts.
+13. Record the improvement in the vault's own log/changelog if it has one.
+
+Execution pitfall
+If you tell the user you will build the next artifact when they say so, then any reply like yes, ok, do it, or equivalent counts as authorization. Start the work immediately; do not wait for a second confirmation or silently leave the promised step undone.
+
+Path-resolution pitfall
+When verifying whether harness files exist, anchor the check to the actual project root/workdir, not the session home directory. In repo work it is easy to get a false negative by checking /home/hermes instead of the active project clone.
 
 Operational schema design guidance
 Include:

@@ -3,10 +3,13 @@ import argparse
 import hashlib
 import json
 import shutil
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
+AUTOMATION_ENTRYPOINT = PROJECT_ROOT / "scripts" / "knowledgevault_automation.py"
 FIXTURES_DIR = SCRIPT_DIR / "fixtures"
 MANIFESTS_DIR = SCRIPT_DIR / "manifests"
 DEFAULT_RUNS_DIR = Path("/home/hermes/temp/knowledgevault-automation-runs")
@@ -47,36 +50,17 @@ def ensure_seed_vault(workspace: Path) -> None:
         path.write_text(content, encoding="utf-8")
 
 
-def append_thought_capture(workspace: Path, fixture: dict) -> dict:
-    payload = fixture["input_payload"]
-    author = payload["author"]
-    text = payload["text"]
-    destination = workspace / "PKM-idea.md"
-    before = read_text(destination)
-    entry = f"## Captured Thought\n\n- Author: {author}\n- Channel: {fixture.get('channel', 'unknown')}\n- Request: {fixture['user_request']}\n- Text: {text}\n\n"
-    destination.write_text(before + entry, encoding="utf-8")
-    return {
-        "destination": "PKM-idea.md",
-        "preserved_text": text,
-        "entry": entry,
-    }
-
-
-def apply_fixture(workspace: Path, fixture: dict) -> dict:
-    fixture_name = fixture["fixture_name"]
-    workflow_class = fixture["workflow_class"]
-    automation_mode = fixture["automation_mode"]
-
-    if fixture_name == "thought-simple" and workflow_class == "thought" and automation_mode == "capture_only":
-        return {
-            "implementation": "deterministic_stub",
-            "action": "append_to_pkm_idea",
-            "details": append_thought_capture(workspace, fixture),
-        }
-
-    raise ValueError(
-        f"Unsupported fixture: fixture_name={fixture_name!r}, workflow_class={workflow_class!r}, automation_mode={automation_mode!r}"
-    )
+def apply_fixture_via_entrypoint(workspace: Path, fixture_path: Path) -> dict:
+    command = [
+        "python3",
+        str(AUTOMATION_ENTRYPOINT),
+        "run-fixture",
+        str(fixture_path),
+        "--vault-root",
+        str(workspace),
+    ]
+    completed = subprocess.run(command, capture_output=True, text=True, check=True)
+    return json.loads(completed.stdout)
 
 
 def classify_diff(before: dict, after: dict) -> dict[str, list[str]]:
@@ -113,8 +97,9 @@ def main() -> int:
         raise SystemExit(f"Fixture not found: {fixture_path}")
     if not manifest_path.exists():
         raise SystemExit(f"Manifest not found: {manifest_path}")
+    if not AUTOMATION_ENTRYPOINT.exists():
+        raise SystemExit(f"Automation entrypoint not found: {AUTOMATION_ENTRYPOINT}")
 
-    fixture = load_json(fixture_path)
     manifest = load_json(manifest_path)
 
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -128,7 +113,7 @@ def main() -> int:
 
     ensure_seed_vault(workspace)
     before = snapshot_tree(workspace)
-    execution = apply_fixture(workspace, fixture)
+    execution = apply_fixture_via_entrypoint(workspace, fixture_path)
     after = snapshot_tree(workspace)
     diff = classify_diff(before, after)
 
