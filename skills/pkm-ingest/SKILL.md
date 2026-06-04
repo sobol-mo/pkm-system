@@ -66,6 +66,21 @@ For curated thought ingest, the intended split is:
 Do not report success until the production vault contains the note and the expected registry files were updated and verified.
 When reporting completion, say explicitly whether the run was end-to-end automated or semi-automated with AI-prepared payload plus script-applied updates.
 
+### Concrete implementation
+
+The deterministic automation lives in the project's shared script at `scripts/knowledgevault_automation.py` (resolved from the pkm-system project root, accessible from this skill as `../scripts/knowledgevault_automation.py`).
+
+Available subcommands:
+
+- **`curate-thought`** — creates/updates a thought page + index + connection-map + log from a JSON payload. Used after AI prepares the payload file.
+  Usage: `python3 ../scripts/knowledgevault_automation.py curate-thought <payload.json> [--vault-root <path>]`
+- **`capture-thought`** — appends a raw thought to PKM-idea.md (quick capture without curation).
+  Usage: `python3 ../scripts/knowledgevault_automation.py capture-thought --text "..." --author "..." --user-request "..."`
+- **`run-fixture`** — runs a fixture through the real automation entrypoint (testing).
+  Usage: `python3 ../scripts/knowledgevault_automation.py run-fixture <fixture.json>`
+
+All three respect `PKM_VAULT_PATH` env var, then `OBSIDIAN_VAULT_PATH`, then default to `~/KnowledgeVault`.
+
 ## Raw Layer Rules
 
 Raw is the capture layer.

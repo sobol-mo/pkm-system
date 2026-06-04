@@ -202,3 +202,7 @@ When advising the user, be explicit:
 
 - references/digital-mind-boundary-case.md — concrete case where a Digital Mind research repo evolved into a broader PKM knowledge environment and git was retained mainly for cross-device replication
 - references/pkm-vault-vs-userdata-vs-derived-state.md — practical boundary guide for separating synced human-facing vaults from server-only runtime data and rebuildable machine indexes
+
+## Overlap notice
+
+`pkm-system-boundaries` and `pkm-ingest` both define session-start conventions for PKM project work. `pkm-ingest` carries the automation-boundary and thought-note rules. `pkm-system-boundaries` carries the drift-guardrail and topic-awareness rules. These are complementary concerns (what vs. when to check), not duplicates — the boundary is clean if the agent loads both before PKM work.
