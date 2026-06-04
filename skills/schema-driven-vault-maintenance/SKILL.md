@@ -36,12 +36,13 @@ Recommended workflow
 2. Inspect the external source and identify only the operational patterns worth borrowing.
 3. Before writing files, classify each artifact as knowledge-state content or system-layer implementation.
 4. Design a separate operational schema file that complements the semantic schema.
-5. Implement deterministic local scripts for checks. Prefer Python and JSON output.
-6. Store reusable skills, scripts, and schemas in the owning PKM system project skill tree, not inside the live knowledge vault.
-7. Allow legacy tolerance where the corpus justifies it, especially raw capture folders.
-8. Auto-repair only when the fix is mechanically provable, for example broken relative links whose correct existing target can be resolved unambiguously.
-9. Re-run the checker after changes and report the real delta in score and issue counts.
-10. Record the improvement in the vault's own log/changelog if it has one.
+5. Before building new automation, define the acceptance harness first: fixtures, manifest/oracle format, deterministic checker output, and pass/fail gates.
+6. Implement deterministic local scripts for checks. Prefer Python and JSON output.
+7. Store reusable skills, scripts, and schemas in the owning PKM system project skill tree, not inside the live knowledge vault.
+8. Allow legacy tolerance where the corpus justifies it, especially raw capture folders.
+9. Auto-repair only when the fix is mechanically provable, for example broken relative links whose correct existing target can be resolved unambiguously.
+10. Re-run the checker after changes and report the real delta in score and issue counts.
+11. Record the improvement in the vault's own log/changelog if it has one.
 
 Operational schema design guidance
 Include:
@@ -163,6 +164,7 @@ Place reusable scripts with the owning project skill, not inside the live knowle
 
 What this skill package owns
 - references/autograph-vs-ontology-first.md
+- references/automation-test-strategy.md
 - references/operational-schema.json
 - scripts/check_vault_health.py
 
