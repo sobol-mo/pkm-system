@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pkm-system.local/tests/knowledgevault-automation/manifest-schema.json",
+  "title": "KnowledgeVault Automation Expected Outcome Manifest",
+  "type": "object",
+  "required": [
+    "fixture_name",
+    "workflow_class",
+    "automation_mode",
+    "expected_created_files",
+    "expected_modified_files",
+    "expected_untouched_files",
+    "required_frontmatter",
+    "required_relations",
+    "surface_expectations",
+    "prohibited_outcomes",
+    "pass_criteria"
+  ],
+  "properties": {
+    "fixture_name": {"type": "string", "minLength": 1},
+    "workflow_class": {
+      "type": "string",
+      "enum": ["thought", "source", "quote", "link_request", "enrichment", "analysis", "implementation"]
+    },
+    "automation_mode": {
+      "type": "string",
+      "enum": ["capture_only", "capture_and_curate", "link_only", "enrich_existing"]
+    },
+    "expected_created_files": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "expected_modified_files": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "expected_untouched_files": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "required_frontmatter": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "required_fields": {
+            "type": "array",
+            "items": {"type": "string"},
+            "uniqueItems": true
+          },
+          "forbidden_fields": {
+            "type": "array",
+            "items": {"type": "string"},
+            "uniqueItems": true
+          }
+        },
+        "required": ["required_fields", "forbidden_fields"],
+        "additionalProperties": false
+      }
+    },
+    "required_relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "must_contain"],
+        "properties": {
+          "path": {"type": "string"},
+          "must_contain": {
+            "type": "array",
+            "items": {"type": "string"},
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "surface_expectations": {
+      "type": "object",
+      "required": ["index", "connection_map", "log"],
+      "properties": {
+        "index": {"type": "string", "enum": ["must_change", "must_not_change", "optional"]},
+        "connection_map": {"type": "string", "enum": ["must_change", "must_not_change", "optional"]},
+        "log": {"type": "string", "enum": ["must_change", "must_not_change", "optional"]}
+      },
+      "additionalProperties": false
+    },
+    "prohibited_outcomes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "pass_criteria": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

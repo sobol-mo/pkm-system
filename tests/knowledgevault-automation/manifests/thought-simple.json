@@ -1,0 +1,35 @@
+{
+  "fixture_name": "thought-simple",
+  "workflow_class": "thought",
+  "automation_mode": "capture_only",
+  "expected_created_files": [],
+  "expected_modified_files": [
+    "PKM-idea.md"
+  ],
+  "expected_untouched_files": [
+    "index.md",
+    "connection-map.md",
+    "log.md"
+  ],
+  "required_frontmatter": {},
+  "required_relations": [],
+  "surface_expectations": {
+    "index": "must_not_change",
+    "connection_map": "must_not_change",
+    "log": "must_not_change"
+  },
+  "prohibited_outcomes": [
+    "create a source page",
+    "create a raw source note for an external document",
+    "invent a URL or publication date",
+    "create concept pages automatically",
+    "rewrite the thought into polished curated prose instead of preserving the original wording"
+  ],
+  "pass_criteria": [
+    "the original thought text appears in PKM-idea.md",
+    "the automation does not classify the input as an external source",
+    "no vault surface files change",
+    "no new curated entities are created"
+  ],
+  "notes": "This MVP fixture intentionally chooses the conservative raw-first behavior from AGENTS.md: Maxim's monologues and voice/thought captures go to PKM-idea.md unless formalization is explicitly requested."
+}

@@ -1,0 +1,26 @@
+{
+  "fixture_name": "thought-simple",
+  "workflow_class": "thought",
+  "automation_mode": "capture_only",
+  "channel": "telegram",
+  "user_request": "Добавь мысль, которую я сейчас сформулировал",
+  "input_payload": {
+    "text": "Многие проблемы внедрения ИИ начинаются не с плохих моделей, а с того, что сама работа не разложена на проверяемые артефакты.",
+    "author": "Maxim Sobol",
+    "language": "ru"
+  },
+  "attachments": [],
+  "evidence_urls": [],
+  "expected_risk_level": "low",
+  "review_required": false,
+  "allowed_uncertainty": [
+    "whether this thought should later be promoted into a curated thought page",
+    "which concept pages might eventually absorb this idea"
+  ],
+  "invariants_under_test": [
+    "maxim-originated thought is not misclassified as external source",
+    "raw-first capture is preserved",
+    "no fake citation or source metadata is invented",
+    "automation remains conservative when formalization was not explicitly requested"
+  ]
+}
