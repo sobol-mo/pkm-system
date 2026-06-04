@@ -83,6 +83,19 @@ Check whether the ingest should update:
 - `log.md`
 - `overview.md` if the big picture changed materially
 
+## Cross-source Linking Pattern
+
+When the user asks to link two already-related artifacts such as video ↔ book, interview ↔ article, or talk ↔ paper:
+
+1. Do not just patch one sentence into an existing page if one side of the relation is not yet represented as a source.
+2. Create the missing minimal raw/source pair for the newly referenced artifact when needed.
+3. Add bidirectional `related_source` links so the relationship is traversable from either page.
+4. Update `index.md`, `connection-map.md`, and `log.md` so the new relation is visible in global retrieval surfaces.
+5. Preserve epistemic status explicitly:
+   - if the user identifies the relation and the source evidence fully confirms it, state it directly
+   - if transcript or source evidence supports the relation only partially, write that clearly instead of overstating certainty
+6. For videos, distinguish between metadata verified directly (title, channel, canonical URL) and claims supported only by transcript snippets or user framing.
+
 ## Link Contract
 
 For vaults with `raw/` and `sources/` split:
