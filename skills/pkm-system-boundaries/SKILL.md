@@ -162,6 +162,7 @@ This project has an automated drift guard to catch when PKM skills end up outsid
 - Exit 82 = error
 
 A cron job (`pkm-drift-detector`, runs every 60m) alerts this topic when drift is found.
+Clean state should be silent — do not emit routine `CLEAN` / `all good` messages into the topic, because no-drift is the normal expected state and the notification channel should preserve attention for actual drift.
 The cron uses a trampoline at `~/.hermes/scripts/check-pkm-drift.sh`; the real implementation stays project-owned.
 
 ### Rules for agents in this topic
