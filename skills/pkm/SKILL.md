@@ -58,6 +58,7 @@ Do not ingest commentary alone unless the user explicitly says the comment itsel
 
 - Prefer existing pages over near-duplicates.
 - Treat raw capture and curated vault knowledge as different layers.
+- In this vault, `log.md` is newest-first, so read the top entries for recent context and expect fresh writes to appear directly under the intro.
 - If the task is both generic ingest and multimodal ingest, pkm-ingest provides the base contract and multimodal-source-ingest adds image-specific handling.
 - If a session asks about why the PKM/wiki/vault is shaped this way by design, consult references/design-lineage.md first.
 - Native note-taking skills are now the active PKM workflow surface; legacy oc-skills/pkm should be treated as deprecated breadcrumbs, not the primary operating layer.

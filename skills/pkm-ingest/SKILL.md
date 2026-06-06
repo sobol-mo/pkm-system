@@ -110,6 +110,15 @@ Check whether the ingest should update:
 - `log.md`
 - `overview.md` if the big picture changed materially
 
+## Log Ordering Rule
+
+In this vault, `log.md` is newest-first.
+When adding a new ingest or refinement record:
+- insert the new block directly under the file intro, not at the bottom
+- preserve older entries below in descending recency order
+- if an automation path writes to `log.md`, verify that it prepends rather than appends
+- if you notice mixed ordering from previous runs, fix the ordering before finishing the task instead of leaving the log half-reversed
+
 ## Source Refinement Pattern
 
 When a source was already ingested and the user later sends one more quote, correction, framing note, or interpretive nuance:
