@@ -19,7 +19,7 @@ For project understanding, read files in this order:
 For vault orientation during ingest/query/lint work, additionally read:
 
 1. `index.md` in the resolved canonical vault path
-2. last 5 entries in `log.md` in the resolved canonical vault path
+2. first 5 entries in `log.md` in the resolved canonical vault path, because `log.md` is newest-first
 3. `schema.md` in the resolved canonical vault path only when relation types, entity types, or page format are relevant
 
 Canonical vault-path contract:
@@ -106,7 +106,7 @@ For agents working directly in the project clone, `skills/` should be treated as
 2. Read `Requirements/README.md`.
 3. Run `scripts/check_pkm_drift.py` to verify no PKM skills have drifted outside the project-owned tree.
 4. Read only the canonical files needed for the user's request.
-5. For vault work, read `index.md` and the last 5 entries in `log.md` from the resolved canonical vault path.
+5. For vault work, read `index.md` and the first 5 entries in `log.md` from the resolved canonical vault path, because the freshest records live at the top.
 6. Check `BACKLOG.md` only when the task involves planning, status, or next actions.
 7. Before creating any new PKM skill or script, check whether an existing project skill covers the need.
 8. After any PKM-related write, verify it landed in the project-owned tree, not only in a runtime bridge path.

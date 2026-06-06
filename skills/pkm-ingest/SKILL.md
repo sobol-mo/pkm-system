@@ -110,6 +110,19 @@ Check whether the ingest should update:
 - `log.md`
 - `overview.md` if the big picture changed materially
 
+## Source Refinement Pattern
+
+When a source was already ingested and the user later sends one more quote, correction, framing note, or interpretive nuance:
+
+1. Update the existing raw capture with the new quote or evidence excerpt, preserving whether it came from transcript text, user framing, or direct verification.
+2. Update the existing curated source page rather than creating a second source note.
+3. If the new material changes the reusable idea layer, enrich the existing concept page that carries that argument instead of spawning a narrow new concept.
+4. Add a short refinement entry near the top of `log.md` so later retrieval shows that the source was materially enriched after the first ingest.
+5. Keep `log.md` newest-first: fresh entries go directly under the file intro, older entries stay below in descending recency order.
+6. Keep epistemic status explicit: quote text, user-supplied context, and independently verified metadata should remain distinguishable.
+
+Typical case: a user remembers an important quote from a previously ingested video and wants the anti-panic framing, example profession, or argumentative role preserved.
+
 ## Cross-source Linking Pattern
 
 When the user asks to link two already-related artifacts such as video ↔ book, interview ↔ article, or talk ↔ paper:

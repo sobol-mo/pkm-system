@@ -85,6 +85,31 @@ def append_block(path: Path, block: str) -> None:
     write_text(path, updated)
 
 
+def prepend_log_block(path: Path, block: str) -> None:
+    content = read_text(path)
+    stripped = content.strip()
+    if not stripped:
+        write_text(path, block.rstrip() + "\n")
+        return
+
+    parts = content.split("---\n", 2)
+    if len(parts) == 3 and content.startswith("---\n"):
+        frontmatter = "---\n" + parts[1] + "---\n"
+        body = parts[2].lstrip("\n")
+    else:
+        frontmatter = ""
+        body = content.lstrip("\n")
+
+    header, separator, remainder = body.partition("\n---\n\n")
+    if separator:
+        updated_body = header.rstrip() + "\n\n---\n\n" + block.rstrip() + "\n\n" + remainder.lstrip("\n")
+    else:
+        updated_body = body.rstrip() + "\n\n" + block.rstrip() + "\n"
+
+    updated = frontmatter + "\n" + updated_body.lstrip("\n") if frontmatter else updated_body
+    write_text(path, updated)
+
+
 def append_to_pkm_idea(vault_root: Path, request: CaptureRequest) -> CaptureResult:
     destination = vault_root / "PKM-idea.md"
     ensure_parent(destination)
@@ -238,7 +263,7 @@ def append_log_for_thought(vault_root: Path, payload: dict[str, Any]) -> None:
         block_lines.append(f"  - {item}")
     block_lines.append("")
     block_lines.append("---")
-    append_block(log_path, "\n".join(block_lines))
+    prepend_log_block(log_path, "\n".join(block_lines))
 
 
 def validate_curated_thought_payload(payload: dict[str, Any]) -> None:
