@@ -34,8 +34,9 @@ Before acting in a PKM project, read:
 1. project AGENTS.md
 2. `index.md` from the resolved canonical vault path
 3. first recent entries in `log.md` from the resolved canonical vault path, because `log.md` is newest-first
-4. BACKLOG.md
+4. `BACKLOG.md` from the PKM project root when planning/status context is relevant
 
+Do not assume `BACKLOG.md` lives inside the canonical vault path unless the project explicitly says so.
 If already read in the current turn, do not repeat.
 
 ## Routing Rules

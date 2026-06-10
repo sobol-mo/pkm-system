@@ -94,6 +94,10 @@ When ingesting a source, always try to establish the original publication date o
 If the publication date cannot be verified, say so explicitly in both the raw note and the curated source page rather than leaving the reader to assume recency.
 For fast-moving AI topics, treat publication date as part of the meaning of the source, not as optional bibliography fluff.
 
+For direct-input quote ingests, treat author attribution separately from publication date.
+If the quote arrives as pasted text or user attribution without primary-source verification, preserve the quote exactly as submitted but mark the attribution as not independently verified in both raw and curated layers.
+Do not silently upgrade user-supplied attribution into a verified historical fact.
+
 ## Curated Layer Rules
 
 Update existing pages before creating new ones.
