@@ -85,10 +85,10 @@ fi
 
 # Output result
 if ${healthy}; then
-  printf "${GREEN}  OK${NC}  vault-sync healthy | completion=${completion:-N/A}% peers=${peers_connected:-N/A}/${peers_configured:-N/A}\n"
+  printf '%b\n' "${GREEN}  OK${NC}  vault-sync healthy | completion=${completion:-N/A}% peers=${peers_connected:-N/A}/${peers_configured:-N/A}"
   exit 0
 else
-  printf "${RED}FAIL${NC} vault-sync unhealthy\n"
+  printf '%b\n' "${RED}FAIL${NC} vault-sync unhealthy"
   for msg in "${messages[@]}"; do
     printf "      %s\n" "${msg}"
   done

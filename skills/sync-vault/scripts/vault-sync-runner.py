@@ -56,9 +56,13 @@ def _check_vault_exists() -> bool:
     return Path(VAULT_PATH).is_dir()
 
 
-def _check_syncthing_running() -> bool:
+def _check_syncthing_running(api_key: str) -> bool:
     try:
-        urllib.request.urlopen(f"{API_BASE}/system/status", timeout=5)
+        req = urllib.request.Request(
+            f"{API_BASE}/system/status",
+            headers={"X-API-Key": api_key},
+        )
+        urllib.request.urlopen(req, timeout=5)
         return True
     except Exception:
         return False
@@ -70,7 +74,7 @@ def _collect_state(api_key: str) -> dict:
         "checked_at": now,
         "vault_path": VAULT_PATH,
         "vault_exists": _check_vault_exists(),
-        "syncthing_running": _check_syncthing_running(),
+        "syncthing_running": _check_syncthing_running(api_key),
         "pairing_required": False,
         "completion": None,
         "peers_connected": 0,

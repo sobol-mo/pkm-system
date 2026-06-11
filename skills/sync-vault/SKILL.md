@@ -88,6 +88,40 @@ The script:
 
 After deployment on a new device, you must pair it with existing peers. This is a one-time manual step because Syncthing device IDs are generated at runtime and must be exchanged out-of-band.
 
+### Canonical Peer Registry
+
+This skill is the canonical operator registry for the PKM Syncthing cluster. When a new host is paired successfully, update this section immediately with its device ID and its explicit reachable address.
+
+Current known peers:
+
+| Host | Role | Device ID | Canonical vault path | Address strategy | Current explicit address |
+|------|------|-----------|----------------------|------------------|--------------------------|
+| `Prod` | Always-on anchor VPS | `SAAYF4I-2EH3ZWM-4C6JDQC-NDORP2I-FE6KNZ2-XTHJJ2C-57ANVE6-ARTDOAY` | `/home/hermes/KnowledgeVault` | explicit TCP | `tcp://46.225.7.241:22000` |
+| `MWC2` | operator laptop | `XCSSCQ5-Z6F6WVT-HYTK4CS-OL7363W-VYE4JU4-ZOC5B6N-27TOYQ6-TUKMIQG` | `/home/maxim/KnowledgeVault` | explicit TCP | `tcp://193.106.63.15:22000` |
+| `maxim-dev` | existing operator host | `UQHQC53-SG5UDHE-PLJNCI4-ZWRITPA-TTLPMVW-7IYCOFV-4MKKSU7-5JVJCAY` | operator-managed | explicit TCP on Prod | `tcp://193.106.63.15:22000` |
+| `MWC3` | existing operator host | `7WCXEC3-HMLB7OC-HG6JK3C-CODNTZV-GPBRQ6E-GV22S4W-G3R7DFN-SICLIQ5` | operator-managed | explicit TCP on Prod | `tcp://193.106.63.15:22000` |
+
+Registry rules:
+- do not leave a newly paired host documented only as `<NEW_DEVICE_ID>` in shell history or chat
+- after successful pairing, add the host name, device ID, canonical vault path, and explicit address here
+- if a host changes public address strategy, update this registry before treating the rollout as complete
+- treat this table as the first place to look up peer IDs during future pairing work
+
+### Canonical Addressing Strategy
+
+The current real deployment uses explicit peer TCP addresses for the Prod anchor model.
+
+Canonical rule for this cluster:
+- keep `Prod` as the always-on anchor
+- pair every new operator host with `Prod`
+- add device membership on both sides for `pkm-vault`
+- set explicit `tcp://<reachable-ip>:22000` addresses on both sides when the host has a stable reachable address
+- do not rely on `dynamic` alone unless global discovery and relays are intentionally part of the declared topology
+
+Observed operational lesson:
+- adding a host with device membership but leaving it as `dynamic` only can produce a formally paired configuration that never syncs on the real network topology
+- in this deployment family, the safe default is explicit addresses first
+
 **On the new device:**
 
 ```bash
@@ -108,6 +142,18 @@ syncthing cli config devices add --device-id <EXISTING_PEER_ID> --name <HOSTNAME
 syncthing cli config folders pkm-vault devices add --device-id <EXISTING_PEER_ID>
 ```
 
+**Then set explicit addresses on both sides** when the deployment follows the current canonical Prod-anchor topology:
+
+```bash
+# On Prod, point the new host device at its reachable TCP address
+syncthing cli config devices <NEW_DEVICE_ID> addresses set tcp://<NEW_HOST_REACHABLE_IP>:22000
+
+# On the new host, point Prod at the VPS TCP address
+syncthing cli config devices <PROD_DEVICE_ID> addresses set tcp://46.225.7.241:22000
+```
+
+If `syncthing cli ... addresses set` is unavailable in the installed Syncthing build, edit the device `addresses` array through the REST `/rest/config` endpoint or the WebUI, then restart Syncthing.
+
 **Verify pairing:**
 
 ```bash
@@ -121,6 +167,7 @@ curl -s -H "X-API-Key: <key>" 'http://127.0.0.1:8384/rest/db/status?folder=pkm-v
 What must be true after pairing:
 - `/rest/system/connections` shows the peer devices
 - `/rest/config/folders` for `pkm-vault` includes the intended device IDs
+- `/rest/config/devices` shows the intended explicit `tcp://...:22000` addresses for topologies that use explicit addressing
 - `/rest/db/status?folder=pkm-vault` shows `state` != `error`, `errors` == 0
 - Completion converges to 100% on both sides
 
@@ -149,13 +196,16 @@ For every newly added host, complete all of these steps:
 
 1. Install and bootstrap Syncthing on the new host with `setup_vault_sync_localhost.sh`
 2. Obtain the new device ID
-3. Add the new device to each relevant existing peer's device registry
-4. Add the new device to the `pkm-vault` folder membership on each relevant existing peer
-5. Add each existing peer to the new host's device registry
-6. Add each existing peer to the new host's `pkm-vault` folder membership
-7. Verify completion and real files on disk
+3. Look up existing peer IDs in the canonical peer registry in this skill
+4. Add the new device to each relevant existing peer's device registry
+5. Add the new device to the `pkm-vault` folder membership on each relevant existing peer
+6. Add each existing peer to the new host's device registry
+7. Add each existing peer to the new host's `pkm-vault` folder membership
+8. Set explicit TCP addresses on both sides when the host has a stable reachable address
+9. Verify completion and real files on disk
+10. Update the canonical peer registry in this skill with the new host's ID and address
 
-The critical pitfall is step 4 or step 6 being skipped.
+The critical pitfalls are step 5, step 7, or step 8 being skipped.
 
 Observed failure mode:
 
@@ -166,6 +216,16 @@ Observed failure mode:
 Root cause:
 
 - device registration existed, but folder membership for `pkm-vault` was incomplete
+
+Second observed failure mode:
+
+- device registration and folder membership existed
+- the new host was left on `dynamic` only
+- the real deployment topology required explicit addresses
+
+Second root cause:
+
+- the operator used generic Syncthing pairing steps, but the actual cluster relied on explicit `tcp://...:22000` addresses for reachability
 
 ### Syncthing WebUI
 
@@ -259,6 +319,15 @@ MWC2 <---->   (future)
 ```
 
 This means `Prod` must keep `pkm-vault` shared to all intended operator hosts, not just to one currently connected laptop.
+
+For the current live family, the practical address pattern is:
+
+```text
+Prod -> explicit device addresses for operator hosts
+MWC2 -> Prod at tcp://46.225.7.241:22000
+MWC3 -> explicit address on Prod
+maxim-dev -> explicit address on Prod
+```
 
 ## Troubleshooting
 
