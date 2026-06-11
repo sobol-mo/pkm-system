@@ -38,6 +38,14 @@ If the user attaches an image while sharing a link or source, preserve that imag
 Do not automatically treat a user-attached image as native media from the linked source unless that origin is separately verified.
 Label it explicitly as user-attached, companion, article-native, or source-native depending on what was actually verified.
 
+If the attached image and the fetched live source disagree on title, date, version, or other front-page metadata, preserve that discrepancy explicitly instead of forcing a single canonical snapshot.
+Common pattern: a user-attached screenshot reflects an earlier draft, title, or publication state, while the current URL resolves to a revised artifact.
+In that case:
+- save the fetched current artifact as the verified live source
+- save the user-attached image as a separate companion asset
+- record both metadata states in the raw note
+- explain the discrepancy in the curated source page as a versioned evolving artifact, not as an OCR mistake unless that is actually verified
+
 For Telegram or similar social-post ingests, prefer a layered extraction path:
 - fetch the public post text from the web view or embed view first so the raw note preserves the exact post framing
 - treat attached images as a second channel and run OCR when the useful content is a cover, table of contents, diagram, or workflow screenshot
