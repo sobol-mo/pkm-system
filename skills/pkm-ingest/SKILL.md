@@ -136,6 +136,26 @@ When a source was already ingested and the user later sends one more quote, corr
 
 Typical case: a user remembers an important quote from a previously ingested video and wants the anti-panic framing, example profession, or argumentative role preserved.
 
+## Architecture-post ingest pattern
+
+When the source is a product announcement, release post, vendor architecture summary, or promo image describing a technical system:
+
+1. Treat the post as a real source, not as mere marketing noise, when it contains reusable architecture claims.
+2. If the user highlights one specific term or mechanism they want clarified, preserve that framing in the raw note and use it to guide extraction.
+3. When the artifact describes an actual platform or system, create both:
+   - a source page for the post itself
+   - an implementation page for the platform/system
+4. If the highlighted mechanism is reusable beyond the source, also create or update a concept page for that term.
+5. If a companion image contains labeled architecture blocks, extract only the technically relevant labels and preserve them as image-derived evidence instead of paraphrasing the whole poster.
+6. Keep interpretation conservative: distinguish what the source explicitly claims from what we infer about purpose or design intent.
+7. For sandboxing or security-adjacent claims, phrase conclusions as likely runtime-isolation / blast-radius control unless the source explicitly proves stronger guarantees.
+
+Typical example:
+- user forwards a platform announcement and asks whether `micro-VM` means a secure sandbox
+- ingest should preserve the exact phrase in raw
+- create source + implementation + concept pages
+- answer that the sandbox interpretation is directionally correct, but broader than malware defense alone unless the source provides deeper runtime details
+
 ## Cross-source Linking Pattern
 
 When the user asks to link two already-related artifacts such as video ↔ book, interview ↔ article, or talk ↔ paper:
