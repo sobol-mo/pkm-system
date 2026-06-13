@@ -69,6 +69,20 @@ For a simple append with no stable context, `terminal` is acceptable if it is th
 
 Use `patch` for focused note changes when the current content gives you stable context. Prefer this over shell text rewriting.
 
+## Graph-view hygiene for teaching and ontology work
+
+When a vault is meant to be shown visually in Obsidian, separate navigation artifacts from ontology nodes.
+
+Default rule:
+- `index.md` and `glossary.md` are navigation aids, not semantic hubs
+- avoid turning them into the largest graph nodes by linking them to everything unless that is explicitly desired
+- prefer middle-layer organizing notes such as taxonomy nodes, technique buckets, framework buckets, or obstacle buckets
+- build graph traversal as general -> intermediate -> specific rather than root -> every leaf
+
+If the user wants these files hidden permanently from Graph View, use Obsidian Settings -> Files & Links -> Excluded files and add specific file patterns such as `^index\.md$` and `^glossary\.md$`.
+
+This is a display-layer solution only. Structural cleanup still belongs in the vault graph itself.
+
 ## Wikilinks
 
 Obsidian links notes with `[[Note Name]]` syntax. When creating notes, use these to link related content.

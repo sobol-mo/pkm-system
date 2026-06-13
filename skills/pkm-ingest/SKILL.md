@@ -236,8 +236,10 @@ Follow the canonical link policy in `Requirements/05-knowledge-graph-schema.md`.
 
 Operational ingest reminder:
 - preserve layered traversal for structurally rich sources
-- keep taxonomy, framework, and technique roles separate
+- keep taxonomy, framework, technique, and obstacle/distortion roles separate
 - do not create parent -> all descendants links by default
+- avoid direct leaf -> root links when a valid middle-layer organizing node exists
+- when a branch is becoming pedagogical or graph-heavy, introduce an intermediate organizing node (for example taxonomy bucket, techniques bucket, obstacles bucket) so traversal stays general -> intermediate -> specific
 - use tags as facets and typed links as semantic structure
 - add cross-links only when they materially improve retrieval
 
