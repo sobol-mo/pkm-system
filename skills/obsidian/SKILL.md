@@ -79,7 +79,10 @@ Default rule:
 - prefer middle-layer organizing notes such as taxonomy nodes, technique buckets, framework buckets, or obstacle buckets
 - build graph traversal as general -> intermediate -> specific rather than root -> every leaf
 
-If the user wants these files hidden permanently from Graph View, use Obsidian Settings -> Files & Links -> Excluded files and add specific file patterns such as `^index\.md$` and `^glossary\.md$`.
+If the user wants these files hidden permanently from Graph View, use Obsidian Settings -> Files & Links -> Excluded files and add the concrete vault-relative file or folder paths.
+
+For whole folders, prefer plain paths such as `raw/` or `assets/raw/` rather than regex-style anchors.
+For one graph session only, prefer Graph View filter queries such as `-path:"raw/"` or `-path:"assets/raw/"`.
 
 This is a display-layer solution only. Structural cleanup still belongs in the vault graph itself.
 
