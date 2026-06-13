@@ -98,7 +98,7 @@ KnowledgeVault/
   glossary.md       ← term definitions
   connection-map.md ← exhaustive relation graph
   log.md            ← chronological ingest record
-  schema.md         ← reference copy (generated from system/schema/)
+  schema.md         ← optional compatibility bridge, not canonical schema
 ```
 
 Vault IS sync-first (Obsidian). Vault IS NOT a git project. Vault IS the canonical truth — losing system is inconvenient, losing vault is catastrophic.
@@ -173,7 +173,7 @@ The system operates on the vault via scripts in `automation/`:
 - A production VPS may be **more reliable than a local HDD** as a runtime/backup host, but the canonical vault still needs a cross-environment sync contract and must not be reduced to a VPS-only location assumption.
 - **Files > databases** for portability: markdown is a universal format with no vendor lock-in. A folder can be copied, archived, or transferred to an heir regardless of what database technology was in use.
 - Runtime is derived from vault and is trivially reproducible — losing runtime is a rebuild, losing vault is a disaster.
-- Migration cost from current state (PKM/ has raw/ + wiki/) is accepted: vault content moves to the external `KnowledgeVault/`, system retains only config, schema, automation.
+- Migration cost from current state (PKM/ has raw/ + wiki/) is accepted: vault content moves to the external `KnowledgeVault/`, system retains config, canonical schema, automation, and requirements.
 
 ## Consequences
 
@@ -205,5 +205,5 @@ The system operates on the vault via scripts in `automation/`:
 - wiki/concepts/linking-over-categorizing.md — Zettelkasten principle
 - wiki/concepts/map-of-content.md — MOC as concept (ingested 2026-05-27)
 - wiki/connection-map.md — current cluster map
-- wiki/schema.md — entity types and relation types
+- `Requirements/05-knowledge-graph-schema.md` — canonical entity types, relation types, temporal conventions, and link policy
 - ADR-003: cross-environment vault deployment and sync

@@ -86,6 +86,47 @@ Do not force source-control semantics onto the full live knowledge state unless 
 
 When a PKM project has its own agent workflows, treat those skills as part of the PKM system layer, not as ad hoc runtime state.
 
+## Schema authority boundary for PKM systems
+
+If the PKM system has a semantic schema, treat it as a first-class system artifact, not as vault content.
+
+Default rule:
+- canonical schema lives in the project system layer
+- best home is the Requirements layer when the schema defines ontology philosophy and meaning contract
+- skills consume the schema operationally; they do not become a second competing source of truth
+- a vault-local `schema.md` may exist only as a clearly marked compatibility bridge for old links, not as the canonical semantic contract
+
+Pitfall:
+Duplicating ontology semantics in both `schema.md` and ingest skills causes meaning drift. Over time the skill and schema diverge, and the agent starts following whichever copy it happened to read first.
+
+Preferred fix:
+- keep entity types, relation types, temporal conventions, page rules, and link policy canonical in the schema
+- keep only execution-oriented reminders in the skill
+- patch AGENTS/requirements/backlog/docs to point to the canonical schema path
+
+## Reference authority boundary for project-owned skills
+
+A second drift pattern appears after the schema/skill split is fixed: support files under `references/` start accumulating normative rules.
+That quietly creates a third competing source of truth.
+
+Default rule:
+- schema = canonical meaning contract
+- skill `SKILL.md` = operational workflow for applying that contract
+- `references/` = optional examples, edge cases, quoted research, or worked patterns only
+
+What must NOT happen:
+- a reference file restates ontology rules differently from the canonical schema
+- a reference file becomes required reading to know the core contract
+- agents have to reconcile schema vs skill vs reference as three peer authorities
+
+Preferred fix:
+- if a rule is semantic or architectural, move it into the canonical schema
+- if a rule is executional, keep a short version in `SKILL.md`
+- if a file only illustrates a rule, keep it in `references/` and label it explicitly as illustrative/non-canonical
+- if a reference duplicates the skill, delete or collapse it
+
+Reference: `references/schema-authority-boundary.md`
+
 Default rule:
 - canonical PKM project skills live in the project repo under `skills/`
 - Hermes runtime paths such as `~/.hermes/skills/...` are deployment or compatibility bridges, not the source of truth

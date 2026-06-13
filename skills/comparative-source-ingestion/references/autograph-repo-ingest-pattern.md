@@ -5,7 +5,7 @@ Workflow
 2. Extract the reusable idea, not the product taxonomy. For Autograph-like systems, the reusable layer is operational governance: schema-as-code, deterministic health checks, link hygiene, maintenance guardrails, decay/resurfacing policy.
 3. Compare against our canonical architecture explicitly:
    - our semantic core stays ontology-first
-   - schema.md remains the worldview/meaning contract
+   - `Requirements/05-knowledge-graph-schema.md` remains the worldview/meaning contract
    - operational-schema.json is an additional machine-checkable guardrail, not a replacement for ontology
 4. Preserve system boundaries:
    - KnowledgeVault is knowledge state

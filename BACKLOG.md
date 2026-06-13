@@ -29,7 +29,7 @@ Goal: define the first useful set of node/entity types, relation types, review s
 Canonical context:
 
 - `Requirements/04-domain-model.md`
-- `wiki/schema.md`
+- `Requirements/05-knowledge-graph-schema.md`
 
 Acceptance criteria:
 
@@ -50,7 +50,7 @@ Canonical context:
 
 - `Requirements/03-system-requirements.md`
 - `Requirements/04-domain-model.md`
-- `wiki/schema.md`
+- `Requirements/05-knowledge-graph-schema.md`
 
 Acceptance criteria:
 
@@ -91,7 +91,7 @@ Acceptance criteria:
 
 - raw input remains preserved
 - extracted entities are reviewable
-- curated output follows `wiki/schema.md`
+- curated output follows `Requirements/05-knowledge-graph-schema.md`
 - relation quality is manually assessed
 
 ### PKM-007 — Telegram interface for ontology ingestion

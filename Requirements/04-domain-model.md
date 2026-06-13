@@ -123,9 +123,9 @@ Agents should be onboarded from this structured context rather than only from ta
 
 ## Relation Classes
 
-The detailed relation schema currently lives in `wiki/schema.md` as a transitional active schema reference.
+The detailed canonical relation and page schema lives in `Requirements/05-knowledge-graph-schema.md`.
 
-ADR-001 defines the target state: schema belongs to the system layer, and any vault-local `schema.md` should become a generated or copied reference.
+This domain-model file keeps only the class-level interpretation needed to explain the model shape.
 
 At the domain-model level, relations fall into these classes:
 
@@ -184,12 +184,12 @@ Choose deeper extraction when the source already presents a strong conceptual ar
 |-------|------------|---------|
 | `PKM-idea.md` | No | Historical idea dump and raw monologue capture |
 | `raw/` | Evidence only | Immutable raw sources and captures |
-| `Requirements/` | Yes, for project definition | Vision, business requirements, system requirements, domain model |
+| `Requirements/` | Yes, for project definition | Vision, business requirements, system requirements, domain model, graph schema |
 | `Architecture/` | Yes, for accepted architecture decisions | ADRs and architecture rationale |
 | `skills/` | Yes, for PKM-specific agent workflows | Project-owned skills usable from VPS and localhost |
 | `scripts/` | Yes, for reusable support automation | Project-owned scripts, not runtime state |
 | `wiki/` | Yes, for curated knowledge until vault migration | Curated personal ontology content |
-| `wiki/schema.md` | Transitional | Active schema reference until schema migrates to the system layer |
+| vault-local `schema.md` | No | Compatibility bridge only; canonical schema lives in `Requirements/05-knowledge-graph-schema.md` |
 | `BACKLOG.md` | Yes, for active work state only | Actionable tasks and status |
 | `AGENTS.md` | Yes, for operation only | Session bootstrap and agent behavior |
 | Derived databases/indexes | No | Fast query/search/runtime support |

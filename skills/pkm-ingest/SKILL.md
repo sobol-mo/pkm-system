@@ -126,6 +126,25 @@ Rules:
 
 ## Curated Page Frontmatter Convention
 
+Canonical relation types, entity types, temporal conventions, page format, and link policy live in `Requirements/05-knowledge-graph-schema.md`.
+This skill is not a second ontology document.
+This section is only an operational summary for ingest execution.
+
+Source-of-truth contract:
+- `Requirements/05-knowledge-graph-schema.md` = canonical meaning contract
+- `skills/pkm-ingest/SKILL.md` = execution workflow for applying that contract during ingest
+- `skills/pkm-ingest/references/*` = optional examples and edge-case aids only, never normative sources of ontology truth
+
+If this skill, a reference file, and the schema appear to disagree, follow the schema and patch the skill/reference.
+
+
+Source-of-truth contract:
+- `Requirements/05-knowledge-graph-schema.md` = canonical meaning contract
+- `skills/pkm-ingest/SKILL.md` = execution workflow for applying that contract during ingest
+- `skills/pkm-ingest/references/*` = optional examples and edge-case aids only, never normative sources of ontology truth
+
+If this skill, a reference file, and the schema appear to disagree, follow the schema and patch the skill/reference.
+
 Every new concept page MUST use this frontmatter shape:
 
 ```yaml
@@ -213,26 +232,20 @@ Heuristics for choosing Level 3:
 
 ### Structural-link policy for Level 3 ingests
 
-Do not turn a conceptual map into a dense all-to-all web.
-Prefer layered traversal.
+Follow the canonical link policy in `Requirements/05-knowledge-graph-schema.md`.
 
-Default shape:
-- parent concept -> organizing node
-- organizing node -> its direct members
-- leaf nodes -> parent + only semantically necessary sibling/cross-domain links
+Operational ingest reminder:
+- preserve layered traversal for structurally rich sources
+- keep taxonomy, framework, and technique roles separate
+- do not create parent -> all descendants links by default
+- use tags as facets and typed links as semantic structure
+- add cross-links only when they materially improve retrieval
 
-Important separation:
-- taxonomy node = classification spine
-- framework node = method for diagnosing or using the taxonomy
-- technique node = concrete practical maneuver
+Co-listing pages in a retrieval surface is not evidence that those pages should point to each other directly.
+Treat those files as navigation aids, not as graph-expansion prompts.
 
-Do not mix these roles in one node just because the source discussed them together.
-A taxonomy page may link to a framework, but the framework is not itself a member of the taxonomy.
-
-Direct parent -> all descendants links are usually a smell.
-If an intermediate node already exists, route traversal through it unless a direct edge is clearly necessary for retrieval.
-
-See `references/layered-link-policy.md` for the compact policy and examples.
+If you need a compact worked example, see `references/layered-link-policy.md`.
+That reference is illustrative only and must not override the canonical schema.
 
 ## Required Global Updates
 
@@ -360,7 +373,13 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 
 ## Support Files
 
-- references/graph-construction-oriented-ingest.md — criteria and worked pattern for Level 1/2/3 ingest when a source contains reusable conceptual architecture.
+These files are optional operational aids.
+## Support Files
+
+These files are optional operational aids.
+They are not canonical schema documents and must not introduce competing ontology rules.
+
+- references/layered-link-policy.md — compact examples for layered traversal and sparse cross-linking in Level 3 ingests.
 - references/commerce-sample-ocr.md — fallback pattern for bot-guarded commercial/book pages where useful content is only visible in preview images.
 - references/thought-ingest-verification-checklist.md — deterministic side-effect checks for curated thought ingest into the production vault.
 
@@ -374,8 +393,6 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 6. **Reducing ingest to summary.** A clean summary is not enough for this vault when the source contains reusable structure. If concepts, frameworks, techniques, contrasts, or taxonomy-like groupings remain buried inside prose, the ingest is incomplete from a graph-construction perspective.
 7. **Forcing every node to be a concept.** Some first-class graph entities are organizational rather than conceptual: framework nodes, taxonomy nodes, technique buckets, or relation hubs.
 8. **Creating pages without checking existing conventions.** Before writing any new vault page, the deterministic health checker must be consulted — either by running `check_vault_health.py` on the existing vault to see the expected frontmatter shape in action (via sample issues), or by inspecting a recent page of the same type. Creating pages blind leads to frontmatter drift, language violations, missing `## Relations` sections, and non-clickable `relations:` fields that duplicate the link section. The checker catches these automatically, so the fix is to run it pre-ingest for orientation and post-ingest for validation.
-9. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
-
 9. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
 
 ## Verification Checklist

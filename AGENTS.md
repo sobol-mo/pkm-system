@@ -13,14 +13,15 @@ For project understanding, read files in this order:
 3. `Requirements/02-business-requirements.md` — Maxim's expected outcomes and business rules
 4. `Requirements/03-system-requirements.md` — functional and non-functional requirements
 5. `Requirements/04-domain-model.md` — domain entities, boundaries, and canonical state model
-6. `Architecture/README.md` — accepted ADR index
-7. `BACKLOG.md` — active and planned work items
+6. `Requirements/05-knowledge-graph-schema.md` — canonical graph semantics, page rules, and link policy
+7. `Architecture/README.md` — accepted ADR index
+8. `BACKLOG.md` — active and planned work items
 
 For vault orientation during ingest/query/lint work, additionally read:
 
 1. `index.md` in the resolved canonical vault path
 2. first 5 entries in `log.md` in the resolved canonical vault path, because `log.md` is newest-first
-3. `schema.md` in the resolved canonical vault path only when relation types, entity types, or page format are relevant
+3. `Requirements/05-knowledge-graph-schema.md` in the project system layer when relation types, entity types, page format, temporal scope, or link policy are relevant
 
 Canonical vault-path contract:
 
@@ -64,6 +65,7 @@ Your responsibilities:
 | Business intent | `Requirements/02-business-requirements.md` |
 | System behavior | `Requirements/03-system-requirements.md` |
 | Domain model | `Requirements/04-domain-model.md` |
+| Knowledge-graph schema | `Requirements/05-knowledge-graph-schema.md` |
 | Architecture decisions | `Architecture/` |
 | PKM-specific skills | `skills/` |
 | Active work state | `BACKLOG.md` |

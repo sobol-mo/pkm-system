@@ -10,6 +10,7 @@ The purpose of this layer is to prevent project truth from being scattered acros
 2. [Business Requirements](02-business-requirements.md)
 3. [System Requirements](03-system-requirements.md)
 4. [Domain Model](04-domain-model.md)
+5. [Knowledge Graph Schema](05-knowledge-graph-schema.md)
 
 ## Source-of-Truth Rules
 
@@ -19,6 +20,7 @@ The purpose of this layer is to prevent project truth from being scattered acros
 | What outcomes does Maxim expect? | `02-business-requirements.md` | Customer/business intent |
 | What must the system do? | `03-system-requirements.md` | Functional and non-functional requirements |
 | What are the core domain entities and boundaries? | `04-domain-model.md` | Conceptual model before implementation |
+| What are the canonical graph semantics and page rules? | `05-knowledge-graph-schema.md` | Entity types, relation types, temporal conventions, link policy |
 | Which architecture decisions were accepted? | `../Architecture/` | ADRs only, not product truth |
 | What should the agent do next? | `../BACKLOG.md` | Actionable work items only |
 | How should an agent operate in a session? | `../AGENTS.md` | Operational bootstrap only |
