@@ -11,7 +11,6 @@
     "overview.md": "overview",
     "glossary.md": "glossary",
     "log.md": "log",
-    "schema.md": "schema",
     "connection-map.md": "connection-map"
   },
   "curated_folders": {
@@ -30,7 +29,6 @@
     "overview": ["title", "type", "created", "updated", "sources", "tags"],
     "glossary": ["title", "type", "created", "updated", "sources", "tags"],
     "log": ["title", "type", "created", "updated", "sources", "tags"],
-    "schema": ["title", "type", "created", "updated", "sources", "tags"],
     "connection-map": ["title", "type", "created", "updated", "sources", "tags"]
   },
   "relations_required_in": [

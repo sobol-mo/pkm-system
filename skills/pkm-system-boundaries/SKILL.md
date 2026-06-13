@@ -94,15 +94,18 @@ Default rule:
 - canonical schema lives in the project system layer
 - best home is the Requirements layer when the schema defines ontology philosophy and meaning contract
 - skills consume the schema operationally; they do not become a second competing source of truth
-- a vault-local `schema.md` may exist only as a clearly marked compatibility bridge for old links, not as the canonical semantic contract
+- legacy schema-file paths are deprecated; point directly to `Requirements/05-knowledge-graph-schema.md`
 
 Pitfall:
-Duplicating ontology semantics in both `schema.md` and ingest skills causes meaning drift. Over time the skill and schema diverge, and the agent starts following whichever copy it happened to read first.
+Duplicating ontology semantics outside `Requirements/05-knowledge-graph-schema.md` and ingest skills causes meaning drift. Over time the skill and schema diverge, and the agent starts following whichever copy it happened to read first.
 
 Preferred fix:
 - keep entity types, relation types, temporal conventions, page rules, and link policy canonical in the schema
 - keep only execution-oriented reminders in the skill
 - patch AGENTS/requirements/backlog/docs to point to the canonical schema path
+- when deprecating a legacy schema-file path, also patch deterministic tooling that still encodes it, such as frontmatter helpers, operational-schema files, migration checklists, and health-check root-file expectations
+
+Pitfall: documentation-only cleanup is incomplete if tooling still treats a deprecated schema file as a special root artifact. Remove the path from both human guidance and machine-readable structural expectations in the same change.
 
 ## Reference authority boundary for project-owned skills
 

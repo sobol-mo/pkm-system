@@ -189,7 +189,7 @@ Choose deeper extraction when the source already presents a strong conceptual ar
 | `skills/` | Yes, for PKM-specific agent workflows | Project-owned skills usable from VPS and localhost |
 | `scripts/` | Yes, for reusable support automation | Project-owned scripts, not runtime state |
 | `wiki/` | Yes, for curated knowledge until vault migration | Curated personal ontology content |
-| vault-local `schema.md` | No | Compatibility bridge only; canonical schema lives in `Requirements/05-knowledge-graph-schema.md` |
+| Legacy schema-file paths | No | Deprecated; use `Requirements/05-knowledge-graph-schema.md` directly |
 | `BACKLOG.md` | Yes, for active work state only | Actionable tasks and status |
 | `AGENTS.md` | Yes, for operation only | Session bootstrap and agent behavior |
 | Derived databases/indexes | No | Fast query/search/runtime support |

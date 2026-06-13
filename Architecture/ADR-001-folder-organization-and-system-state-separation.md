@@ -98,7 +98,6 @@ KnowledgeVault/
   glossary.md       ← term definitions
   connection-map.md ← exhaustive relation graph
   log.md            ← chronological ingest record
-  schema.md         ← optional compatibility bridge, not canonical schema
 ```
 
 Vault IS sync-first (Obsidian). Vault IS NOT a git project. Vault IS the canonical truth — losing system is inconvenient, losing vault is catastrophic.

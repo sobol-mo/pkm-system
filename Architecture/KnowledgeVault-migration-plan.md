@@ -82,7 +82,6 @@ Rules:
 | `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/glossary.md` | `/home/maxim/KnowledgeVault/glossary.md` | Root glossary |
 | `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/connection-map.md` | `/home/maxim/KnowledgeVault/connection-map.md` | Root relation map |
 | `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/log.md` | `/home/maxim/KnowledgeVault/log.md` | Chronological ingest log |
-| `/home/maxim/dev/projects/agents-projects/pkm-system/wiki/schema.md` | `/home/maxim/KnowledgeVault/schema.md` | Optional compatibility bridge only; canonical schema lives in `Requirements/05-knowledge-graph-schema.md` |
 
 ### Curated Wiki Entity Folders
 
@@ -149,7 +148,6 @@ Also create root files if missing:
 - `/home/maxim/KnowledgeVault/glossary.md`
 - `/home/maxim/KnowledgeVault/connection-map.md`
 - `/home/maxim/KnowledgeVault/log.md`
-- `/home/maxim/KnowledgeVault/schema.md` only if a compatibility bridge is intentionally kept
 
 ### Phase 2: Copy, Then Verify On Dev
 
@@ -223,7 +221,6 @@ Minimum migration verification on `Dev`:
 - raw file count in target is not lower than the current repo source count
 - curated note count in target is not lower than the current repo source count
 - root files exist: `index.md`, `overview.md`, `glossary.md`, `connection-map.md`, `log.md`
-- if a schema bridge is kept, `schema.md` exists only as a non-canonical pointer to `Requirements/05-knowledge-graph-schema.md`
 - a sample of internal links still resolves under the new root structure
 - a sample of raw sources referenced from curated pages still exists in target raw/assets locations
 

@@ -30,8 +30,8 @@ Therefore:
 - agent procedures live in `skills/`
 - curated knowledge lives in the canonical vault
 
-A vault-local `schema.md` may exist only as a compatibility bridge during migration.
-It is not canonical and must not be edited for meaning.
+Legacy schema-file paths are deprecated.
+Resolve schema meaning only from `Requirements/05-knowledge-graph-schema.md`.
 
 ## Core Principle
 

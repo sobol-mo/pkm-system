@@ -23,7 +23,6 @@ SPECIAL_TYPES = {
     "glossary.md": "glossary",
     "log.md": "log",
     "connection-map.md": "connection-map",
-    "schema.md": "schema",
 }
 
 SKIP = {"README.md"}
