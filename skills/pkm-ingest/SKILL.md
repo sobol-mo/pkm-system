@@ -211,6 +211,29 @@ Heuristics for choosing Level 3:
 - Maxim explicitly signals that the source is important for graph-building, ontology, or structured reuse
 - later retrieval would be degraded if the structure stayed buried inside prose
 
+### Structural-link policy for Level 3 ingests
+
+Do not turn a conceptual map into a dense all-to-all web.
+Prefer layered traversal.
+
+Default shape:
+- parent concept -> organizing node
+- organizing node -> its direct members
+- leaf nodes -> parent + only semantically necessary sibling/cross-domain links
+
+Important separation:
+- taxonomy node = classification spine
+- framework node = method for diagnosing or using the taxonomy
+- technique node = concrete practical maneuver
+
+Do not mix these roles in one node just because the source discussed them together.
+A taxonomy page may link to a framework, but the framework is not itself a member of the taxonomy.
+
+Direct parent -> all descendants links are usually a smell.
+If an intermediate node already exists, route traversal through it unless a direct edge is clearly necessary for retrieval.
+
+See `references/layered-link-policy.md` for the compact policy and examples.
+
 ## Required Global Updates
 
 Check whether the ingest should update:
