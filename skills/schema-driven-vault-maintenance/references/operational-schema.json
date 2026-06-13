@@ -47,7 +47,8 @@
     "missing_required_fields": 20,
     "type_mismatch": 15,
     "missing_relations": 10,
-    "broken_relative_links": 30
+    "broken_relative_links": 30,
+    "non_english_content": 20
   },
   "report_samples_per_category": 20,
   "legacy_tolerance": {

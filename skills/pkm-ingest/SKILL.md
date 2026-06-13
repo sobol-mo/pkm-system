@@ -98,6 +98,33 @@ For direct-input quote ingests, treat author attribution separately from publica
 If the quote arrives as pasted text or user attribution without primary-source verification, preserve the quote exactly as submitted but mark the attribution as not independently verified in both raw and curated layers.
 Do not silently upgrade user-supplied attribution into a verified historical fact.
 
+
+## Curated Page Frontmatter Convention
+
+Every new concept page MUST use this frontmatter shape:
+
+```yaml
+---
+title: "Page Title in English"
+type: concept
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+sources:
+  - sources/source-slug.md
+tags: [tag1, tag2, tag3]
+---
+```
+
+Rules:
+- **Language**: English only for all vault content (concepts, sources, quotes, thoughts, analyses), regardless of chat language or source language.
+- **Frontmatter**: use `tags:` (lowercase kebab-case), not `relations:` or `related_to:`. Tags are the cross-cutting organization mechanism that compensates for folder-by-type limitations.
+- **`## Relations` section**: every curated page MUST have a `## Relations` section at the bottom with clickable markdown links to related pages. Do NOT use `## Related` — the health checker expects `## Relations`.
+- **sources**: bare source page IDs in frontmatter (no `$` prefix).
+- After creating or updating curated pages, run the vault health checker to catch frontmatter, language, `## Relations`, and link violations automatically:
+  ```bash
+  python3 /home/hermes/.hermes/agents-projects/pkm-system/skills/schema-driven-vault-maintenance/scripts/check_vault_health.py ~/KnowledgeVault
+  ```
+
 ## Curated Layer Rules
 
 Update existing pages before creating new ones.

@@ -176,6 +176,14 @@ What this skill package owns
 - references/operational-schema.json
 - scripts/check_vault_health.py
 
+Checker validates:
+- missing frontmatter and required fields (per type in operational schema)
+- type mismatches (folder vs declared type)
+- missing `## Relations` section in curated pages
+- broken relative markdown links
+- **non-English body content** (>5% Cyrillic in curated pages; English is the vault-wide content language)
+- legacy raw files missing frontmatter (reported separately, not penalized)
+
 KnowledgeVault run examples
 - python3 /home/hermes/.hermes/agents-projects/pkm-system/skills/schema-driven-vault-maintenance/scripts/check_vault_health.py /home/hermes/KnowledgeVault
 - python3 /home/hermes/.hermes/agents-projects/pkm-system/skills/schema-driven-vault-maintenance/scripts/check_vault_health.py /home/hermes/KnowledgeVault --json

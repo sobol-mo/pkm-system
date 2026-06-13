@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 MD_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)#]+)(?:#[^)]+)?\)")
+CYRILLIC_RE = re.compile(r"[А-Яа-яЁё]")
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -55,6 +56,7 @@ def score_report(report: dict[str, Any], schema: dict[str, Any]) -> int:
     penalties += weights["type_mismatch"] * min(1.0, report["counts"]["type_mismatch"] / curated)
     penalties += weights["missing_relations"] * min(1.0, report["counts"]["missing_relations"] / curated)
     penalties += weights["broken_relative_links"] * min(1.0, report["counts"]["broken_relative_links"] / curated)
+    penalties += weights.get("non_english_content", 0) * min(1.0, report["counts"].get("non_english_content", 0) / curated)
     return max(0, round(100 - penalties))
 
 
@@ -90,6 +92,7 @@ def main() -> int:
         "type_mismatch": [],
         "missing_relations": [],
         "broken_relative_links": [],
+        "non_english_content": [],
     }
 
     summary = {
@@ -146,6 +149,16 @@ def main() -> int:
         if is_curated and top in relations_required_in and "## Relations" not in body:
             issues["missing_relations"].append(str(rel))
 
+        if is_curated and top != "raw":
+            non_ws_body = "".join(body.split())
+            if non_ws_body:
+                cyrillic_chars = len(CYRILLIC_RE.findall(non_ws_body))
+                if cyrillic_chars / len(non_ws_body) > 0.05:
+                    issues["non_english_content"].append({
+                        "file": str(rel),
+                        "cyrillic_ratio": round(cyrillic_chars / len(non_ws_body), 3),
+                    })
+
         for match in MD_LINK_RE.finditer(body):
             target = match.group(1).strip()
             if not target or target.startswith(("http://", "https://", "mailto:")):
@@ -190,6 +203,7 @@ def main() -> int:
         ("type_mismatch", "folder/type mismatches"),
         ("missing_relations", "curated files missing Relations section"),
         ("broken_relative_links", "broken relative markdown links"),
+        ("non_english_content", "curated files with non-English body content"),
         ("legacy_raw_missing_frontmatter", "legacy raw files missing frontmatter"),
     ]:
         print(f"  {label}: {counts[key]}")
@@ -202,6 +216,7 @@ def main() -> int:
         "type_mismatch",
         "missing_relations",
         "broken_relative_links",
+        "non_english_content",
     ]:
         if not report["samples"][key]:
             continue
