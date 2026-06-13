@@ -250,6 +250,17 @@ When prose needs to explain how siblings differ, prefer putting the contrast int
 Co-listing pages in a retrieval surface is not evidence that those pages should point to each other directly.
 Treat those files as navigation aids, not as graph-expansion prompts.
 
+### Selecting a validation target for hierarchy cleanup
+
+When the user wants to test or demonstrate the hierarchy rules on an existing part of the vault, do not pick a branch that was already cleaned up and now behaves well.
+Choose a branch that still shows the failure mode you are trying to detect or fix:
+- source -> branch plus source -> many leaves fan-out
+- same-level nodes densely cross-linked without retrieval need
+- a broad hub whose leaves also link heavily sideways, flattening the graph into a mesh
+
+The goal of the test branch is to stress the rule, not to re-verify an already-normalized example.
+A good candidate is slightly messy but still small enough to inspect end-to-end.
+
 If you need a compact worked example, see `references/layered-link-policy.md`.
 That reference is illustrative only and must not override the canonical schema.
 
