@@ -226,6 +226,31 @@ Before any action:
 A real directory (not a symlink) inside `~/.hermes/skills/note-taking/` whose name overlaps with PKM project concerns.
 The opposite — a project-owned skill that has no bridge symlink — is not drift, just a missing bridge.
 
+## Obsidian graph-view boundary
+
+When the vault is meant to be visually shown in Obsidian, distinguish navigation pages from ontology pages.
+
+Navigation pages
+Index, glossary, registries, and other human-facing entrypoints.
+
+Ontology pages
+Concepts, taxonomy nodes, MOCs, relation hubs, implementation pages, people, sources, and other graph-meaningful entities.
+
+Rule:
+- do not let `index.md` or `glossary.md` become universal graph hubs
+- a page with dozens or hundreds of outgoing links will dominate Obsidian Graph View even if links are only one-way
+- this distorts the visible topology and hides the intended hierarchy from general to specific
+
+Preferred pattern:
+- keep `index.md` as a human-facing catalog, not a semantic root node
+- keep `glossary.md` as a reference aid, not a graph-central ontology page
+- build visible hierarchy through taxonomy nodes, map-of-content pages, and other domain-level concept hubs
+- if the vault is used for teaching/demo, ensure the top visual hubs are meaningful conceptual parents, not service pages
+- where possible, exclude navigation pages from the graph view or reduce their direct links to the full corpus
+
+Diagnostic signal:
+If `Index` or `Glossary` become the largest nodes in Obsidian, the graph is showing navigation structure instead of knowledge structure.
+
 ## Pitfalls
 
 - Calling the drift a mistake. Often it is discovery of the real system boundary.
@@ -233,6 +258,7 @@ The opposite — a project-owned skill that has no bridge symlink — is not dri
 - Treating sync needs as versioning needs.
 - Letting one topic name become the container name for all future knowledge.
 - Designing from file format similarity instead of lifecycle similarity.
+- Letting service pages such as `index.md` or `glossary.md` accumulate mass links that flatten the visible ontology into hub-and-spoke noise.
 
 ## Output pattern
 
