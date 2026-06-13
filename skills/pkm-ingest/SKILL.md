@@ -98,6 +98,31 @@ For direct-input quote ingests, treat author attribution separately from publica
 If the quote arrives as pasted text or user attribution without primary-source verification, preserve the quote exactly as submitted but mark the attribution as not independently verified in both raw and curated layers.
 Do not silently upgrade user-supplied attribution into a verified historical fact.
 
+### Raw File Frontmatter Convention
+
+Every new raw file MUST follow this shape:
+
+```yaml
+---
+title: "Descriptive Title"
+type: raw
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+source_kind: youtube-video | pasted-post | arxiv-paper | forwarded-text | ...
+url: https://...
+author: name or "unidentified"
+publication_date: YYYY-MM-DD or "unverified"
+curated_page: ../sources/source-slug.md
+tags: [raw, topic1, topic2]
+---
+```
+
+Rules:
+- `curated_page` is REQUIRED — it creates the bidirectional raw↔source link that the vault's link contract depends on
+- `source_kind` describes the type of source (not `source_type`, which conflicts with `type` in the schema)
+- `tags` includes `raw` as the first tag plus topic tags
+- After creating a raw file, run `check_vault_health.py` to verify links resolve
+
 
 ## Curated Page Frontmatter Convention
 
@@ -268,6 +293,8 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 3. Treating curated interpretation as if it were raw capture.
 4. Using broken relative links between raw and source pages.
 5. **Confusing entity type with topic.** If you find yourself thinking "this concept is about AI, so it should go in an AI folder" — stop. It goes in `concepts/` because it IS a concept. The topic emerges from links, not folder hierarchy. The type-based system prevents the multiple-belonging problem that plagues topic-based trees.
+6. **Creating pages without checking existing conventions.** Before writing any new vault page, the deterministic health checker must be consulted — either by running `check_vault_health.py` on the existing vault to see the expected frontmatter shape in action (via sample issues), or by inspecting a recent page of the same type. Creating pages blind leads to frontmatter drift, language violations, missing `## Relations` sections, and non-clickable `relations:` fields that duplicate the link section. The checker catches these automatically, so the fix is to run it pre-ingest for orientation and post-ingest for validation.
+7. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
 
 ## Verification Checklist
 
@@ -275,7 +302,8 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 - [ ] Curated page explains why the source matters
 - [ ] Existing pages were preferred over duplicates
 - [ ] Global retrieval surfaces updated where needed
-- [ ] Raw/source links verified
+- [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)
+- [ ] `check_vault_health.py` run post-ingest — no new issues from this ingest
 - [ ] Commit helper used when commit was required
 
 For curated thoughts, also verify:
