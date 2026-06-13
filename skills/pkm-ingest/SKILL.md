@@ -211,60 +211,6 @@ Heuristics for choosing Level 3:
 - Maxim explicitly signals that the source is important for graph-building, ontology, or structured reuse
 - later retrieval would be degraded if the structure stayed buried inside prose
 
-Think in terms of graph-worthy entities, not only concepts.
-The unit of preservation is not just "an interesting idea" but any reusable entity that should live independently in the graph.
-
-Allowed graph-worthy entity classes include:
-- concept
-- framework node
-- taxonomy or collection node
-- technique node
-- relation hub
-
-Do not force every graph node to masquerade as a concept.
-Some nodes exist mainly to organize or connect other nodes.
-
-Minimum operational rule:
-Every ingest must extract at least a small graph-useful set of entities and relations.
-If the source is saved only as raw text plus a source summary, the knowledge remains trapped inside the source and has not yet been integrated into the graph.
-
-## Ingest Depth Modes
-
-Choose the depth of extraction intentionally.
-Do not treat every source as requiring the same amount of ontology work.
-
-### Level 1 — source capture
-
-Use when the goal is to preserve the source quickly without deep decomposition yet.
-Still extract a minimal graph-useful set:
-- raw capture
-- source page
-- 2 to 5 important graph-worthy entities
-- the most important explicit relations needed for later retrieval
-
-### Level 2 — structured extraction
-
-Use when the source contains several reusable ideas and a meaningful internal structure.
-Extract:
-- main concepts
-- major frameworks, techniques, or taxonomy nodes
-- the key contrasts and relations between them
-
-### Level 3 — ontology expansion
-
-Use when the source is itself highly structured, strategically important, or clearly intended as a conceptual map.
-Here the agent should perform ontology extraction plus normalization:
-- recover the source's conceptual architecture
-- separate concepts from organizing nodes
-- preserve contrasts, taxonomies, frameworks, and relation hubs as first-class graph entities where justified
-- avoid flattening a mind map into a single summary page
-
-Heuristics for choosing Level 3:
-- the author presents an explicit map, framework, taxonomy, or staged model
-- the value of the source lies in distinctions between neighboring concepts
-- Maxim explicitly signals that the source is important for graph-building, ontology, or structured reuse
-- later retrieval would be degraded if the structure stayed buried inside prose
-
 ## Required Global Updates
 
 Check whether the ingest should update:
@@ -391,6 +337,7 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 
 ## Support Files
 
+- references/graph-construction-oriented-ingest.md — criteria and worked pattern for Level 1/2/3 ingest when a source contains reusable conceptual architecture.
 - references/commerce-sample-ocr.md — fallback pattern for bot-guarded commercial/book pages where useful content is only visible in preview images.
 - references/thought-ingest-verification-checklist.md — deterministic side-effect checks for curated thought ingest into the production vault.
 
