@@ -12,6 +12,7 @@ Architecture decisions should explain how requirements are implemented or constr
 | [ADR-001: Folder Organization and System/State Separation](ADR-001-folder-organization-and-system-state-separation.md) | Accepted | 2026-05-27 | Type-based folders; system/vault/runtime separation; markdown canonical, databases compiled |
 | [ADR-002: Project-Owned Agent Skills](ADR-002-project-owned-agent-skills.md) | Accepted | 2026-05-28 | PKM-specific skills belong to the project system layer and are deployed/synced to agent runtimes |
 | [ADR-003: Cross-Environment Vault Deployment and Sync](ADR-003-cross-environment-vault-deployment-and-sync.md) | Accepted | 2026-05-28 | Separate system deploy from vault sync; make prod vault path/sync/monitoring Layer 1 concerns; rebuild runtime from Prod vault |
+| [ADR-004: Graph-Construction-Oriented Ingest](ADR-004-graph-construction-oriented-ingest.md) | Accepted | 2026-06-13 | Preserve reusable graph structure during ingest; distinguish concept vs graph node; use Level 1/2/3 ingest depth |
 
 ## Supporting Design Docs
 

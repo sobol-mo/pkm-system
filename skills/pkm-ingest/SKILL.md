@@ -157,6 +157,114 @@ Create new concept pages only for stable reusable concepts, not every phrase in 
 When the source mainly adds evidence or nuance to an existing page, enrich the existing page instead of spawning a duplicate node.
 Do not default to writing new canonical curated pages into repo-local `PKM/wiki/` after vault cutover.
 
+Think in terms of graph-worthy entities, not only concepts.
+The unit of preservation is not just an interesting idea but any reusable entity that should live independently in the graph.
+
+Allowed graph-worthy entity classes include:
+- concept
+- framework node
+- taxonomy or collection node
+- technique node
+- relation hub
+
+Do not force every graph node to masquerade as a concept.
+Some nodes exist mainly to organize or connect other nodes.
+
+Minimum operational rule:
+Every ingest must extract at least a small graph-useful set of entities and relations.
+If the source is saved only as raw text plus a source summary, the knowledge remains trapped inside the source and has not yet been integrated into the graph.
+
+## Ingest Depth Modes
+
+Choose the depth of extraction intentionally.
+Do not treat every source as requiring the same amount of ontology work.
+
+### Level 1 — source capture
+
+Use when the goal is to preserve the source quickly without deep decomposition yet.
+Still extract a minimal graph-useful set:
+- raw capture
+- source page
+- 2 to 5 important graph-worthy entities
+- the most important explicit relations needed for later retrieval
+
+### Level 2 — structured extraction
+
+Use when the source contains several reusable ideas and a meaningful internal structure.
+Extract:
+- main concepts
+- major frameworks, techniques, or taxonomy nodes
+- the key contrasts and relations between them
+
+### Level 3 — ontology expansion
+
+Use when the source is itself highly structured, strategically important, or clearly intended as a conceptual map.
+Here the agent should perform ontology extraction plus normalization:
+- recover the source's conceptual architecture
+- separate concepts from organizing nodes
+- preserve contrasts, taxonomies, frameworks, and relation hubs as first-class graph entities where justified
+- avoid flattening a mind map into a single summary page
+
+Heuristics for choosing Level 3:
+- the author presents an explicit map, framework, taxonomy, or staged model
+- the value of the source lies in distinctions between neighboring concepts
+- Maxim explicitly signals that the source is important for graph-building, ontology, or structured reuse
+- later retrieval would be degraded if the structure stayed buried inside prose
+
+Think in terms of graph-worthy entities, not only concepts.
+The unit of preservation is not just "an interesting idea" but any reusable entity that should live independently in the graph.
+
+Allowed graph-worthy entity classes include:
+- concept
+- framework node
+- taxonomy or collection node
+- technique node
+- relation hub
+
+Do not force every graph node to masquerade as a concept.
+Some nodes exist mainly to organize or connect other nodes.
+
+Minimum operational rule:
+Every ingest must extract at least a small graph-useful set of entities and relations.
+If the source is saved only as raw text plus a source summary, the knowledge remains trapped inside the source and has not yet been integrated into the graph.
+
+## Ingest Depth Modes
+
+Choose the depth of extraction intentionally.
+Do not treat every source as requiring the same amount of ontology work.
+
+### Level 1 — source capture
+
+Use when the goal is to preserve the source quickly without deep decomposition yet.
+Still extract a minimal graph-useful set:
+- raw capture
+- source page
+- 2 to 5 important graph-worthy entities
+- the most important explicit relations needed for later retrieval
+
+### Level 2 — structured extraction
+
+Use when the source contains several reusable ideas and a meaningful internal structure.
+Extract:
+- main concepts
+- major frameworks, techniques, or taxonomy nodes
+- the key contrasts and relations between them
+
+### Level 3 — ontology expansion
+
+Use when the source is itself highly structured, strategically important, or clearly intended as a conceptual map.
+Here the agent should perform ontology extraction plus normalization:
+- recover the source's conceptual architecture
+- separate concepts from organizing nodes
+- preserve contrasts, taxonomies, frameworks, and relation hubs as first-class graph entities where justified
+- avoid flattening a mind map into a single summary page
+
+Heuristics for choosing Level 3:
+- the author presents an explicit map, framework, taxonomy, or staged model
+- the value of the source lies in distinctions between neighboring concepts
+- Maxim explicitly signals that the source is important for graph-building, ontology, or structured reuse
+- later retrieval would be degraded if the structure stayed buried inside prose
+
 ## Required Global Updates
 
 Check whether the ingest should update:
@@ -293,18 +401,26 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 3. Treating curated interpretation as if it were raw capture.
 4. Using broken relative links between raw and source pages.
 5. **Confusing entity type with topic.** If you find yourself thinking "this concept is about AI, so it should go in an AI folder" — stop. It goes in `concepts/` because it IS a concept. The topic emerges from links, not folder hierarchy. The type-based system prevents the multiple-belonging problem that plagues topic-based trees.
-6. **Creating pages without checking existing conventions.** Before writing any new vault page, the deterministic health checker must be consulted — either by running `check_vault_health.py` on the existing vault to see the expected frontmatter shape in action (via sample issues), or by inspecting a recent page of the same type. Creating pages blind leads to frontmatter drift, language violations, missing `## Relations` sections, and non-clickable `relations:` fields that duplicate the link section. The checker catches these automatically, so the fix is to run it pre-ingest for orientation and post-ingest for validation.
-7. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
+6. **Reducing ingest to summary.** A clean summary is not enough for this vault when the source contains reusable structure. If concepts, frameworks, techniques, contrasts, or taxonomy-like groupings remain buried inside prose, the ingest is incomplete from a graph-construction perspective.
+7. **Forcing every node to be a concept.** Some first-class graph entities are organizational rather than conceptual: framework nodes, taxonomy nodes, technique buckets, or relation hubs.
+8. **Creating pages without checking existing conventions.** Before writing any new vault page, the deterministic health checker must be consulted — either by running `check_vault_health.py` on the existing vault to see the expected frontmatter shape in action (via sample issues), or by inspecting a recent page of the same type. Creating pages blind leads to frontmatter drift, language violations, missing `## Relations` sections, and non-clickable `relations:` fields that duplicate the link section. The checker catches these automatically, so the fix is to run it pre-ingest for orientation and post-ingest for validation.
+9. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
+
+9. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
 
 ## Verification Checklist
 
 - [ ] Raw capture saved with enough fidelity to re-check the source later
 - [ ] Curated page explains why the source matters
 - [ ] Existing pages were preferred over duplicates
+- [ ] The ingest produced graph-useful entities and explicit relations, not only a summary
+- [ ] For structurally rich sources, concepts were separated from framework/taxonomy/technique nodes where justified
 - [ ] Global retrieval surfaces updated where needed
 - [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)
 - [ ] `check_vault_health.py` run post-ingest — no new issues from this ingest
 - [ ] Commit helper used when commit was required
+
+For curated thoughts, also verify:
 
 For curated thoughts, also verify:
 - [ ] The real file exists at `thoughts/YYYY-MM-DD-slug.md` in the canonical vault

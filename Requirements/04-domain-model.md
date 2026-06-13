@@ -44,6 +44,36 @@ The canonical record is the curated markdown vault. Databases and indexes are co
 
 ## Important Distinctions
 
+### Concept vs Graph Node
+
+A concept is a knowledge-bearing entity.
+A graph node is any entity that is useful as a first-class object in the knowledge graph.
+
+Therefore:
+
+- every concept can be represented as a graph node
+- not every graph node must be a concept
+- some nodes exist primarily to organize, collect, diagnose, or structure other nodes
+
+Typical non-concept but graph-worthy node classes include:
+
+- framework node
+- taxonomy node
+- technique node
+- relation hub
+- map-of-content or collection node
+
+Examples:
+
+- `complex systems` is a concept
+- `DART framework` may be treated as a framework node
+- `techniques of systems thinking` may be treated as a taxonomy/collection node
+- `getting on the platform` may be treated as a technique node
+
+This distinction matters operationally.
+The goal of ingest is not only to summarize source content, but to preserve reusable graph structure.
+If a source contains meaningful structure, the system should preserve that structure as explicit graph entities and relations rather than burying it inside prose.
+
 ### Raw vs Curated
 
 Raw input records what was received.
@@ -121,6 +151,32 @@ Example:
 ```
 
 Temporal scope is required for claims about Maxim's beliefs, values, and interpretations when the claim may evolve.
+
+## Progressive Enrichment and Ingest Depth
+
+Ingest is not binary.
+A source does not need either zero extraction or full ontology expansion.
+The system supports progressive enrichment, where a source may enter the vault at different depths and be enriched later.
+
+Default depth model:
+
+- Level 1 — source capture
+  - preserve raw capture and curated source page
+  - extract a minimal graph-worthy set of entities and relations
+  - enough to ensure the source is not trapped as dead text
+- Level 2 — structured extraction
+  - extract the main concepts, frameworks, techniques, and key relations
+  - preserve the source's major internal structure in graph form
+- Level 3 — ontology expansion
+  - perform deep decomposition when the source is itself strongly structured or strategically important
+  - recover the source's internal map where useful: concepts, graph-organizing nodes, relation hubs, contrasts, taxonomies, and frameworks
+
+Operational rule:
+Every ingest must produce at least a minimal graph-useful result.
+A source that enters the system without any extracted reusable entities is archived, but not yet integrated into the knowledge graph.
+
+Selection rule:
+Choose deeper extraction when the source already presents a strong conceptual architecture, when Maxim explicitly flags it as structurally important, or when later reuse depends on preserving distinctions between neighboring entities.
 
 ## Canonical State Boundaries
 
