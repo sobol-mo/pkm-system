@@ -217,10 +217,12 @@ Represent knowledge from general to specific.
 Prefer:
 - parent node -> immediate organizing node
 - organizing node -> direct members
-- leaf node -> parent plus only semantically necessary sibling or cross-domain links
+- leaf node -> immediate parent plus only semantically necessary cross-domain links
 
 Do not default to parent -> every descendant.
 If an intermediate taxonomy, framework, or collection node already exists, route traversal through it.
+In teaching-oriented or hierarchy-first branches, do not default to sibling-to-sibling links inside the same taxonomy level.
+Treat same-level contrast links as optional overlays, not as part of the base structural spine.
 
 ### 2. Keep structural roles separate
 
@@ -233,7 +235,36 @@ Do not mix these roles in one node:
 A framework may point to a taxonomy.
 That does not make it a member of the taxonomy.
 
-### 3. Tags are facets, not semantic edges
+### 3. Siblings are not the default structural path
+
+Inside a taxonomy branch, sibling nodes should usually connect only to their parent organizing node.
+
+Use direct sibling links only when at least one of these is true:
+- the relation carries meaning that would be lost if it stayed only in prose
+- retrieval would materially degrade without the edge
+- the branch is not being optimized for a clean pedagogical hierarchy
+
+If the goal is a clear Obsidian teaching graph, prefer:
+- parent taxonomy node -> siblings
+- sibling page prose may describe contrasts
+- no direct sibling-to-sibling structural edges by default
+
+### 4. Sources should not flatten branch depth
+
+When a source page introduces a layered branch, do not make the source node point to both the branch node and all of that branch's descendants by default.
+
+Prefer:
+- source -> root concept or first-layer organizing nodes
+- organizing node -> direct members
+
+Avoid:
+- source -> organizing node
+- source -> all leaves in the same branch
+
+Exception:
+Keep a direct source -> leaf link only when the leaf itself is a primary retrieval target independent of the branch, and that direct access materially improves later discovery.
+
+### 5. Tags are facets, not semantic edges
 
 Use tags for:
 - topic grouping
@@ -250,7 +281,7 @@ Do not use tags as a substitute for relations such as:
 
 If the relationship changes the meaning of traversal, represent it as a typed relation.
 
-### 4. Cross-links must earn their place
+### 6. Cross-links must earn their place
 
 Cross-links are allowed, but they should be sparse and explicit.
 Add them when they:
@@ -260,7 +291,7 @@ Add them when they:
 
 Avoid all-to-all dense linking between neighboring pages from the same source.
 
-### 5. Retrieval surfaces are not graph hubs
+### 7. Retrieval surfaces are not graph hubs
 
 `index.md`, `glossary.md`, and similar overview files are retrieval surfaces.
 They help humans and agents find pages.

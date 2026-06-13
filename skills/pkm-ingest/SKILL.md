@@ -213,7 +213,7 @@ Use when the source contains several reusable ideas and a meaningful internal st
 Extract:
 - main concepts
 - major frameworks, techniques, or taxonomy nodes
-- the key contrasts and relations between them
+- the key relations between them, keeping hierarchy cleaner than prose when the branch is meant for graph-first or teaching-first use
 
 ### Level 3 — ontology expansion
 
@@ -238,10 +238,14 @@ Operational ingest reminder:
 - preserve layered traversal for structurally rich sources
 - keep taxonomy, framework, technique, and obstacle/distortion roles separate
 - do not create parent -> all descendants links by default
+- do not create source -> branch plus source -> all branch leaves by default; let the source point to the first-layer organizing node and let the branch node carry the descendants
 - avoid direct leaf -> root links when a valid middle-layer organizing node exists
+- inside one taxonomy level, do not default to sibling -> sibling links; keep siblings attached to the shared parent unless a cross-link is semantically necessary
 - when a branch is becoming pedagogical or graph-heavy, introduce an intermediate organizing node (for example taxonomy bucket, techniques bucket, obstacles bucket) so traversal stays general -> intermediate -> specific
 - use tags as facets and typed links as semantic structure
 - add cross-links only when they materially improve retrieval
+
+When prose needs to explain how siblings differ, prefer putting the contrast into the page body rather than encoding every contrast as a graph edge.
 
 Co-listing pages in a retrieval surface is not evidence that those pages should point to each other directly.
 Treat those files as navigation aids, not as graph-expansion prompts.
@@ -396,6 +400,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 7. **Forcing every node to be a concept.** Some first-class graph entities are organizational rather than conceptual: framework nodes, taxonomy nodes, technique buckets, or relation hubs.
 8. **Creating pages without checking existing conventions.** Before writing any new vault page, the deterministic health checker must be consulted — either by running `check_vault_health.py` on the existing vault to see the expected frontmatter shape in action (via sample issues), or by inspecting a recent page of the same type. Creating pages blind leads to frontmatter drift, language violations, missing `## Relations` sections, and non-clickable `relations:` fields that duplicate the link section. The checker catches these automatically, so the fix is to run it pre-ingest for orientation and post-ingest for validation.
 9. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
+10. **Flattening a layered branch from the source node.** If a source links to an organizing node and also to that branch's leaves, the graph loses depth and the teaching hierarchy becomes visually noisy. Prefer `source -> branch entry node`, then `branch node -> direct members`.
 
 ## Verification Checklist
 

@@ -246,6 +246,8 @@ Preferred pattern:
 - keep `glossary.md` as a reference aid, not a graph-central ontology page
 - build visible hierarchy through taxonomy nodes, map-of-content pages, and other domain-level concept hubs
 - if the vault is used for teaching/demo, ensure the top visual hubs are meaningful conceptual parents, not service pages
+- inside one taxonomy level, prefer sibling -> parent routing over sibling -> sibling meshes
+- keep same-level contrasts in page prose unless a direct graph edge is truly necessary for retrieval
 - where possible, exclude navigation pages from the graph view or reduce their direct links to the full corpus
 
 Diagnostic signal:

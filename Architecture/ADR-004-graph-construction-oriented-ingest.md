@@ -114,7 +114,7 @@ Expected output:
 
 - main concepts
 - major frameworks, techniques, or taxonomy nodes
-- the key contrasts and relations between them
+- the key relations between them, with sibling contrasts kept in prose unless the edge is structurally necessary
 
 #### Level 3 — ontology expansion
 
