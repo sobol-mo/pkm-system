@@ -137,14 +137,6 @@ Source-of-truth contract:
 
 If this skill, a reference file, and the schema appear to disagree, follow the schema and patch the skill/reference.
 
-
-Source-of-truth contract:
-- `Requirements/05-knowledge-graph-schema.md` = canonical meaning contract
-- `skills/pkm-ingest/SKILL.md` = execution workflow for applying that contract during ingest
-- `skills/pkm-ingest/references/*` = optional examples and edge-case aids only, never normative sources of ontology truth
-
-If this skill, a reference file, and the schema appear to disagree, follow the schema and patch the skill/reference.
-
 Every new concept page MUST use this frontmatter shape:
 
 ```yaml
@@ -168,6 +160,29 @@ Rules:
   ```bash
   python3 /home/hermes/.hermes/agents-projects/pkm-system/skills/schema-driven-vault-maintenance/scripts/check_vault_health.py ~/KnowledgeVault
   ```
+
+### Source page frontmatter — additional fields
+
+The operational schema (`schema-driven-vault-maintenance/references/operational-schema.json`) requires additional fields for `type: source` pages beyond the canonical template:
+
+```yaml
+---
+title: "..."
+type: source
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+author: "Author Name(s)"
+url: https://...
+date: YYYY  # or YYYY-MM-DD
+tags: [source, ...]
+sources: []  # still valid alongside author/url/date
+---
+```
+
+Required for source pages: `title`, `type`, `created`, `updated`, `author`, `url`, `date`, `tags`.
+The canonical schema (`05-knowledge-graph-schema.md`) uses `sources:` as the generic field; the operational schema adds source-specific metadata fields that the health checker enforces.
+If `author`, `url`, or `date` are missing, the health checker flags `curated_missing_required_fields`.
+Do not omit `sources: []` even when adding `author/url/date` — both sets of fields coexist.
 
 ## Curated Layer Rules
 
@@ -249,6 +264,17 @@ When prose needs to explain how siblings differ, prefer putting the contrast int
 
 Co-listing pages in a retrieval surface is not evidence that those pages should point to each other directly.
 Treat those files as navigation aids, not as graph-expansion prompts.
+
+### Cross-linking to existing vault — conservatism rule
+
+When a Level 3 ingest produces new concept pages, do NOT rush to cross-link them with existing vault pages.
+The only cross-links that should be created are those where BOTH conditions hold:
+1. a clear semantic relationship exists (the new page IS a subclass, instance, enabler, or narrower/broader variant of the existing page)
+2. a clear hierarchical relationship exists (the link follows general→specific, parent→child, or abstract→concrete direction)
+
+When either condition is uncertain, ask Maxim in dialog mode rather than forcing the link.
+A new page that stands alone in the graph is better than a forced edge that muddies traversal.
+The test: if you have to justify the link in a sentence longer than the relation name itself, it's not clear enough — ask.
 
 ### Selecting a validation target for hierarchy cleanup
 
@@ -391,9 +417,6 @@ If you're unsure whether something belongs in `concepts/` vs `implementations/` 
 ## Support Files
 
 These files are optional operational aids.
-## Support Files
-
-These files are optional operational aids.
 They are not canonical schema documents and must not introduce competing ontology rules.
 
 - references/layered-link-policy.md — compact examples for layered traversal and sparse cross-linking in Level 3 ingests.
@@ -412,6 +435,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 8. **Creating pages without checking existing conventions.** Before writing any new vault page, the deterministic health checker must be consulted — either by running `check_vault_health.py` on the existing vault to see the expected frontmatter shape in action (via sample issues), or by inspecting a recent page of the same type. Creating pages blind leads to frontmatter drift, language violations, missing `## Relations` sections, and non-clickable `relations:` fields that duplicate the link section. The checker catches these automatically, so the fix is to run it pre-ingest for orientation and post-ingest for validation.
 9. **Using `## Related` instead of `## Relations`.** The vault convention and health checker both expect `## Relations`. Using `## Related` causes the page to be flagged as missing its Relations section.
 10. **Flattening a layered branch from the source node.** If a source links to an organizing node and also to that branch's leaves, the graph loses depth and the teaching hierarchy becomes visually noisy. Prefer `source -> branch entry node`, then `branch node -> direct members`.
+11. **Omitting source-page metadata fields.** Source pages (`type: source`) require `author`, `url`, and `date` in frontmatter per the operational schema, in addition to the canonical `title/type/created/updated/tags` fields. The health checker flags missing `author/url/date` as `curated_missing_required_fields`. Always include these three fields when creating or updating a source page.
 
 ## Verification Checklist
 
@@ -424,8 +448,6 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)
 - [ ] `check_vault_health.py` run post-ingest — no new issues from this ingest
 - [ ] Commit helper used when commit was required
-
-For curated thoughts, also verify:
 
 For curated thoughts, also verify:
 - [ ] The real file exists at `thoughts/YYYY-MM-DD-slug.md` in the canonical vault
