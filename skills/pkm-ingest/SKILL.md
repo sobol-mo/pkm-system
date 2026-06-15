@@ -119,9 +119,17 @@ tags: [raw, topic1, topic2]
 
 Rules:
 - `curated_page` is REQUIRED — it creates the bidirectional raw↔source link that the vault's link contract depends on
+- `asset` is OPTIONAL — local copy of the source file (PDF, image, data file) stored in `raw/files/`
 - `source_kind` describes the type of source (not `source_type`, which conflicts with `type` in the schema)
 - `tags` includes `raw` as the first tag plus topic tags
+- **Obsidian clickability rule:** YAML frontmatter values are NOT clickable in Obsidian. Both `curated_page` and `asset` MUST also appear as clickable markdown links in the body of the raw file, immediately after the title/metadata block. Frontmatter = machine-readable contract. Body link = human navigation.
 - After creating a raw file, run `check_vault_health.py` to verify links resolve
+
+**Body link template** (place after the title and metadata lines):
+```
+**Curated page:** [source-slug](../sources/source-slug.md)  
+**Local PDF:** [document-slug.pdf](files/document-slug.pdf) (X.X MB)
+```
 
 
 ## Curated Page Frontmatter Convention
@@ -360,7 +368,7 @@ For vaults with `raw/` and `sources/` split:
 - source page links to raw capture
 - raw capture links back to source page
 - relative paths must be verified from the real file location
-- if assets are stored in `assets/raw/`, source pages link there explicitly
+- if asset files are stored in `raw/files/`, source pages and raw captures link there explicitly with clickable body links
 
 Run the deterministic checker from multimodal-source-ingest when the active vault still uses the legacy raw/source relative-link pattern and deterministic verification is available.
 
