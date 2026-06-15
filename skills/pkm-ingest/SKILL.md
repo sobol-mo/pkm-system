@@ -113,6 +113,7 @@ url: https://...
 author: name or "unidentified"
 publication_date: YYYY-MM-DD or "unverified"
 curated_page: ../sources/source-slug.md
+asset: raw/files/document-slug.pdf  # optional — local copy of the source file
 tags: [raw, topic1, topic2]
 ---
 ```
@@ -184,6 +185,7 @@ url: https://...
 date: YYYY  # or YYYY-MM-DD
 tags: [source, ...]
 sources: []  # still valid alongside author/url/date
+asset: raw/files/document-slug.pdf  # optional — local copy of the source file
 ---
 ```
 
@@ -447,6 +449,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 12. **Taxonomy nodes without a parent taxonomy link.** When creating specialized taxonomy nodes (e.g. `rag-kg-paradigm-taxonomy`, `word-embedding-taxonomy`), link them to the general `taxonomy` concept page as their broader parent with `--narrower_than-->` `[taxonomy](taxonomy.md)`. If the general taxonomy page already exists in the vault, also update it with `--broader_than-->` links back to the new nodes. This keeps the general→specific hierarchy intact and prevents orphan taxonomy nodes.
 13. **Patching connection-map.md without enough context.** `connection-map.md` lists the same concept names across multiple sections (Concept→Concept, Source→Concept, Hub Nodes, Clusters), so a `patch` with a short `old_string` like `taxonomy → personal-ontology` will match in 2+ places and fail with "Found N matches". Always include surrounding unique lines (adjacent concept entries, section headers) in the `old_string` to disambiguate which occurrence to replace.
 14. **Adding rows to index.md with wrong table prefix.** The `index.md` Concepts table has inconsistent row prefixes — some rows use `|` (single pipe) and others `||` (double pipe). When adding new rows, match the prefix of the immediately adjacent rows. More importantly: always `read_file` the target area before patching — do not patch index.md blind from memory of its format.
+15. **Omitting clickable body links for curated_page and asset.** YAML frontmatter values are not clickable in Obsidian. If `curated_page` and `asset` exist only in frontmatter, the human cannot navigate from raw → source or raw → local file. Always duplicate these as clickable markdown links in the body of every raw capture, immediately after the title/metadata block. Use the body link template from the Raw File Frontmatter Convention section.
 
 ## Verification Checklist
 
@@ -458,6 +461,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Global retrieval surfaces updated where needed
 - [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)
 - [ ] `check_vault_health.py` run post-ingest — no new issues from this ingest
+- [ ] Clickable body links present for `curated_page` and `asset` (if asset exists) — not just frontmatter
 - [ ] Commit helper used when commit was required
 
 For curated thoughts, also verify:
