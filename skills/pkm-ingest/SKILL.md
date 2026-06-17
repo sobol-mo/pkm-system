@@ -94,6 +94,35 @@ When ingesting a source, always try to establish the original publication date o
 If the publication date cannot be verified, say so explicitly in both the raw note and the curated source page rather than leaving the reader to assume recency.
 For fast-moving AI topics, treat publication date as part of the meaning of the source, not as optional bibliography fluff.
 
+### Partial publication-date rule
+
+Some sources expose only partial date granularity, especially local PDFs or slide decks whose title page shows only a month and year such as `May 2026`.
+In that case:
+- preserve the visible date evidence exactly as seen in the body text
+- do not invent a day value in frontmatter
+- use the coarsest truthful machine-readable value available on the curated page (for example `date: 2026` when month-only precision does not fit the current field contract cleanly)
+- state explicitly that the exact day is unverified
+- in the raw note, mention where the date came from, for example `document date shown in PDF: May 2026`
+
+The rule is conservative truthfulness over fake precision.
+
+### Local PDF extraction fallback
+
+When the user sends a local PDF and no text is inlined, first preserve the original file under `raw/files/` and treat it as the canonical evidence artifact.
+If the session Python lacks PDF libraries, prefer an ephemeral extraction path over mutating the environment:
+
+```bash
+uv run --with pypdf python3 - <<'PY'
+from pypdf import PdfReader
+reader = PdfReader('document.pdf')
+for page in reader.pages:
+    print(page.extract_text() or '')
+PY
+```
+
+Use this to inspect the document, recover title/authors/table of contents/key sections, and verify whether the visible publication date is exact or only partial.
+This is especially useful for one-off source ingest where installing a permanent PDF stack would be unnecessary.
+
 For direct-input quote ingests, treat author attribution separately from publication date.
 If the quote arrives as pasted text or user attribution without primary-source verification, preserve the quote exactly as submitted but mark the attribution as not independently verified in both raw and curated layers.
 Do not silently upgrade user-supplied attribution into a verified historical fact.
