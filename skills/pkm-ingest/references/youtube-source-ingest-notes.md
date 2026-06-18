@@ -18,3 +18,14 @@ PKM modeling lessons from this ingest:
 Useful for future ingests:
 - Debate/interview sources often require separate handling for host vs guests vs referenced third parties.
 - If external tooling is partial, combine lightweight public metadata with transcript-driven concept extraction instead of delaying the ingest.
+
+## Metadata-only ingest (no transcript available)
+
+When ALL retrieval paths fail (IP block, expired cookies, no user-provided transcript) but the user wants the video in the vault:
+
+1. Create a minimal raw capture with oEmbed-verified metadata (title, channel, canonical URL).
+2. Include an explicit "Retrieval status" section noting which methods failed and why.
+3. Use `publication_date: unverified` in raw frontmatter, `date: unverified` in source frontmatter.
+4. The raw body should contain: verified metadata block, retrieval status block, and context block (why the user asked to add it).
+5. Link to existing related sources, implementations, and people rather than treating the video as isolated.
+6. Run the health checker post-ingest — it accepts `date: unverified` without flagging.
