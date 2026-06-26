@@ -460,7 +460,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 
 - references/layered-link-policy.md — compact examples for layered traversal and sparse cross-linking in Level 3 ingests.
 - references/commerce-sample-ocr.md — fallback pattern for bot-guarded commercial/book pages where useful content is only visible in preview images.
-- references/thought-ingest-verification-checklist.md — deterministic side-effect checks for curated thought ingest into the production vault.
+- references/thought-only-ingest-pattern.md — condensed workflow for thought-only ingests where no external source exists: skip raw/ and sources/, create concept + thought with bidirectional `--about-->` links.
 
 ## Common Pitfalls
 
