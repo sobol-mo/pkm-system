@@ -52,6 +52,18 @@ For Telegram or similar social-post ingests, prefer a layered extraction path:
 - if the post points to an attachment in comments or a secondary location, save the public pointer even when the file itself is not yet directly retrievable
 - record the attachment state precisely: captured file vs public pointer only vs unverifiable mention
 
+For X/Twitter and similar teaser-first social posts that point to linked longform content:
+- capture the visible post framing exactly: author, platform, timestamp, URL, teaser text, and card title
+- try the linked longform target directly before enriching from elsewhere
+- if the native article/thread/video endpoint is inaccessible, use at most one accessible mirror or summary source for additional detail
+- state the verification path explicitly in raw and curated layers:
+  - primary URL
+  - inaccessible endpoint if relevant
+  - mirror URL used
+  - which claims are mirror-derived rather than primary-source verified
+- extract only durable architectural or workflow patterns from mirror-only detail unless the full primary artifact was directly verified
+- avoid overcommitting to specific tools or vendors mentioned only in a mirror summary when the primary artifact could not be inspected
+
 3. Classify the source value.
 Decide what the source is useful for in the knowledge system:
 - terminology reference
@@ -142,4 +154,5 @@ Verification checklist
 Support files
 
 - references/pkm-social-post-pattern.md — concise pattern from a real session ingesting a social post plus infographic into a PKM repo
+- references/x-post-mirror-pattern.md — worked pattern for X post -> inaccessible native article endpoint -> accessible mirror summary with explicit provenance boundaries
 - scripts/check_raw_source_links.py — deterministic checker/fixer for raw↔source relative links in either the canonical vault layout (`sources/`, `raw/`, `assets/raw/`) or the legacy repo split (`wiki/sources/`, `raw/`, `raw/assets/`)
