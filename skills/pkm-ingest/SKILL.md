@@ -247,6 +247,24 @@ Minimum operational rule:
 Every ingest must extract at least a small graph-useful set of entities and relations.
 If the source is saved only as raw text plus a source summary, the knowledge remains trapped inside the source and has not yet been integrated into the graph.
 
+### Existing Entity Reconciliation Pass
+
+Before creating new curated pages or finalizing relations, every ingest MUST reconcile extracted entities against the existing vault.
+This is mandatory for concepts, people, quotes, implementations, sources, thoughts, analyses, and any other graph-worthy node.
+
+Procedure:
+1. Extract candidate entities from the source: named people, quoted authors, quoted phrases, frameworks, techniques, concepts, systems, publications, and source references.
+2. Search the existing vault for each candidate by exact name, common aliases, filename-like slug, and distinctive quote text.
+3. Classify each candidate:
+   - exact match: same entity already exists; link to the existing page and update it when the source adds useful evidence
+   - near match: possible duplicate or variant; inspect manually and ask Maxim if the identity is uncertain
+   - new entity: create a page only after exact and near matches are ruled out
+4. Add obvious identity links immediately. Conservatism rules for semantic cross-linking do NOT apply to identity reconciliation. If Mark Twain, an existing quote, or an existing concept is explicitly mentioned, it should be linked.
+5. Record unresolved candidates in the source page or log when they were mentioned but not promoted to pages.
+
+Failure mode this prevents:
+A source mentions an existing person or quote, but the ingest leaves it as plain text in prose, creating a disconnected duplicate mention instead of strengthening the existing graph.
+
 ## Ingest Depth Modes
 
 Choose the depth of extraction intentionally.
