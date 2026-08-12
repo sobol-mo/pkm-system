@@ -51,8 +51,9 @@ Outputs:
 6. Add typed relations.
 7. Add human-navigable links between raw and curated layers.
 8. Update global wiki surfaces that help retrieval.
-9. Verify links and changed pages.
-10. Commit and push when the project workflow expects it.
+9. Complete named-person reconciliation and run the fail-closed manifest check.
+10. Verify links and changed pages.
+11. Commit and push when the project workflow expects it.
 
 ## Automation Boundary for Curated Thought Ingest
 
@@ -264,6 +265,56 @@ Procedure:
 
 Failure mode this prevents:
 A source mentions an existing person or quote, but the ingest leaves it as plain text in prose, creating a disconnected duplicate mention instead of strengthening the existing graph.
+
+### Named-person completion gate
+
+Every source ingest that contains named people MUST produce a reconciliation manifest before it can be reported complete. This includes:
+- speaker, author, interviewer, and channel-visible creator
+- every person explicitly named in the source
+- every researcher or author to whom a theory, quotation, experiment, model, or result is attributed
+- attribution corrections required by damaged captions, shorthand teaching attribution, or omitted co-authorship
+
+For each person, choose exactly one resolution:
+- `existing`: an existing person page was found and linked
+- `created`: a new person page was created and linked
+- `deferred`: identity is genuinely ambiguous; record the evidence and a concrete `defer_reason`
+
+Do not use relevance as a reason to omit a named person. Relevance controls how detailed the person page is, not whether explicit attribution remains plain text. A minimal page is sufficient when the person matters only as provenance.
+
+Manifest shape:
+
+```json
+{
+  "declared_person_count": 2,
+  "people": [
+    {
+      "name": "Named Lecturer",
+      "role": "speaker",
+      "resolution": "created",
+      "page": "people/named-lecturer.md",
+      "evidence": "video metadata"
+    },
+    {
+      "name": "Research Co-author",
+      "role": "attribution-correction",
+      "resolution": "existing",
+      "page": "people/research-co-author.md",
+      "evidence": "primary publication metadata"
+    }
+  ]
+}
+```
+
+Run the deterministic gate:
+
+```bash
+python3 skills/pkm-ingest/scripts/check_person_reconciliation.py \
+  /tmp/person-reconciliation.json \
+  --vault-root "$PKM_VAULT_PATH" \
+  --source-page "$PKM_VAULT_PATH/sources/source-slug.md"
+```
+
+Completion criterion: output contains `"ok": true`; every non-deferred person page exists, has `type: person` and `## Relations`, and the curated source page links to it. The manifest is a temporary verification artifact unless the source needs a durable evidence bundle.
 
 ## Ingest Depth Modes
 
@@ -503,6 +554,9 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Raw capture saved with enough fidelity to re-check the source later
 - [ ] Curated page explains why the source matters
 - [ ] Existing pages were preferred over duplicates
+- [ ] Every named or attributed person was classified as existing, created, or explicitly deferred
+- [ ] Person reconciliation manifest count matches its entries and the deterministic gate returned `ok: true`
+- [ ] Curated source page links every non-deferred person page
 - [ ] The ingest produced graph-useful entities and explicit relations, not only a summary
 - [ ] For structurally rich sources, concepts were separated from framework/taxonomy/technique nodes where justified
 - [ ] Global retrieval surfaces updated where needed
