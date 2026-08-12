@@ -17,13 +17,30 @@ import sys
 from pathlib import Path
 
 BRIDGE = Path.home() / ".hermes" / "skills" / "note-taking"
-PROJECT_SKILLS = (
+FALLBACK_PROJECT_SKILLS = (
     Path.home()
     / ".hermes"
     / "agents-projects"
     / "pkm-system"
     / "skills"
 )
+
+
+def resolve_project_skills() -> Path:
+    """Resolve the project-owned PKM skills directory for this host.
+
+    Prefer an explicit host/runtime binding, then the checkout that contains
+    this script, then the historical VPS Hermes checkout layout.
+    """
+    for env_name in ("PKM_SYSTEM_PATH", "PKM_PROJECT_ROOT"):
+        if value := os.environ.get(env_name):
+            return Path(value).expanduser().resolve() / "skills"
+
+    checkout_skills = Path(__file__).resolve().parents[1] / "skills"
+    if checkout_skills.is_dir():
+        return checkout_skills
+
+    return FALLBACK_PROJECT_SKILLS
 
 
 def resolve_symlink_target(p: Path) -> Path | None:
@@ -34,16 +51,18 @@ def resolve_symlink_target(p: Path) -> Path | None:
 
 
 def main() -> int:
+    project_skills = resolve_project_skills()
+
     if not BRIDGE.is_dir():
         print(f"SKIP: {BRIDGE} does not exist")
         return 0
 
-    if not PROJECT_SKILLS.is_dir():
-        print(f"ERROR: project skills dir {PROJECT_SKILLS} not found")
+    if not project_skills.is_dir():
+        print(f"ERROR: project skills dir {project_skills} not found")
         return 82
 
     project_skill_names: set[str] = set()
-    for child in PROJECT_SKILLS.iterdir():
+    for child in project_skills.iterdir():
         if child.is_dir():
             project_skill_names.add(child.name)
 
@@ -56,7 +75,7 @@ def main() -> int:
             continue  # not a skill directory, skip
         if child.is_symlink():
             target = resolve_symlink_target(child)
-            if target and target.parent == PROJECT_SKILLS and target.name in project_skill_names:
+            if target and target.parent == project_skills and target.name in project_skill_names:
                 continue  # valid bridge symlink
             drifted.append(f"{child.name} (symlink target not in project skills)")
         else:
