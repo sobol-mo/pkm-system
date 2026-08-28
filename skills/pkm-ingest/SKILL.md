@@ -48,12 +48,13 @@ Outputs:
 3. Save the fidelity layer in `raw/` under the resolved canonical vault path.
 4. Identify reusable entities and likely target pages.
 5. Create or update curated wiki pages.
-6. Add typed relations.
-7. Add human-navigable links between raw and curated layers.
-8. Update global wiki surfaces that help retrieval.
-9. Complete named-person reconciliation and run the fail-closed manifest check.
-10. Verify links and changed pages.
-11. Commit and push when the project workflow expects it.
+6. Run definitional closure on every new or materially updated curated page (see below). Do not stop at the title node.
+7. Add typed relations.
+8. Add human-navigable links between raw and curated layers.
+9. Update global wiki surfaces that help retrieval.
+10. Complete named-person reconciliation and run the fail-closed manifest check.
+11. Verify links and changed pages.
+12. Commit and push when the project workflow expects it.
 
 ## Automation Boundary for Curated Thought Ingest
 
@@ -265,6 +266,28 @@ Procedure:
 
 Failure mode this prevents:
 A source mentions an existing person or quote, but the ingest leaves it as plain text in prose, creating a disconnected duplicate mention instead of strengthening the existing graph.
+
+### Definitional closure gate
+
+Ingest is not "add the title page."
+A concept is understood through the concepts used to describe it.
+If the curated page explains X using Y, Z, and W, then Y, Z, and W must be vault nodes (existing + linked, or created + linked) unless they are explicitly deferred as non-graph-worthy ordinary language.
+
+This is Maxim's ontology rule (2026-08-28): describing vocabulary is part of the ingest, not an optional follow-up.
+
+Procedure (run after drafting each new or materially updated curated page, before reporting complete):
+
+1. List every term in that page that does definitional work: predecessors, contrasting formats, tools, frameworks, named systems, parent categories, and any other reusable idea used to explain the node. Ordinary words (PDF, XML, table, company) stay prose unless they already have a page or the user treats them as graph-worthy.
+2. Search the vault for each term (name, alias, slug).
+3. Classify:
+   - existing → link it; do not leave it as bold/plain text
+   - missing + graph-worthy → create a page in this ingest and link it
+   - missing + not graph-worthy → record as deferred on the source or log with a one-line reason
+4. Repeat once on the newly created pages (one extra hop). Do not recurse forever. If a new page's own defining terms are still missing, either close them in the same ingest or list them as remaining work — never silently leave them as unlinked jargon.
+5. The ingest is incomplete while a defining term of a page created in this session remains a dangling mention.
+
+Failure mode this prevents:
+DocLang is ingested and explained via OTSL, DocTags, Docling, and OKF, but only DocLang (and maybe one neighbor) exists as a page. The graph cannot teach the concept because the teaching vocabulary is not in memory.
 
 ### Named-person completion gate
 
@@ -548,6 +571,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 13. **Patching connection-map.md without enough context.** `connection-map.md` lists the same concept names across multiple sections (Concept→Concept, Source→Concept, Hub Nodes, Clusters), so a `patch` with a short `old_string` like `taxonomy → personal-ontology` will match in 2+ places and fail with "Found N matches". Always include surrounding unique lines (adjacent concept entries, section headers) in the `old_string` to disambiguate which occurrence to replace.
 14. **Adding rows to index.md with wrong table prefix.** The `index.md` Concepts table has inconsistent row prefixes — some rows use `|` (single pipe) and others `||` (double pipe). When adding new rows, match the prefix of the immediately adjacent rows. More importantly: always `read_file` the target area before patching — do not patch index.md blind from memory of its format.
 15. **Omitting clickable body links for curated_page and asset.** YAML frontmatter values are not clickable in Obsidian. If `curated_page` and `asset` exist only in frontmatter, the human cannot navigate from raw → source or raw → local file. Always duplicate these as clickable markdown links in the body of every raw capture, immediately after the title/metadata block. Use the body link template from the Raw File Frontmatter Convention section.
+16. **Ingesting the title node only.** Using OTSL, DocTags, Docling, or OKF to explain DocLang without checking whether those terms already have pages (and creating them if not) is an incomplete ingest. Definitional closure is mandatory; Maxim should not have to ask "did you create the neighboring pages?"
 
 ## Verification Checklist
 
@@ -558,6 +582,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Person reconciliation manifest count matches its entries and the deterministic gate returned `ok: true`
 - [ ] Curated source page links every non-deferred person page
 - [ ] The ingest produced graph-useful entities and explicit relations, not only a summary
+- [ ] Definitional closure: every term used to define a new/updated curated page is existing+linked, created+linked, or explicitly deferred as non-graph-worthy
 - [ ] For structurally rich sources, concepts were separated from framework/taxonomy/technique nodes where justified
 - [ ] Global retrieval surfaces updated where needed
 - [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)

@@ -35,6 +35,7 @@ After saving the raw capture and before creating curated pages:
    - Quotes attributed → `--referenced_quote--> [Quote](quotes/quote.md)` on the source page
 4. **If an existing page matches an ONTOLOGY entity** (person, quote, concept), prefer linking to it over re-creating the entity. Do NOT create a duplicate person page or quote page. 
 5. **Only create new pages** for entities that have NO existing vault representation.
+6. **Definitional closure on our prose, not only on the source.** After the curated page is drafted, extract the terms *we used to explain the node*. Search the vault for those terms too. If they do not exist and they are graph-worthy, create them in the same ingest. Source-entity extraction is not enough: a page can mention only DocLang in the source title while its body teaches via OTSL and DocTags.
 
 ## Pitfalls
 
@@ -43,6 +44,7 @@ After saving the raw capture and before creating curated pages:
 3. **Skipping people.** People are the most commonly missed cross-reference — the source names a thinker (e.g. "as Marcus Aurelius said") and the thinker has a vault page, but no link is added.
 4. **Date blindness.** Always run `date` at the start of the ingest session. DO NOT reuse dates from conversation context or session summaries — they may be stale. A stale date means every new page carries the wrong creation timestamp.
 5. **Partial name matching.** "Mark Twain" and "Samuel Clemens" are the same person. When a source uses a nickname/alias, search both the common name and the formal name.
+6. **Closing the source vocabulary but not the describing vocabulary.** Neighbor concepts used in our definition remain unlinked jargon. Treat that as an incomplete ingest.
 
 ## References
 
@@ -55,4 +57,5 @@ After saving the raw capture and before creating curated pages:
 - [ ] A second-pass ontology audit was done for Level 2+ sources: missed techniques, cases, meta-principles, people, quotes, and practical life tools
 - [ ] Every existing match received a typed cross-link relation
 - [ ] No duplicate pages were created for entities that already exist in the vault
+- [ ] Definitional terms on new curated pages were searched, then linked or created
 - [ ] `check_vault_health.py` run post-ingest confirms no new issues
