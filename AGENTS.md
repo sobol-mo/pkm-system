@@ -15,7 +15,8 @@ For project understanding, read files in this order:
 5. `Requirements/04-domain-model.md` — domain entities, boundaries, and canonical state model
 6. `Requirements/05-knowledge-graph-schema.md` — canonical graph semantics, page rules, and link policy
 7. `Architecture/README.md` — accepted ADR index
-8. `BACKLOG.md` — active and planned work items
+8. `SESSION_HANDOFF.md` — current session continuation, last verified state, and exact next action
+9. `BACKLOG.md` — active and planned work items
 
 For vault orientation during ingest/query/lint work, additionally read:
 
@@ -69,6 +70,7 @@ Your responsibilities:
 | Architecture decisions | `Architecture/` |
 | PKM-specific skills | `skills/` |
 | Active work state | `BACKLOG.md` |
+| Session continuity | `SESSION_HANDOFF.md` |
 | Raw idea dump | `PKM-idea.md` |
 | Raw source evidence | `raw/` under the resolved canonical vault path |
 | Curated knowledge | entity folders and root files under the resolved canonical vault path |
@@ -107,11 +109,12 @@ For agents working directly in the project clone, `skills/` should be treated as
 1. Read this file.
 2. Read `Requirements/README.md`.
 3. Run `scripts/check_pkm_drift.py` to verify no PKM skills have drifted outside the project-owned tree.
-4. Read only the canonical files needed for the user's request.
-5. For vault work, read `index.md` and the first 5 entries in `log.md` from the resolved canonical vault path, because the freshest records live at the top.
-6. Check `BACKLOG.md` only when the task involves planning, status, or next actions.
-7. Before creating any new PKM skill or script, check whether an existing project skill covers the need.
-8. After any PKM-related write, verify it landed in the project-owned tree, not only in a runtime bridge path.
+4. Read `SESSION_HANDOFF.md` for the current continuation; do not treat it as a backlog or completed-work history.
+5. Read only the canonical files needed for the user's request.
+6. For vault work, read `index.md` and the first 5 entries in `log.md` from the resolved canonical vault path, because the freshest records live at the top.
+7. Check `BACKLOG.md` only when the task involves planning, status, or next actions.
+8. Before creating any new PKM skill or script, check whether an existing project skill covers the need.
+9. After any PKM-related write, verify it landed in the project-owned tree, not only in a runtime bridge path.
 
 ## Multi-Message Delivery Pattern
 
@@ -134,6 +137,7 @@ Do not react to the first message alone when it clearly introduces a forwarded s
 9. Active tasks belong in `BACKLOG.md`, not in `AGENTS.md`.
 10. PKM-specific skill changes belong in `skills/`, not only in VPS runtime paths.
 11. Do not use repo-local `raw/` or `wiki/` as the default write target for new canonical vault work unless rollback is explicitly active.
+12. Keep `SESSION_HANDOFF.md` limited to one current continuation: active scope, last verified state, exact next action, blockers, repository state, and governing artifacts. Durable tasks remain in `BACKLOG.md`.
 
 ## Current Open Questions
 
