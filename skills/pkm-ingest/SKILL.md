@@ -271,20 +271,22 @@ A source mentions an existing person or quote, but the ingest leaves it as plain
 
 Ingest is not "add the title page."
 A concept is understood through the concepts used to describe it.
-If the curated page explains X using Y, Z, and W, then Y, Z, and W must be vault nodes (existing + linked, or created + linked) unless they are explicitly deferred as non-graph-worthy ordinary language.
+This does not mean that every noun, verb, highlighted English phrase, or subordinate distinction in a definition must become a vault node.
 
-This is Maxim's ontology rule (2026-08-28): describing vocabulary is part of the ingest, not an optional follow-up.
+Definitional closure identifies genuine concept dependencies without atomizing prose. The ingest agent may propose ontology expansion, but the human operator authorizes new concept identities.
 
 Procedure (run after drafting each new or materially updated curated page, before reporting complete):
 
-1. List every term in that page that does definitional work: predecessors, contrasting formats, tools, frameworks, named systems, parent categories, and any other reusable idea used to explain the node. Ordinary words (PDF, XML, table, company) stay prose unless they already have a page or the user treats them as graph-worthy.
+1. List terms that do substantive definitional work: parent concepts, explicit contrasts, frameworks, techniques, named systems, and other stable reusable ideas needed to understand the page. Keep ordinary language, student-memory phrases, and facets in prose unless the operator has approved them as independent concepts.
 2. Search the vault for each term (name, alias, slug).
 3. Classify:
-   - existing → link it; do not leave it as bold/plain text
-   - missing + graph-worthy → create a page in this ingest and link it
-   - missing + not graph-worthy → record as deferred on the source or log with a one-line reason
-4. Repeat once on the newly created pages (one extra hop). Do not recurse forever. If a new page's own defining terms are still missing, either close them in the same ingest or list them as remaining work — never silently leave them as unlinked jargon.
-5. The ingest is incomplete while a defining term of a page created in this session remains a dangling mention.
+   - existing + semantically necessary → link the canonical page
+   - existing + incidental → keep it as prose; an existing page does not make every mention edge-worthy
+   - missing + potentially graph-worthy → ask the human operator whether to promote it before creating a page
+   - missing + not independently graph-worthy → keep it as prose or a facet; record deferral only when later reconsideration is useful
+4. For every promotion question, show the term, the definition context, why it may deserve an independent identity, and what would be lost if it remained prose.
+5. Repeat once only for newly created pages that the operator approved. Do not recurse forever.
+6. The ingest is incomplete only when an operator-approved defining concept remains an unresolved dangling mention. Unapproved vocabulary does not block ingest merely because it appears in a definition.
 
 Failure mode this prevents:
 DocLang is ingested and explained via OTSL, DocTags, Docling, and OKF, but only DocLang (and maybe one neighbor) exists as a page. The graph cannot teach the concept because the teaching vocabulary is not in memory.
@@ -582,7 +584,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Person reconciliation manifest count matches its entries and the deterministic gate returned `ok: true`
 - [ ] Curated source page links every non-deferred person page
 - [ ] The ingest produced graph-useful entities and explicit relations, not only a summary
-- [ ] Definitional closure: every term used to define a new/updated curated page is existing+linked, created+linked, or explicitly deferred as non-graph-worthy
+- [ ] Definitional closure: every genuine concept dependency is existing+linked, operator-approved+created, or deliberately retained as prose/facet; unresolved promotion questions are reported to the operator
 - [ ] For structurally rich sources, concepts were separated from framework/taxonomy/technique nodes where justified
 - [ ] Global retrieval surfaces updated where needed
 - [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)
