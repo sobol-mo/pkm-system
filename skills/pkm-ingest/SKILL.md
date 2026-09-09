@@ -1,7 +1,7 @@
 ---
 name: pkm-ingest
 description: Use when adding a new source, thought, quote, forward, or document into a PKM wiki with raw and curated layers.
-version: 1.0.0
+version: 1.0.1
 author: Hermes Agent
 license: MIT
 metadata:
@@ -505,7 +505,8 @@ Folders encode ENTITY TYPE (what a page IS), not TOPIC (what it's ABOUT). This i
 |--------|-------------|-------------------|------------------|
 | `concepts/` | Idea, definition, principle, pattern | A stable reusable idea with definition and relations | It's a specific person's implementation (→ implementations/) |
 | `people/` | Person, author, thinker | Someone whose ideas, quotes, or work connects to the Digital Mind | The content is purely about their tool (→ implementations/) |
-| `implementations/` | Tool, system, project, codebase | A specific working system or product that instantiates a concept | The content is just an idea about how something could work (→ concepts/) |
+| `projects/` | Coordinated endeavor | A stable semantic projection of why a project exists and how it relates to goals, constraints, processes, patterns, and artifacts | The content is mutable project status, backlog, branch, path, assignment, or runtime state (→ authoritative project repository or registry) |
+| `implementations/` | Tool, system, product, codebase | A specific working system or product that instantiates a concept | The entity is the coordinated endeavor that produced or operates it (→ projects/) |
 | `quotes/` | Verbatim quote | A quotable formulation that Maxim endorses as personality signal | A paraphrased observation (→ thoughts/ or enrich existing concept) |
 | `thoughts/` | Maxim's own dated reflection | A first-person insight, opinion, or synthesis by Maxim | A third-party source (→ sources/ + concepts/) |
 
@@ -523,6 +524,8 @@ Also encode the user's stance explicitly:
 This turns a saved quote into a retrievable worldview signal rather than a disconnected citation.
 | `analyses/` | Comparative or synthetic study | A comparison of approaches, design decisions, or publication directions | Raw findings from a single source (→ sources/ + concepts/) |
 | `sources/` | Curated summary of an external document | A complex source with multiple ideas extracted across several pages | A single idea already captured in a concept page |
+
+Until PKM-011 adds `projects/` to the operational schema and deterministic validator, treat a proposed project page as blocked implementation work. Do not route it back into `implementations/` as a workaround.
 
 ### Thought-note rules
 

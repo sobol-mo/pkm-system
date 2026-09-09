@@ -1,7 +1,7 @@
 # Domain Model
 
 Status: Baseline draft
-Last updated: 2026-05-28
+Last updated: 2026-09-09
 
 ## Purpose
 
@@ -29,7 +29,8 @@ The canonical record is the curated markdown vault. Databases and indexes are co
 | Thought | Maxim's dated reflection with original wording and extracted concepts | `wiki/thoughts/` now; future vault `thoughts/` |
 | Source | Curated summary of an external or internal source | `wiki/sources/` now; future vault `sources/` |
 | Person | Person relevant to the ontology, source network, or influence map | `wiki/people/` now; future vault `people/` |
-| Implementation | Tool, system, project, or reference implementation | `wiki/implementations/` now; future vault `implementations/` |
+| Implementation | Concrete tool, system, product, or reference implementation | `wiki/implementations/` now; future vault `implementations/` |
+| Project | Coordinated endeavor with a stable identity, purpose, and semantic relations to goals, constraints, processes, patterns, and artifacts | Future vault `projects/` |
 | Analysis | Synthesis, comparison, gap analysis, design note, or research output | `wiki/analyses/` now; future vault `analyses/` |
 | Relation | Typed edge connecting two entities | Stored inside page relation sections |
 | Skill | Agent-executable workflow instructions for maintaining or operating the wiki | `skills/` in the project system layer |
@@ -121,6 +122,14 @@ This means the vault must be able to represent:
 
 Agents should be onboarded from this structured context rather than only from task-specific prompts.
 
+### Project vs Implementation
+
+A project is the coordinated endeavor: why work exists, what durable goal it pursues, and which knowledge objects give it meaning.
+
+An implementation is a concrete realized system, tool, product, or reference implementation. A project may produce or operate one or more implementations. Do not collapse the endeavor and its outputs into one identity merely because they currently share a repository or name.
+
+Project pages are semantic projections, not project-management records. Project repositories and authoritative registries remain the source of truth for lifecycle, paths, requirements, backlog, milestones, branches, assignments, and operational state.
+
 ## Relation Classes
 
 The detailed canonical relation and page schema lives in `Requirements/05-knowledge-graph-schema.md`.
@@ -136,7 +145,7 @@ At the domain-model level, relations fall into these classes:
 | Expression | Connect quotes and thoughts to concepts | `expresses`, `expressed_in`, `endorsed_by` |
 | Worldview | Capture Maxim's subjective conceptual model | `values`, `believes_that`, `sufficient_for`, `instrument_for` |
 | Logical/Semantic | Capture reasoning relationships | `supports`, `contradicts`, `implies`, `opposed_to` |
-| Operational | Connect workflows, SOPs, tools, and implementations | `uses_pattern`, `implemented_by`, `enables` |
+| Operational | Connect workflows, SOPs, projects, tools, and implementations | `uses_pattern`, `implemented_by`, `enables`, `pursues_goal`, `constrained_by`, `uses_process`, `produces_artifact` |
 | Agent Management | Connect roles, goals, processes, artifacts, and evaluation criteria | `responsible_for`, `requires_context`, `evaluated_by`, `constrained_by` |
 
 ## Temporal Model
@@ -205,6 +214,8 @@ Choose deeper extraction when the source already presents a strong conceptual ar
 - PKM-specific skills are project system assets and should be versioned with the project, then deployed or synced to agent runtimes as needed.
 - Digital Mind is a unified knowledge field for both worldview preservation and deep agent context.
 - Agents should be managed through roles, goals, constraints, and evaluation criteria, not only through prompts.
+- Projects are first-class semantic entities. Their vault pages contain durable meaning and relations while mutable project state remains in authoritative repositories and registries.
+- Participating project workflows assess reusable knowledge yield at work-block close and hand bounded producer artifacts to PKM rather than writing directly to the vault.
 
 ## Open Domain Questions
 

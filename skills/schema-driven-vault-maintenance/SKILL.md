@@ -146,9 +146,9 @@ This avoids token waste from 20+ sequential tool calls and gives a clean before/
 
 Boundary/system link resolution
 When the health report flags broken links to files that live outside the vault (for example, PKM-idea.md in the PKM system project repo), do not create those files inside the vault. Instead:
-1. Create (or use an existing) implementations/ page about the external system, explaining it as a setup artifact (example: implementations/pkm-system.md documents the PKM System project and explains that PKM-idea.md is its origin document).
+1. Create (or use an existing) implementations/ page about the external system, explaining it as a setup artifact (example: implementations/pkm-system.md documents the PKM System layer and explains that PKM-idea.md is its origin document).
 2. Re-point all vault-internal references from the external path to the new implementations/ page.
-3. Verify with the user: "We have an implementations/ page about Project X — redirect broken links there instead of crossing the boundary?"
+3. Verify with the user: "We have an implementations/ page about System X — redirect broken links there instead of crossing the boundary?"
 This preserves the system/state separation enforced by the vault's architecture.
 
 Frontmatter completion guidance

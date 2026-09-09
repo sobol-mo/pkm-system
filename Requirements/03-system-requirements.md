@@ -1,7 +1,7 @@
 # System Requirements
 
 Status: Baseline draft
-Last updated: 2026-05-28
+Last updated: 2026-09-09
 
 ## Requirement Language
 
@@ -14,7 +14,7 @@ Last updated: 2026-05-28
 | ID | Requirement | Priority |
 |----|-------------|----------|
 | FR-01 | The system must capture raw inputs from Maxim and external sources without treating them as curated truth. | Must |
-| FR-02 | The system must maintain curated wiki pages for concepts, people, quotes, thoughts, sources, analyses, and implementations. | Must |
+| FR-02 | The system must maintain curated wiki pages for concepts, projects, people, quotes, thoughts, sources, analyses, and implementations. | Must |
 | FR-03 | The system must represent typed relations between knowledge objects. | Must |
 | FR-04 | The system must support worldview relations such as `sufficient_for`, `instrument_for`, `necessary_for`, `values`, `believes_that`, `supports`, and `contradicts`. | Must |
 | FR-05 | The system must support temporal scope for beliefs, values, and other worldview relations that can change over time. | Must |
@@ -60,7 +60,7 @@ Last updated: 2026-05-28
 | DR-03 | Every worldview claim should be traceable to raw input, source, or explicit Maxim decision. |
 | DR-04 | Every temporal worldview relation should preserve old states instead of overwriting them. |
 | DR-05 | Raw captures must remain immutable after processing, except for explicit correction of capture errors. |
-| DR-06 | Role, process, artifact, goal, constraint, and evaluation knowledge should be represented as first-class curated objects or clearly tagged concepts. |
+| DR-06 | Project, role, process, artifact, goal, constraint, and evaluation knowledge should be represented as first-class curated objects or clearly tagged concepts according to the accepted domain model. |
 
 ## Interface Requirements
 

@@ -1,5 +1,7 @@
 # PKM Architecture Decisions
 
+Last updated: 2026-09-09
+
 This directory contains accepted architecture decisions.
 
 Project definition and requirements are canonical in `../Requirements/`.
@@ -13,6 +15,7 @@ Architecture decisions should explain how requirements are implemented or constr
 | [ADR-002: Project-Owned Agent Skills](ADR-002-project-owned-agent-skills.md) | Accepted | 2026-05-28 | PKM-specific skills belong to the project system layer and are deployed/synced to agent runtimes |
 | [ADR-003: Cross-Environment Vault Deployment and Sync](ADR-003-cross-environment-vault-deployment-and-sync.md) | Accepted | 2026-05-28 | Separate system deploy from vault sync; make prod vault path/sync/monitoring Layer 1 concerns; rebuild runtime from Prod vault |
 | [ADR-004: Graph-Construction-Oriented Ingest](ADR-004-graph-construction-oriented-ingest.md) | Accepted | 2026-06-13 | Preserve reusable graph structure during ingest; distinguish concept vs graph node; use Level 1/2/3 ingest depth |
+| [ADR-005: Project Knowledge Projection and Handoff](ADR-005-project-knowledge-projection-and-handoff.md) | Accepted | 2026-09-09 | First-class Project entities; semantic projection boundary; close-bundle knowledge yield; generic PKM handoff and pilot order |
 
 ## Supporting Design Docs
 

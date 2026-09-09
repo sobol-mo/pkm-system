@@ -1,7 +1,7 @@
 # Knowledge Graph Schema
 
 Status: Canonical
-Last updated: 2026-06-13
+Last updated: 2026-09-09
 
 ## Purpose
 
@@ -50,7 +50,8 @@ Entity folders encode what a page IS, not what it is ABOUT.
 | Type | Canonical Location | Meaning |
 |------|--------------------|---------|
 | Concept | `concepts/` | Idea, principle, belief, value, pattern, definition, event, technical term |
-| Implementation | `implementations/` | Tool, system, project, or concrete implementation |
+| Implementation | `implementations/` | Concrete tool, system, product, or reference implementation |
+| Project | `projects/` | Coordinated endeavor represented as a durable semantic projection, not as mutable project-management state |
 | Person | `people/` | Person relevant to the ontology, source network, or influence map |
 | Quote | `quotes/` | Verbatim quote preserved as a first-class object |
 | Thought | `thoughts/` | Maxim's dated reflection |
@@ -100,7 +101,7 @@ Prefer existing relation types before inventing new ones.
 | Expression | connect quotes/thoughts to concepts | `expresses`, `expressed_in`, `endorsed_by` |
 | Worldview | capture Maxim's subjective model | `values`, `believes_that`, `sufficient_for`, `instrument_for` |
 | Logical/Semantic | reasoning relationships | `supports`, `contradicts`, `implies`, `opposed_to` |
-| Operational | workflows, tools, and support structure | `uses_pattern`, `uses_protocol`, `enables` |
+| Operational | workflows, projects, tools, and support structure | `uses_pattern`, `uses_protocol`, `enables`, `pursues_goal`, `constrained_by`, `uses_process`, `produces_artifact` |
 
 ## Standard Relation Types
 
@@ -161,6 +162,17 @@ Use temporal scope when the belief, value, or interpretation may evolve.
 |------|---------|
 | `--source-->` | Claim or page is grounded in source Y |
 
+### Project Relations
+
+Project relations connect the stable semantic projection of a project to reusable knowledge objects. They must not encode mutable status, scheduling, assignment, or runtime state.
+
+| Type | Meaning |
+|------|---------|
+| `--pursues_goal-->` | Project X pursues durable goal Y |
+| `--constrained_by-->` | Project X is bounded by durable constraint Y |
+| `--uses_process-->` | Project X uses stable process or practice Y |
+| `--produces_artifact-->` | Project X produces durable artifact or implementation Y |
+
 ## Temporal Scope
 
 Temporal scope is optional for stable structural or historical facts.
@@ -193,7 +205,7 @@ Canonical curated-page frontmatter:
 ```yaml
 ---
 title: "Page Title"
-type: concept | implementation | person | quote | thought | source | analysis
+type: concept | implementation | project | person | quote | thought | source | analysis
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 sources: [raw-or-source-identifiers]
@@ -208,6 +220,24 @@ Canonical curated-page body shape:
 
 Raw pages preserve source fidelity and evidence.
 They are not rewritten as curated interpretation.
+
+### Project Page Contract
+
+Project pages add these required frontmatter fields:
+
+```yaml
+project_id: stable-project-identifier
+authority_refs:
+  - stable-catalog-repository-or-project-package-reference
+```
+
+The body must contain:
+
+1. a one-line purpose
+2. a durable semantic boundary describing what the project exists to accomplish
+3. a `## Relations` section
+
+Project pages must not copy current status, milestone, backlog, next actions, branch, checkout paths, runtime state, or mutable team assignments. Agents follow `authority_refs` when they need current operational facts.
 
 ## Link Policy
 

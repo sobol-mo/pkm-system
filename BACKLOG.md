@@ -1,5 +1,7 @@
 # PKM Project Backlog
 
+Last updated: 2026-09-09
+
 This file tracks actionable work only.
 
 Canonical project meaning lives in `Requirements/`.
@@ -175,9 +177,74 @@ Acceptance criteria:
 - define how an agent receives role-specific context from the vault
 - document how goal-oriented agent work differs from prompt-only task execution
 
+### PKM-011 — Implement generic project knowledge handoff and course pilot
+
+Status: Backlog
+Type: Integration / Implementation Design
+Owner: Maxim + Calen
+
+Goal: implement the minimal project-to-PKM knowledge-yield and handoff slice accepted in ADR-005, then validate it with the AI Systems Design course.
+
+Canonical context:
+
+- `Architecture/ADR-005-project-knowledge-projection-and-handoff.md`
+- `Requirements/04-domain-model.md`
+- `Requirements/05-knowledge-graph-schema.md`
+
+Acceptance criteria:
+
+- a project-owned PKM knowledge-yield procedure integrates with participating projects' `session-close-bundle` without forcing an ingest task when no reusable knowledge exists
+- a machine-readable `pkm-knowledge-handoff.v1` envelope and `course-concepts.v1` profile point to immutable producer artifacts without duplicating their semantic content
+- the operational schema, validation, and retrieval surfaces support `type: project` and `projects/`
+- MAS admits bounded read-only `pkm-ontology-consultation` without granting ontology decision or write authority
+- the AI Systems Design pilot preserves instructor approval, exact-digest canonical-write approval, producer/curator separation, validation, and read-back
+- existing project-like implementation pages are reconciled explicitly rather than bulk-moved
+
+### PKM-012 — Validate project knowledge handoff with MAS
+
+Status: Backlog
+Type: Integration Validation
+Owner: Maxim + Calen
+
+Goal: use Multi-Agent System as the second pilot to prove that the generic handoff works beyond course concept packages.
+
+Depends on: PKM-011 and the relevant entity/relation decisions in PKM-010
+
+Acceptance criteria:
+
+- one completed MAS work block produces a bounded generic knowledge-yield decision
+- any reusable package uses `pkm-knowledge-handoff.v1` without course-specific fields in the generic envelope
+- role, process, artifact, goal, constraint, and evaluation semantics follow the accepted PKM-010 model
+- curator consultation and ingest preserve MAS as the authority for project state and PKM as the authority for ontology and vault writes
+
 ## Done
 
 Done items contain historical summaries and traceability notes. They are not canonical product definition; canonicalized outcomes are listed under each item.
+
+### PKM-013 — Decide project knowledge projection and handoff
+
+Completed: 2026-09-09
+
+Outcome:
+
+- `Project` accepted as a first-class semantic entity without duplicating mutable project state
+- project knowledge-yield assessment attached to participating projects' `session-close-bundle`
+- read-only `pkm-ontology-consultation` accepted without curator decision authority
+- generic `pkm-knowledge-handoff.v1` envelope accepted with `course-concepts.v1` as its first profile
+- AI Systems Design selected as the first pilot and Multi-Agent System as the second
+
+Canonicalized into:
+
+- `Architecture/ADR-005-project-knowledge-projection-and-handoff.md`
+- `Requirements/01-vision-and-scope.md`
+- `Requirements/03-system-requirements.md`
+- `Requirements/04-domain-model.md`
+- `Requirements/05-knowledge-graph-schema.md`
+
+Follow-up implementation:
+
+- `PKM-011`
+- `PKM-012`
 
 ### PKM-001 — Define project name and scope
 

@@ -1,7 +1,7 @@
 # Vision and Scope
 
 Status: Baseline draft
-Last updated: 2026-05-28
+Last updated: 2026-09-09
 
 ## Product Name
 
@@ -104,7 +104,7 @@ The reason is practical: worldview is the core differentiator, but Maxim's world
 ## In Scope
 
 - raw capture of Maxim's thoughts and external sources
-- curated wiki pages for concepts, people, quotes, thoughts, sources, analyses, and implementations
+- curated wiki pages for concepts, projects, people, quotes, thoughts, sources, analyses, and implementations
 - typed relations between knowledge objects
 - temporal representation of beliefs and values
 - agent-assisted ingest, query, lint, rebuild, and export workflows
