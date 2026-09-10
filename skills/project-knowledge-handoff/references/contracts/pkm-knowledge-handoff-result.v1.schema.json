@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://digital-mind.local/contracts/pkm-knowledge-handoff-result.v1.schema.json",
+  "title": "PKM Knowledge Handoff Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "result_id",
+    "handoff",
+    "status",
+    "entities",
+    "relations",
+    "conflicts",
+    "validation_outcomes",
+    "read_back_paths"
+  ],
+  "properties": {
+    "schema_version": {"const": "pkm-knowledge-handoff-result.v1"},
+    "result_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"},
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handoff_id", "envelope_digest"],
+      "properties": {
+        "handoff_id": {"type": "string", "minLength": 1},
+        "envelope_digest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["algorithm", "value"],
+          "properties": {
+            "algorithm": {"const": "sha256"},
+            "value": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        }
+      }
+    },
+    "status": {"enum": ["completed", "partial", "rejected"]},
+    "entities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reused", "created", "updated", "rejected", "deferred"],
+      "properties": {
+        "reused": {"$ref": "#/$defs/entityPathOutcomes"},
+        "created": {"$ref": "#/$defs/entityPathOutcomes"},
+        "updated": {"$ref": "#/$defs/entityPathOutcomes"},
+        "rejected": {"$ref": "#/$defs/entityReasonOutcomes"},
+        "deferred": {"$ref": "#/$defs/entityReasonOutcomes"}
+      }
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["added", "rejected", "deferred"],
+      "properties": {
+        "added": {"$ref": "#/$defs/relationOutcomes"},
+        "rejected": {"$ref": "#/$defs/relationReasonOutcomes"},
+        "deferred": {"$ref": "#/$defs/relationReasonOutcomes"}
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "requires_maxim_decision"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "description": {"type": "string", "minLength": 1},
+          "requires_maxim_decision": {"type": "boolean"}
+        }
+      }
+    },
+    "validation_outcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check", "status", "details"],
+        "properties": {
+          "check": {"type": "string", "minLength": 1},
+          "status": {"enum": ["passed", "failed", "deferred"]},
+          "details": {"type": "string"}
+        }
+      }
+    },
+    "read_back_paths": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}
+    }
+  },
+  "$defs": {
+    "entityBase": {
+      "type": "object",
+      "properties": {
+        "identifier": {"type": "string", "minLength": 1},
+        "type": {"enum": ["concept", "implementation", "project", "person", "quote", "thought", "source", "analysis"]}
+      }
+    },
+    "entityPathOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["identifier", "type", "path"],
+        "properties": {
+          "identifier": {"type": "string", "minLength": 1},
+          "type": {"enum": ["concept", "implementation", "project", "person", "quote", "thought", "source", "analysis"]},
+          "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}
+        }
+      }
+    },
+    "entityReasonOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["identifier", "type", "reason"],
+        "properties": {
+          "identifier": {"type": "string", "minLength": 1},
+          "type": {"enum": ["concept", "implementation", "project", "person", "quote", "thought", "source", "analysis"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "relationOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "type", "target"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "target": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "relationReasonOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "type", "target", "reason"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "target": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

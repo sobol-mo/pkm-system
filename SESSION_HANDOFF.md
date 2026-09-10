@@ -1,41 +1,31 @@
 # Session Handoff — Digital Mind / PKM System
 
-Last updated: 2026-09-09
+Last updated: 2026-09-10
 Status: active
 
 ## Active Work
 
-Implement the PKM-owned foundation for project knowledge projection and handoff accepted in ADR-005.
-
-The first bounded slice is `PKM-011`: define the reusable knowledge-yield procedure and machine-readable generic envelope/profile contracts in the project-owned `skills/` tree before changing MAS routing or the AI Systems Design course.
+`PKM-011` remains in progress after completion of its PKM-owned foundation. No MAS routing, course producer workflow, or canonical vault change is part of the completed block.
 
 ## Last Verified State
 
-- Maxim accepted all six coupled design decisions recorded in `Architecture/ADR-005-project-knowledge-projection-and-handoff.md`.
-- `Project` is now a canonical entity type with a semantic-projection boundary and four initial project relations.
-- Knowledge-yield assessment belongs in participating projects' `session-close-bundle`, while the PKM project owns the reusable procedure and handoff meaning.
-- `swc-hermes-pkm-curator` is approved to gain a bounded read-only `pkm-ontology-consultation` task, not ontology decision authority.
-- The generic contract is `pkm-knowledge-handoff.v1`; the first specialization is `course-concepts.v1`.
-- AI Systems Design is the first pilot. Multi-Agent System is the second pilot after PKM-011 and the relevant PKM-010 decisions.
-- No vault page, MAS contract, deployed agent, or course workflow was changed in this design block.
-- `scripts/check_pkm_drift.py` still reports one pre-existing external real directory, `obsidian`, matching a project-owned skill.
+- `skills/project-knowledge-handoff/` owns the reusable knowledge-yield decision procedure and the generic project-to-PKM handoff boundary.
+- Versioned JSON Schemas define `pkm-knowledge-handoff.v1`, `course-concepts.v1`, and `pkm-knowledge-handoff-result.v1`.
+- The validator dispatches payload profiles, checks immutable references and exact selections, and verifies bundled positive and negative fixtures deterministically.
+- The operational vault schema and health checker now validate `projects/`, `type: project`, `project_id`, list-valued `authority_refs`, and `## Relations`.
+- PKM ingest and query procedures now route and retrieve project entities without treating them as implementations.
+- A clean temporary project-page vault scored 100/100, and the full project test suite passed in a fresh virtual environment.
+- No vault page, MAS contract, deployed agent, course workflow, or producer artifact changed in this block.
+- The local Hermes compatibility path `~/.hermes/skills/note-taking/obsidian` is now a symlink to the project-owned `skills/obsidian/`; `scripts/check_pkm_drift.py` exits cleanly with no drift output.
 - The standalone checkout remote is `git@github.com:sobol-mo/pkm-system.git`; the MAS project catalog still records `sobol-mo/agents-projects`. This discrepancy is non-blocking and remains separate from PKM-011.
 
 ## Exact Next Action
 
-Create the PKM-owned project knowledge-handoff skill and its versioned support contracts for the first PKM-011 slice:
-
-1. knowledge-yield decision procedure callable from `session-close-bundle`
-2. `pkm-knowledge-handoff.v1` envelope schema and fixtures
-3. `course-concepts.v1` payload-profile contract
-4. generic result contract
-5. deterministic validation for positive and negative fixtures
-
-Stop after the PKM-owned contracts are verified. Update MAS routing and the AI Systems Design producer workflow only in subsequent bounded work blocks.
+In a separately authorized PKM-011 work block, update the AI Systems Design producer workflow to emit the generic `pkm-knowledge-handoff.v1` envelope with the `course-concepts.v1` profile while preserving its existing instructor approval and exact-digest canonical-write gates. Do not combine that block with MAS routing changes.
 
 ## Blockers
 
-No decision blocker remains for the first PKM-011 slice.
+No blocker remains in the PKM-owned foundation. The next block crosses into the AI Systems Design course repository and therefore remains deliberately unstarted.
 
 ## Repository State
 

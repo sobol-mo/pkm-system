@@ -18,6 +18,7 @@ These skills are stored here so agents working directly in the project clone can
 | `sync-vault/` | Set up Knowledge Vault synchronization across devices via Syncthing |
 | `comparative-source-ingestion/` | Ingest external systems into the PKM with explicit comparison against the local architecture |
 | `schema-driven-vault-maintenance/` | Add deterministic operational governance to the vault without replacing the semantic ontology |
+| `project-knowledge-handoff/` | Decide reusable knowledge yield and validate immutable project-to-PKM handoff contracts |
 
 ## Source-of-Truth Rule
 

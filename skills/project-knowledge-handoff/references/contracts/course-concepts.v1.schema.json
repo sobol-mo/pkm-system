@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://digital-mind.local/contracts/course-concepts.v1.schema.json",
+  "title": "Course Concepts Payload Profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "data"],
+  "properties": {
+    "schema_version": {"const": "course-concepts.v1"},
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "approved_concept_artifact_ref",
+        "terminology_registry_ref",
+        "included_concept_ids",
+        "preserve_instructor_approved_meaning"
+      ],
+      "properties": {
+        "module": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "title"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "title": {"type": "string", "minLength": 1}
+          }
+        },
+        "approved_concept_artifact_ref": {"type": "string", "minLength": 1},
+        "terminology_registry_ref": {"type": "string", "minLength": 1},
+        "included_concept_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+        },
+        "preserve_instructor_approved_meaning": {"const": true}
+      }
+    }
+  }
+}

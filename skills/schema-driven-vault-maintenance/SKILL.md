@@ -179,6 +179,7 @@ What this skill package owns
 Checker validates:
 - missing frontmatter and required fields (per type in operational schema)
 - type mismatches (folder vs declared type)
+- project-page fields and `projects/` folder/type routing
 - missing `## Relations` section in curated pages
 - broken relative markdown links
 - **non-English body content** (>5% Cyrillic in curated pages; English is the vault-wide content language)

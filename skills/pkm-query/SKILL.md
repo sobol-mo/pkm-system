@@ -1,6 +1,6 @@
 ---
 name: pkm-query
-description: Use when answering from an existing PKM wiki. Retrieve from curated pages first, fall back to raw only when the wiki is insufficient.
+description: Use when answering from an existing PKM wiki. Retrieve concepts, projects, and other curated entities first; fall back to raw only when the wiki is insufficient.
 version: 1.0.0
 author: Hermes Agent
 license: MIT
@@ -22,7 +22,7 @@ For this project's current migration state, the canonical read surface is the re
 ## When to Use
 
 Use this skill when:
-- the user asks what the PKM says about a concept, person, source, or pattern
+- the user asks what the PKM says about a concept, project, implementation, person, source, or pattern
 - the request is explanatory or comparative rather than an ingest request
 - you need to tell whether the answer already exists in wiki form or only in raw captures
 

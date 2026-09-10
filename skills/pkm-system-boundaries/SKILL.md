@@ -143,6 +143,9 @@ Practical pattern:
 Pitfall:
 Agents often drift back to `~/.hermes/skills/` because default skill-creation flows write there unless explicitly redirected. For PKM-system work, after creating or modifying a skill, verify that the canonical edit landed in the project-owned `skills/` tree rather than only in the runtime bridge path.
 
+Read-only bridge repair:
+Before replacing a real runtime directory, compare its complete file set and digests with the project-owned skill so unique runtime changes are not discarded. The bridge tree may be intentionally frozen at directory mode `0555` and file mode `0444`; temporarily restore owner write permission only on the exact parent and source directory, rename the source within the same parent, create the symlink, verify its resolved target and content digest, remove the saved directory, then restore the parent to `0555`. Do not move the frozen directory to another filesystem: a copy-and-delete `mv` can leave a partial backup when removal is denied.
+
 Git is a good fit for:
 - code
 - config

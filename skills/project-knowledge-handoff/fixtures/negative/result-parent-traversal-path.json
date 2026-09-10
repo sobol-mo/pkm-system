@@ -1,0 +1,20 @@
+{
+  "schema_version": "pkm-knowledge-handoff-result.v1",
+  "result_id": "invalid.result.traversal.v1",
+  "handoff": {
+    "handoff_id": "example.handoff.v1",
+    "envelope_digest": {"algorithm": "sha256", "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}
+  },
+  "status": "completed",
+  "entities": {
+    "reused": [],
+    "created": [{"identifier": "example", "type": "concept", "path": "../concepts/example.md"}],
+    "updated": [],
+    "rejected": [],
+    "deferred": []
+  },
+  "relations": {"added": [], "rejected": [], "deferred": []},
+  "conflicts": [],
+  "validation_outcomes": [{"check": "read-back", "status": "passed", "details": "Read-back completed."}],
+  "read_back_paths": ["../concepts/example.md"]
+}

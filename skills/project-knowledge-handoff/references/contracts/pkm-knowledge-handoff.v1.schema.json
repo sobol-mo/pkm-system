@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://digital-mind.local/contracts/pkm-knowledge-handoff.v1.schema.json",
+  "title": "PKM Knowledge Handoff Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_id",
+    "created_at",
+    "producer",
+    "completed_work_block",
+    "knowledge_yield",
+    "payload_profile",
+    "payload_references",
+    "requested_mode",
+    "required_result",
+    "unresolved_questions"
+  ],
+  "properties": {
+    "schema_version": {"const": "pkm-knowledge-handoff.v1"},
+    "handoff_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_id", "authority_ref"],
+      "properties": {
+        "project_id": {"type": "string", "minLength": 1},
+        "authority_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "completed_work_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reference"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "reference": {"type": "string", "minLength": 1}
+      }
+    },
+    "knowledge_yield": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["categories", "reuse_rationale"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["concept", "relation", "decision", "pattern", "process", "artifact", "goal", "constraint", "source"]
+          }
+        },
+        "reuse_rationale": {"type": "string", "minLength": 1}
+      }
+    },
+    "payload_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "data"],
+      "properties": {
+        "schema_version": {"type": "string", "minLength": 1},
+        "data": {"type": "object"}
+      }
+    },
+    "payload_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/immutableReference"}
+    },
+    "included_identifiers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "bounded_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "requested_mode": {"enum": ["consultation", "proposal", "canonical_ingest"]},
+    "required_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version"],
+      "properties": {
+        "schema_version": {"const": "pkm-knowledge-handoff-result.v1"}
+      }
+    },
+    "unresolved_questions": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "oneOf": [
+    {"required": ["included_identifiers"], "not": {"required": ["bounded_selection"]}},
+    {"required": ["bounded_selection"], "not": {"required": ["included_identifiers"]}}
+  ],
+  "$defs": {
+    "immutableReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_id", "repository", "commit", "path", "digest"],
+      "properties": {
+        "reference_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$"},
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "remote"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "remote": {"type": "string", "minLength": 1}
+          }
+        },
+        "commit": {"type": "string", "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"},
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "digest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["algorithm", "value"],
+          "properties": {
+            "algorithm": {"const": "sha256"},
+            "value": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        }
+      }
+    }
+  }
+}

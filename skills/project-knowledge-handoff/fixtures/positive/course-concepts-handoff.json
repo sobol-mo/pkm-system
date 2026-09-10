@@ -1,0 +1,59 @@
+{
+  "schema_version": "pkm-knowledge-handoff.v1",
+  "handoff_id": "ai-systems-design.module-02.concepts.v1",
+  "created_at": "2026-09-10T09:00:00+03:00",
+  "producer": {
+    "project_id": "ai-systems-design-course",
+    "authority_ref": "project-catalog.v1#ai-systems-design-course"
+  },
+  "completed_work_block": {
+    "id": "module-02-concept-approval",
+    "reference": "course/ai-engineering@0123456789abcdef0123456789abcdef01234567"
+  },
+  "knowledge_yield": {
+    "categories": ["concept", "relation"],
+    "reuse_rationale": "Approved course concepts are stable and reusable by later modules and agent onboarding."
+  },
+  "payload_profile": {
+    "schema_version": "course-concepts.v1",
+    "data": {
+      "module": {"id": "02", "title": "Foundation Model Mechanics"},
+      "approved_concept_artifact_ref": "module-concepts",
+      "terminology_registry_ref": "terminology-registry",
+      "included_concept_ids": ["context-window", "structured-output"],
+      "preserve_instructor_approved_meaning": true
+    }
+  },
+  "payload_references": [
+    {
+      "reference_id": "module-concepts",
+      "repository": {
+        "id": "sobol-mo/My_AI_Assistant",
+        "remote": "git@github.com:sobol-mo/My_AI_Assistant.git"
+      },
+      "commit": "0123456789abcdef0123456789abcdef01234567",
+      "path": "AI_Systems_Design/modules/02_Foundation_Model_Mechanics/02_Foundation_Model_Mechanics_Concepts.yaml",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "reference_id": "terminology-registry",
+      "repository": {
+        "id": "sobol-mo/My_AI_Assistant",
+        "remote": "git@github.com:sobol-mo/My_AI_Assistant.git"
+      },
+      "commit": "0123456789abcdef0123456789abcdef01234567",
+      "path": "AI_Systems_Design/terminology/TERMINOLOGY.yaml",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    }
+  ],
+  "included_identifiers": ["context-window", "structured-output"],
+  "requested_mode": "proposal",
+  "required_result": {"schema_version": "pkm-knowledge-handoff-result.v1"},
+  "unresolved_questions": []
+}

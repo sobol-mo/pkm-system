@@ -1,0 +1,31 @@
+{
+  "schema_version": "pkm-knowledge-handoff.v1",
+  "handoff_id": "invalid.reference.v1",
+  "created_at": "2026-09-10T09:00:00+03:00",
+  "producer": {"project_id": "example", "authority_ref": "project-catalog.v1#example"},
+  "completed_work_block": {"id": "block-1", "reference": "example@0123456789abcdef0123456789abcdef01234567"},
+  "knowledge_yield": {"categories": ["concept"], "reuse_rationale": "Reusable example."},
+  "payload_profile": {
+    "schema_version": "course-concepts.v1",
+    "data": {
+      "module": {"id": "01", "title": "Example"},
+      "approved_concept_artifact_ref": "missing-concepts",
+      "terminology_registry_ref": "terms",
+      "included_concept_ids": ["example-concept"],
+      "preserve_instructor_approved_meaning": true
+    }
+  },
+  "payload_references": [
+    {
+      "reference_id": "terms",
+      "repository": {"id": "example/repo", "remote": "git@example/repo.git"},
+      "commit": "0123456789abcdef0123456789abcdef01234567",
+      "path": "terms.json",
+      "digest": {"algorithm": "sha256", "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+    }
+  ],
+  "included_identifiers": ["example-concept"],
+  "requested_mode": "proposal",
+  "required_result": {"schema_version": "pkm-knowledge-handoff-result.v1"},
+  "unresolved_questions": []
+}

@@ -1,6 +1,6 @@
 ---
 name: pkm-ingest
-description: Use when adding a new source, thought, quote, forward, or document into a PKM wiki with raw and curated layers.
+description: Use when adding a new source, project, thought, quote, forward, or document into a PKM wiki with raw and curated layers.
 version: 1.0.1
 author: Hermes Agent
 license: MIT
@@ -24,7 +24,7 @@ For this project's current migration state, the canonical write target is the re
 Use this skill when:
 - the user sends a source, link, forward, quote, note, or text to preserve in PKM
 - a raw capture and corresponding curated source page must be created or updated
-- the wiki graph needs new concepts, people, implementations, thoughts, quotes, or analyses derived from a source
+- the wiki graph needs new concepts, projects, people, implementations, thoughts, quotes, or analyses derived from a source or approved project handoff
 
 Prefer multimodal-source-ingest as a companion when screenshots, infographics, or image-only details carry meaning.
 
@@ -525,7 +525,7 @@ This turns a saved quote into a retrievable worldview signal rather than a disco
 | `analyses/` | Comparative or synthetic study | A comparison of approaches, design decisions, or publication directions | Raw findings from a single source (→ sources/ + concepts/) |
 | `sources/` | Curated summary of an external document | A complex source with multiple ideas extracted across several pages | A single idea already captured in a concept page |
 
-Until PKM-011 adds `projects/` to the operational schema and deterministic validator, treat a proposed project page as blocked implementation work. Do not route it back into `implementations/` as a workaround.
+The operational schema and deterministic validator support `projects/` with `type: project`, `project_id`, `authority_refs`, and `## Relations`. Keep project pages within the semantic projection boundary defined by the canonical schema.
 
 ### Thought-note rules
 

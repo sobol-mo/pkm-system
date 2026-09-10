@@ -97,6 +97,7 @@ Current project-owned skill set:
 - `skills/sync-vault/`
 - `skills/comparative-source-ingestion/`
 - `skills/schema-driven-vault-maintenance/`
+- `skills/project-knowledge-handoff/`
 
 On the VPS Hermes runtime, the compatibility paths under `~/.hermes/skills/note-taking/` are symlink bridges back to these project directories.
 

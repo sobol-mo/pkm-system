@@ -16,6 +16,7 @@
   "curated_folders": {
     "concepts": "concept",
     "implementations": "implementation",
+    "projects": "project",
     "people": "person",
     "quotes": "quote",
     "thoughts": "thought",
@@ -24,6 +25,7 @@
   },
   "required_frontmatter_fields": {
     "default": ["title", "type", "created", "updated", "tags"],
+    "project": ["title", "type", "created", "updated", "sources", "tags", "project_id", "authority_refs"],
     "source": ["title", "type", "created", "updated", "author", "url", "date", "tags"],
     "index": ["title", "type", "created", "updated", "sources", "tags"],
     "overview": ["title", "type", "created", "updated", "sources", "tags"],
@@ -34,6 +36,7 @@
   "relations_required_in": [
     "concepts",
     "implementations",
+    "projects",
     "people",
     "quotes",
     "thoughts",

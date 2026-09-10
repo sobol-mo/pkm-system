@@ -1,0 +1,29 @@
+{
+  "schema_version": "pkm-knowledge-handoff-result.v1",
+  "result_id": "ai-systems-design.module-02.concepts.result.v1",
+  "handoff": {
+    "handoff_id": "ai-systems-design.module-02.concepts.v1",
+    "envelope_digest": {
+      "algorithm": "sha256",
+      "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  },
+  "status": "partial",
+  "entities": {
+    "reused": [{"identifier": "structured-output", "type": "concept", "path": "concepts/structured-output.md"}],
+    "created": [{"identifier": "context-window", "type": "concept", "path": "concepts/context-window.md"}],
+    "updated": [],
+    "rejected": [],
+    "deferred": []
+  },
+  "relations": {
+    "added": [{"source": "context-window", "type": "related_concept", "target": "token"}],
+    "rejected": [],
+    "deferred": []
+  },
+  "conflicts": [],
+  "validation_outcomes": [
+    {"check": "pkm-health", "status": "passed", "details": "No new schema or link errors."}
+  ],
+  "read_back_paths": ["concepts/context-window.md", "concepts/structured-output.md"]
+}

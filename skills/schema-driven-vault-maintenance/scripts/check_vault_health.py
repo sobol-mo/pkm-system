@@ -15,7 +15,7 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def parse_frontmatter(text: str) -> tuple[dict[str, str] | None, str]:
+def parse_frontmatter(text: str) -> tuple[dict[str, Any] | None, str]:
     if not text.startswith("---\n"):
         return None, text
     parts = text.split("---\n", 2)
@@ -23,12 +23,24 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str] | None, str]:
         return None, text
     fm_text = parts[1]
     body = parts[2]
-    fm: dict[str, str] = {}
+    fm: dict[str, Any] = {}
+    sequence_key: str | None = None
     for raw_line in fm_text.splitlines():
+        stripped = raw_line.strip()
+        if raw_line[:1].isspace() and stripped.startswith("- ") and sequence_key:
+            if fm[sequence_key] == "":
+                fm[sequence_key] = []
+            if isinstance(fm[sequence_key], list):
+                fm[sequence_key].append(stripped[2:].strip())
+            continue
         if ":" not in raw_line:
+            sequence_key = None
             continue
         key, value = raw_line.split(":", 1)
-        fm[key.strip()] = value.strip()
+        key = key.strip()
+        value = value.strip()
+        fm[key] = value
+        sequence_key = key if value == "" else None
     return fm, body
 
 
