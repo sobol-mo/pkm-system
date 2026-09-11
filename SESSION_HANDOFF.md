@@ -22,10 +22,11 @@ Status: active
 - `pkm-ingest` and `pkm-ingest-crosslinking` now classify hub links by ownership and retain second-circle concepts as unlinked prose; their checklists cover hub depth and forbidden packaging tags.
 - These documentation and skill changes are the intended scope of commit `docs(pkm): first-circle hubs and forbid packaging tags`.
 - The repository had no vault-page changes in this block.
+- The curator profile currently exposes the PKM project skill tree through `skills.external_dirs`, but it does not yet expose a PKM-owned `session-close-bundle`; the separate-session provisioning question remains open.
 
 ## Exact Next Action
 
-Tomorrow, first: reconcile the canonical vault's organizing and pedagogical hub pages against the first-circle rule. Keep links only to first-circle members and an allowed grounding source; keep second-circle titles as exact unlinked prose under an explicit "Vault concepts kept as prose" list; label illustrations as not promoted; and remove or correct forbidden packaging tags (`course`, `module-<n>`, `prerequisite`, `introduced`, `developed`). Run the vault health checker and inspect the resulting graph-facing links before making any canonical-vault write. Do not combine this cleanup with the PKM-011 course producer integration.
+Tomorrow, first, resolve and implement the separate-session skill provisioning for `swc-hermes-pkm-curator`. The first question is which PKM-owned skills the curator must receive for an isolated working session, including the PKM workflows and a PKM-adapted `session-close-bundle`; verify that only the project-owned skill tree is exposed, that unrelated default-profile skills are not inherited, and that the fresh curator session can discover and invoke the required slash skills. Preserve the curator's existing STATE and ontology/write-authority boundaries. Only after this provisioning work, reconcile the canonical vault's organizing and pedagogical hub pages against the first-circle rule and forbidden packaging tags. Do not combine either task with the PKM-011 course producer integration.
 
 ## Blockers
 
