@@ -1,6 +1,6 @@
 # Session Handoff — Digital Mind / PKM System
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11
 Status: active
 
 ## Active Work
@@ -18,10 +18,14 @@ Status: active
 - No vault page, MAS contract, deployed agent, course workflow, or producer artifact changed in this block.
 - The local Hermes compatibility path `~/.hermes/skills/note-taking/obsidian` is now a symlink to the project-owned `skills/obsidian/`; `scripts/check_pkm_drift.py` exits cleanly with no drift output.
 - The standalone checkout remote is `git@github.com:sobol-mo/pkm-system.git`; the MAS project catalog still records `sobol-mo/agents-projects`. This discrepancy is non-blocking and remains separate from PKM-011.
+- The knowledge-graph schema now defines first-circle-only outgoing links for organizing nodes and forbids course/lesson packaging labels from functioning as retrieval tags.
+- `pkm-ingest` and `pkm-ingest-crosslinking` now classify hub links by ownership and retain second-circle concepts as unlinked prose; their checklists cover hub depth and forbidden packaging tags.
+- These documentation and skill changes are the intended scope of commit `docs(pkm): first-circle hubs and forbid packaging tags`.
+- The repository had no vault-page changes in this block.
 
 ## Exact Next Action
 
-In a separately authorized PKM-011 work block, update the AI Systems Design producer workflow to emit the generic `pkm-knowledge-handoff.v1` envelope with the `course-concepts.v1` profile while preserving its existing instructor approval and exact-digest canonical-write gates. Do not combine that block with MAS routing changes.
+Tomorrow, first: reconcile the canonical vault's organizing and pedagogical hub pages against the first-circle rule. Keep links only to first-circle members and an allowed grounding source; keep second-circle titles as exact unlinked prose under an explicit "Vault concepts kept as prose" list; label illustrations as not promoted; and remove or correct forbidden packaging tags (`course`, `module-<n>`, `prerequisite`, `introduced`, `developed`). Run the vault health checker and inspect the resulting graph-facing links before making any canonical-vault write. Do not combine this cleanup with the PKM-011 course producer integration.
 
 ## Blockers
 

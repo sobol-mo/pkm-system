@@ -1,5 +1,7 @@
 Purpose
 
+This file is illustrative only. Canonical meaning lives in `Requirements/05-knowledge-graph-schema.md`.
+
 Use layered traversal in concept-graph design so retrieval can expand context gradually instead of loading a flat web.
 
 Core rule
@@ -43,6 +45,9 @@ If clear/complicated/complex/chaotic all point to each other, the branch stops r
 
 5. Source fan-out across a whole branch
 If a source points to an organizing node and also to every leaf underneath it, the branch depth is visually flattened. Prefer source -> branch node, then branch node -> leaves.
+
+6. Hub mentions that skip the member page
+If an abstraction-levels or taxonomy hub links Software Architecture, a nested pattern, and a dimension because those words appeared in the lecture, depth-1 Graph View is no longer the first circle. Keep those titles as unlinked prose on the hub; put the clickable detail on the member page.
 
 Recommended decision test
 

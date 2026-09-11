@@ -29,11 +29,12 @@ After saving the raw capture and before creating curated pages:
 1. **Extract all graph-worthy candidates from the source** — people quoted or referenced, concepts named, frameworks invoked, techniques described, quotes attributed, cases/examples, and meta-principles implied by the source's practical argument.
 2. **Do a second-pass ontology coverage audit for Level 2+ sources** — ask what useful philosophical concepts, life-improvement tools, techniques, cases, and relation hubs are still buried in the prose after the obvious named frameworks were extracted. Summary-driven extraction is not enough for this vault.
 3. **For each candidate, search the vault** — use `search_files` on the vault for the entity name, aliases, person name, concept title, quote snippet, and distinctive case/example text. Also check `index.md` and `connection-map.md` for existing pages by scanning the entity's canonical form.
-4. **Build a cross-reference list**: for each match found, add a typed relation from the new source page and from the new concept page to the existing entity.
+4. **Build a cross-reference list**, then decide *which page* should carry the edge:
    - People referenced → `--referenced_person--> [Name](people/name.md)` on the source page
-   - Concepts named → `--related_concept--> [Concept](concepts/concept.md)` on the new concept page
    - Quotes attributed → `--referenced_quote--> [Quote](quotes/quote.md)` on the source page
-4. **If an existing page matches an ONTOLOGY entity** (person, quote, concept), prefer linking to it over re-creating the entity. Do NOT create a duplicate person page or quote page. 
+   - Concepts named → link from the page whose first circle they belong to, not from every page that mentions them
+   - On an organizing/hub page, existing concept matches stay unlinked prose unless they are first-circle members
+4. **If an existing page matches an ONTOLOGY entity** (person, quote, concept), prefer linking to it over re-creating the entity. Do NOT create a duplicate person page or quote page. Linking is not the same as starring every match from a hub.
 5. **Only create new pages** for entities that have NO existing vault representation.
 6. **Definitional closure on our prose, not only on the source.** After the curated page is drafted, extract the terms *we used to explain the node*. Search the vault for those terms too. If they do not exist and they are graph-worthy, create them in the same ingest. Source-entity extraction is not enough: a page can mention only DocLang in the source title while its body teaches via OTSL and DocTags.
 
@@ -44,7 +45,8 @@ After saving the raw capture and before creating curated pages:
 3. **Skipping people.** People are the most commonly missed cross-reference — the source names a thinker (e.g. "as Marcus Aurelius said") and the thinker has a vault page, but no link is added.
 4. **Date blindness.** Always run `date` at the start of the ingest session. DO NOT reuse dates from conversation context or session summaries — they may be stale. A stale date means every new page carries the wrong creation timestamp.
 5. **Partial name matching.** "Mark Twain" and "Samuel Clemens" are the same person. When a source uses a nickname/alias, search both the common name and the formal name.
-6. **Closing the source vocabulary but not the describing vocabulary.** Neighbor concepts used in our definition remain unlinked jargon. Treat that as an incomplete ingest.
+6. **Closing the source vocabulary but not the describing vocabulary.** Neighbor concepts used in our definition remain unlinked jargon. Treat that as an incomplete ingest. Exception: on a hub, second-circle vocabulary should stay unlinked *on the hub* and be linked on the member page that owns the detail.
+7. **Linking every existing match from a hub.** "The page exists, so the hub must link it" flattens Graph View. Existence is identity reconciliation, not a first-circle membership test.
 
 ## References
 
@@ -55,7 +57,7 @@ After saving the raw capture and before creating curated pages:
 - [ ] `date` was called at session start, and every created page uses the real date
 - [ ] All graph-worthy candidates from the source were checked against `index.md` / `connection-map.md`
 - [ ] A second-pass ontology audit was done for Level 2+ sources: missed techniques, cases, meta-principles, people, quotes, and practical life tools
-- [ ] Every existing match received a typed cross-link relation
+- [ ] Every existing match was classified: linked from the page that owns it, kept as hub prose, or recorded as not-promoted — not blindly starred from every new page
 - [ ] No duplicate pages were created for entities that already exist in the vault
-- [ ] Definitional terms on new curated pages were searched, then linked or created
+- [ ] Definitional terms on new curated pages were searched, then linked or created; hub pages were checked so outgoing links are first-circle only
 - [ ] `check_vault_health.py` run post-ingest confirms no new issues

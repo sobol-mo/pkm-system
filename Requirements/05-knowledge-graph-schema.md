@@ -1,7 +1,7 @@
 # Knowledge Graph Schema
 
 Status: Canonical
-Last updated: 2026-09-09
+Last updated: 2026-09-11
 
 ## Purpose
 
@@ -301,14 +301,17 @@ Use tags for:
 - retrieval filters
 - page subtyping within one folder
 - lightweight thematic clustering
+- entity-kind markers that help filter when useful, such as `source` or `raw`
 
-Do not use tags as a substitute for relations such as:
-- broader/narrower structure
-- part-whole structure
-- framework-for
-- source attribution
-- support/contrast/implication
+A tag must still be informative after the page is detached from the ingest that created it.
+Ask: "filter by this tag — would I know what set I get?" If the answer is "pages from some unnamed course" or "the agent's lesson stage", the tag is forbidden.
 
+Do not use tags for:
+- unnamed course packaging: `course`, `module-01`, `module-02`, or any `module-<n>`
+- instructional role or ingest stage: `prerequisite`, `introduced`, `developed`
+- a substitute for relations such as broader/narrower, part-whole, framework-for, source attribution, support/contrast/implication
+
+Course provenance belongs in `sources:` and in the source page, not in tags.
 If the relationship changes the meaning of traversal, represent it as a typed relation.
 
 ### 6. Cross-links must earn their place
@@ -326,6 +329,27 @@ Avoid all-to-all dense linking between neighboring pages from the same source.
 `index.md`, `glossary.md`, and similar overview files are retrieval surfaces.
 They help humans and agents find pages.
 They are not part of the semantic graph and should not be treated as ontology hubs that justify extra concept-to-concept links.
+
+### 8. Organizing nodes keep a first circle
+
+Some pages exist to hold a first-circle set of members: a taxonomy node, a framework node, a collection or map-of-content node, or a pedagogical ladder such as abstraction levels.
+
+On such a page:
+- outgoing markdown links and typed relations go only to first-circle members
+- a source attribution link is allowed when this page is grounded in that source
+- reverse links onto the organizing node come from first-circle members, not from every concept mentioned while explaining those members
+
+Detail that belongs to a member is written on the member page.
+If the organizing page must mention a second-circle concept in order to teach, write it as prose, not as a link.
+An existing vault page does not justify a hub edge.
+Obsidian Graph View treats every markdown link in the note as an edge; a clickable mention is a graph neighbor.
+
+To keep "exists but not edged from here" distinct from "not a vault node", an organizing page should make three sets explicit:
+- first-circle members: clickable links
+- known vault concepts kept as prose: exact page titles, unlinked, listed on the page
+- illustrations or non-nodes: labeled as not promoted
+
+A Title-Case concept-like term that is in none of those sets is an unresolved promotion question, not silent prose.
 
 ## Operational Implication for Skills
 

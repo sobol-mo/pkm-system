@@ -194,6 +194,7 @@ tags: [tag1, tag2, tag3]
 Rules:
 - **Language**: English only for all vault content (concepts, sources, quotes, thoughts, analyses), regardless of chat language or source language.
 - **Frontmatter**: use `tags:` (lowercase kebab-case), not `relations:` or `related_to:`. Tags are the cross-cutting organization mechanism that compensates for folder-by-type limitations.
+- **Forbidden tags:** `course`, `module-<n>`, `prerequisite`, `introduced`, `developed`. These are unnamed packaging and lesson-stage labels. They do not survive as retrieval facets. Put course provenance in `sources:` and on the source page. `source` and `raw` as kind markers are allowed.
 - **`## Relations` section**: every curated page MUST have a `## Relations` section at the bottom with clickable markdown links to related pages. Do NOT use `## Related` — the health checker expects `## Relations`.
 - **sources**: bare source page IDs in frontmatter (no `$` prefix).
 - After creating or updating curated pages, run the vault health checker to catch frontmatter, language, `## Relations`, and link violations automatically:
@@ -261,7 +262,8 @@ Procedure:
    - exact match: same entity already exists; link to the existing page and update it when the source adds useful evidence
    - near match: possible duplicate or variant; inspect manually and ask Maxim if the identity is uncertain
    - new entity: create a page only after exact and near matches are ruled out
-4. Add obvious identity links immediately. Conservatism rules for semantic cross-linking do NOT apply to identity reconciliation. If Mark Twain, an existing quote, or an existing concept is explicitly mentioned, it should be linked.
+4. Add obvious identity links immediately. Conservatism rules for semantic cross-linking do NOT apply to identity reconciliation of people, quotes, and the entity that the page is about. If Mark Twain or an existing quote is explicitly mentioned, link it on the source page and on the page whose subject it is.
+   Organizing/hub pages are the exception for *concept* mentions: an existing concept page does not get a hub markdown link merely because the hub text names it. Put the identity link on the source and on the first-circle member that owns the detail. On the hub, keep second-circle concept titles as unlinked prose and list them as "kept as prose".
 5. Record unresolved candidates in the source page or log when they were mentioned but not promoted to pages.
 
 Failure mode this prevents:
@@ -280,13 +282,14 @@ Procedure (run after drafting each new or materially updated curated page, befor
 1. List terms that do substantive definitional work: parent concepts, explicit contrasts, frameworks, techniques, named systems, and other stable reusable ideas needed to understand the page. Keep ordinary language, student-memory phrases, and facets in prose unless the operator has approved them as independent concepts.
 2. Search the vault for each term (name, alias, slug).
 3. Classify:
-   - existing + semantically necessary → link the canonical page
-   - existing + incidental → keep it as prose; an existing page does not make every mention edge-worthy
+   - existing + semantically necessary for *this page's first circle* → link the canonical page
+   - existing + incidental, or existing + detail of a first-circle member → keep it as prose on this page; link it on the member page instead. An existing page does not make every mention edge-worthy
    - missing + potentially graph-worthy → ask the human operator whether to promote it before creating a page
    - missing + not independently graph-worthy → keep it as prose or a facet; record deferral only when later reconsideration is useful
 4. For every promotion question, show the term, the definition context, why it may deserve an independent identity, and what would be lost if it remained prose.
 5. Repeat once only for newly created pages that the operator approved. Do not recurse forever.
-6. The ingest is incomplete only when an operator-approved defining concept remains an unresolved dangling mention. Unapproved vocabulary does not block ingest merely because it appears in a definition.
+6. After drafting an organizing, taxonomy, framework, collection, or pedagogical-ladder page, list every outgoing markdown link. Extra targets beyond first-circle members and a grounding source are a flattening defect: delink them, put exact titles in a "Vault concepts kept as prose" list, or move the detail onto the member page.
+7. The ingest is incomplete only when an operator-approved defining concept remains an unresolved dangling mention. Unapproved vocabulary does not block ingest merely because it appears in a definition.
 
 Failure mode this prevents:
 DocLang is ingested and explained via OTSL, DocTags, Docling, and OKF, but only DocLang (and maybe one neighbor) exists as a page. The graph cannot teach the concept because the teaching vocabulary is not in memory.
@@ -390,6 +393,7 @@ Operational ingest reminder:
 - avoid direct leaf -> root links when a valid middle-layer organizing node exists
 - inside one taxonomy level, do not default to sibling -> sibling links; keep siblings attached to the shared parent unless a cross-link is semantically necessary
 - when a branch is becoming pedagogical or graph-heavy, introduce an intermediate organizing node (for example taxonomy bucket, techniques bucket, obstacles bucket) so traversal stays general -> intermediate -> specific
+- on an organizing node, outgoing links are the first circle only; second-circle vocabulary stays unlinked prose or moves to the member page
 - use tags as facets and typed links as semantic structure
 - add cross-links only when they materially improve retrieval
 
@@ -577,6 +581,8 @@ They are not canonical schema documents and must not introduce competing ontolog
 14. **Adding rows to index.md with wrong table prefix.** The `index.md` Concepts table has inconsistent row prefixes — some rows use `|` (single pipe) and others `||` (double pipe). When adding new rows, match the prefix of the immediately adjacent rows. More importantly: always `read_file` the target area before patching — do not patch index.md blind from memory of its format.
 15. **Omitting clickable body links for curated_page and asset.** YAML frontmatter values are not clickable in Obsidian. If `curated_page` and `asset` exist only in frontmatter, the human cannot navigate from raw → source or raw → local file. Always duplicate these as clickable markdown links in the body of every raw capture, immediately after the title/metadata block. Use the body link template from the Raw File Frontmatter Convention section.
 16. **Ingesting the title node only.** Using OTSL, DocTags, Docling, or OKF to explain DocLang without checking whether those terms already have pages (and creating them if not) is an incomplete ingest. Definitional closure is mandatory; Maxim should not have to ask "did you create the neighboring pages?"
+17. **Hub links everything it mentions.** On an organizing or pedagogical-ladder page, a clickable mention of a second-circle concept (Software Architecture, a dimension, a nested pattern) becomes an Obsidian graph neighbor and flattens depth 1. Detail belongs on the member page. On the hub: link first-circle members; keep known titles in an unlinked "kept as prose" list; label illustrations as not promoted.
+18. **Course-packaging tags.** Do not tag pages `course`, `module-01`, `prerequisite`, `introduced`, or `developed`. Those labels are meaningless outside the ingest batch. Use topic facets. Record the producer artifact in `sources:`.
 
 ## Verification Checklist
 
@@ -588,11 +594,13 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Curated source page links every non-deferred person page
 - [ ] The ingest produced graph-useful entities and explicit relations, not only a summary
 - [ ] Definitional closure: every genuine concept dependency is existing+linked, operator-approved+created, or deliberately retained as prose/facet; unresolved promotion questions are reported to the operator
+- [ ] Organizing/hub pages: outgoing markdown links are first-circle members plus grounding source only; second-circle titles are unlinked and listed as kept-as-prose; illustrations are labeled not-promoted
 - [ ] For structurally rich sources, concepts were separated from framework/taxonomy/technique nodes where justified
 - [ ] Global retrieval surfaces updated where needed
 - [ ] Raw/source links verified (bidirectional `curated_page` ↔ relative link)
 - [ ] `check_vault_health.py` run post-ingest — no new issues from this ingest
 - [ ] Clickable body links present for `curated_page` and `asset` (if asset exists) — not just frontmatter
+- [ ] No forbidden packaging tags (`course`, `module-<n>`, `prerequisite`, `introduced`, `developed`)
 - [ ] Commit helper used when commit was required
 
 For curated thoughts, also verify:
