@@ -22,6 +22,9 @@ Status: active
 - `pkm-ingest` and `pkm-ingest-crosslinking` now classify hub links by ownership and retain second-circle concepts as unlinked prose; their checklists cover hub depth and forbidden packaging tags.
 - These documentation and skill changes are the intended scope of commit `docs(pkm): first-circle hubs and forbid packaging tags`.
 - The repository had no vault-page changes in this block.
+- The knowledge-graph schema and ingest/crosslinking rules now explicitly distinguish direct definitional dependencies (first-line links) from derivative explanations and illustrations (prose or links owned by their defining pages); this clarification is committed as `2c34f21`.
+- The canonical vault's `layered-architecture.md` and `multitier-architecture.md` were checked against that distinction; their first-line relations remain explicit and examples/derivative terms remain intentionally classified prose.
+- Vault health validation after the clarification completed successfully with health score `96/100`; historical asset-link and legacy warning findings remain deferred.
 - The curator profile exposes only the PKM project skill tree through `skills.external_dirs`; profile-local copied Hermes and MAS skill trees were removed.
 - The PKM project now owns `skills/session-close-bundle/`, adapted to preserve PKM project and MAS STATE continuity without copying the generic MAS closeout procedure.
 - A fresh `swc-hermes-pkm-curator` oneshot discovered and invoked the project-owned `session-close-bundle` and returned `PKM-CLOSE-SKILL-READY`.
