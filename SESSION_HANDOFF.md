@@ -1,6 +1,6 @@
 # Session Handoff — Digital Mind / PKM System
 
-Last updated: 2026-09-11
+Last updated: 2026-09-12
 Status: active
 
 ## Active Work
@@ -22,11 +22,13 @@ Status: active
 - `pkm-ingest` and `pkm-ingest-crosslinking` now classify hub links by ownership and retain second-circle concepts as unlinked prose; their checklists cover hub depth and forbidden packaging tags.
 - These documentation and skill changes are the intended scope of commit `docs(pkm): first-circle hubs and forbid packaging tags`.
 - The repository had no vault-page changes in this block.
-- The curator profile currently exposes the PKM project skill tree through `skills.external_dirs`, but it does not yet expose a PKM-owned `session-close-bundle`; the separate-session provisioning question remains open.
+- The curator profile exposes only the PKM project skill tree through `skills.external_dirs`; profile-local copied Hermes and MAS skill trees were removed.
+- The PKM project now owns `skills/session-close-bundle/`, adapted to preserve PKM project and MAS STATE continuity without copying the generic MAS closeout procedure.
+- A fresh `swc-hermes-pkm-curator` oneshot discovered and invoked the project-owned `session-close-bundle` and returned `PKM-CLOSE-SKILL-READY`.
 
 ## Exact Next Action
 
-Tomorrow, first, resolve and implement the separate-session skill provisioning for `swc-hermes-pkm-curator`. The first question is which PKM-owned skills the curator must receive for an isolated working session, including the PKM workflows and a PKM-adapted `session-close-bundle`; verify that only the project-owned skill tree is exposed, that unrelated default-profile skills are not inherited, and that the fresh curator session can discover and invoke the required slash skills. Preserve the curator's existing STATE and ontology/write-authority boundaries. Only after this provisioning work, reconcile the canonical vault's organizing and pedagogical hub pages against the first-circle rule and forbidden packaging tags. Do not combine either task with the PKM-011 course producer integration.
+Next, complete the remaining PKM-011 acceptance work: integrate the PKM-owned closeout reference into one participating project's `session-close-bundle`, then validate the bounded MAS consultation and AI Systems Design pilot. Only after that, reconcile the canonical vault's organizing and pedagogical hub pages against the first-circle rule and forbidden packaging tags. Do not combine either task with the PKM-011 course producer integration.
 
 ## Blockers
 
@@ -48,6 +50,7 @@ Branch: `main`
 - `Requirements/04-domain-model.md`
 - `Requirements/05-knowledge-graph-schema.md`
 - `skills/README.md`
-- `/home/maxim/dev/projects/multi-agent-system/skills/session-close-bundle/SKILL.md`
+- `skills/session-close-bundle/SKILL.md`
+- `/home/maxim/dev/projects/multi-agent-system/skills/session-close-bundle/SKILL.md` (adaptation source)
 - `/home/maxim/dev/projects/multi-agent-system/CONTROL/TEAM/swc-hermes-pkm-curator/AGENTS.md`
 - `/home/maxim/dev/projects/My_AI_Assistant-worktrees/course-ai-engineering/AI_Systems_Design/authoring/CONCEPT_PKM_WORKFLOW.md`

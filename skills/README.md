@@ -19,6 +19,7 @@ These skills are stored here so agents working directly in the project clone can
 | `comparative-source-ingestion/` | Ingest external systems into the PKM with explicit comparison against the local architecture |
 | `schema-driven-vault-maintenance/` | Add deterministic operational governance to the vault without replacing the semantic ontology |
 | `project-knowledge-handoff/` | Decide reusable knowledge yield and validate immutable project-to-PKM handoff contracts |
+| `session-close-bundle/` | Close PKM work blocks and Hermes sessions while preserving project and STATE continuity |
 
 ## Source-of-Truth Rule
 

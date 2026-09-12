@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [pkm, digital-mind, routing, orchestration, wiki]
-    related_skills: [pkm-ingest, pkm-query, pkm-lint, multimodal-source-ingest, pkm-system-boundaries, project-knowledge-handoff, obsidian, sync-vault]
+    related_skills: [pkm-ingest, pkm-query, pkm-lint, multimodal-source-ingest, pkm-system-boundaries, project-knowledge-handoff, session-close-bundle, obsidian, sync-vault]
 ---
 
 # PKM
@@ -46,6 +46,7 @@ If already read in the current turn, do not repeat.
 - "Что мы знаем", "расскажи про", retrieval from existing wiki -> pkm-query
 - "Проверь wiki", "lint", consistency audit, orphan-page detection -> pkm-lint
 - Questions about repo shape, git vs state, system vs content boundaries -> pkm-system-boundaries
+- Closing PKM work blocks or Hermes sessions -> session-close-bundle
 - Closing project work that may yield reusable knowledge or validating a project-to-PKM package -> project-knowledge-handoff
 - Set up vault sync on a new device, verify sync health, pair Syncthing peers -> sync-vault
 - Low-level vault operations -> obsidian
