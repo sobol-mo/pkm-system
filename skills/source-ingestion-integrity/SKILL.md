@@ -1,7 +1,7 @@
 ---
 name: source-ingestion-integrity
 description: Use when ingesting external sources into a PKM/wiki where raw evidence, entity extraction, existing-entity reconciliation, and graph links must be reliable.
-version: 1.0.0
+version: 1.0.1
 author: Hermes Agent
 license: MIT
 metadata:
@@ -91,6 +91,7 @@ For each candidate, decide:
 - ask Maxim because ontology value is unclear
 
 A good audit explicitly reports what was extracted, what was missed, and what should be promoted next.
+For every curated page produced or materially updated, the audit must also leave an explicit promotion-status record for concept-like explanatory terms: existing vault concept kept as prose, illustration/non-node intentionally kept as prose, or unresolved promotion question. Do not treat an unlabelled prose mention as a completed classification.
 This prevents summary-driven extraction where only the big named frameworks are captured while the practical ontology remains trapped in prose.
 
 ## Existing Entity Reconciliation Pass
@@ -142,6 +143,7 @@ Generic assistants tend to summarize; ingestion specialists must preserve and re
 - [ ] Near matches were inspected or escalated
 - [ ] New pages are not duplicates
 - [ ] Relations include both source-internal links and existing-vault links
+- [ ] Every curated page explicitly classifies concept-like explanatory terms as existing vault concepts kept as prose, illustrations/non-nodes intentionally kept as prose, or unresolved promotion questions
 - [ ] Index, connection-map, and log were updated
 - [ ] Log does not overclaim capture completeness
 - [ ] Health checker was run

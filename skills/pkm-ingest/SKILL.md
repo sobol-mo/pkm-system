@@ -1,7 +1,7 @@
 ---
 name: pkm-ingest
 description: Use when adding a new source, project, thought, quote, forward, or document into a PKM wiki with raw and curated layers.
-version: 1.0.1
+version: 1.0.2
 author: Hermes Agent
 license: MIT
 metadata:
@@ -286,10 +286,11 @@ Procedure (run after drafting each new or materially updated curated page, befor
    - existing + incidental, or existing + detail of a first-circle member → keep it as prose on this page; link it on the member page instead. An existing page does not make every mention edge-worthy
    - missing + potentially graph-worthy → ask the human operator whether to promote it before creating a page
    - missing + not independently graph-worthy → keep it as prose or a facet; record deferral only when later reconsideration is useful
-4. For every promotion question, show the term, the definition context, why it may deserve an independent identity, and what would be lost if it remained prose.
-5. Repeat once only for newly created pages that the operator approved. Do not recurse forever.
-6. After drafting an organizing, taxonomy, framework, collection, or pedagogical-ladder page, list every outgoing markdown link. Extra targets beyond first-circle members and a grounding source are a flattening defect: delink them, put exact titles in a "Vault concepts kept as prose" list, or move the detail onto the member page.
-7. The ingest is incomplete only when an operator-approved defining concept remains an unresolved dangling mention. Unapproved vocabulary does not block ingest merely because it appears in a definition.
+4. Record the promotion status of every Title-Case or otherwise concept-like term that does substantive explanatory work on each curated page. Use one of three explicit outcomes: (a) existing vault concept kept as prose because it is incidental or second-circle here; (b) illustration/non-node intentionally kept as prose because it is an example, label, or facet rather than an independent entity; (c) unresolved promotion question, which must be reported to the operator. Do not leave a concept-like term silently unclassified in prose. On ordinary concept pages, use an explicit section such as `## Illustrations intentionally kept as prose` or `## Vault concepts kept as prose`; on organizing pages, use the three-set structure below.
+5. For every unresolved promotion question, show the term, the definition context, why it may deserve an independent identity, and what would be lost if it remained prose.
+6. Repeat once only for newly created pages that the operator approved. Do not recurse forever.
+7. After drafting an organizing, taxonomy, framework, collection, or pedagogical-ladder page, list every outgoing markdown link. Extra targets beyond first-circle members and a grounding source are a flattening defect: delink them, put exact titles in a "Vault concepts kept as prose" list, or move the detail onto the member page.
+8. The ingest is incomplete only when an operator-approved defining concept remains an unresolved dangling mention. Unapproved vocabulary does not block ingest merely because it appears in a definition.
 
 Failure mode this prevents:
 DocLang is ingested and explained via OTSL, DocTags, Docling, and OKF, but only DocLang (and maybe one neighbor) exists as a page. The graph cannot teach the concept because the teaching vocabulary is not in memory.
@@ -581,7 +582,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 14. **Adding rows to index.md with wrong table prefix.** The `index.md` Concepts table has inconsistent row prefixes — some rows use `|` (single pipe) and others `||` (double pipe). When adding new rows, match the prefix of the immediately adjacent rows. More importantly: always `read_file` the target area before patching — do not patch index.md blind from memory of its format.
 15. **Omitting clickable body links for curated_page and asset.** YAML frontmatter values are not clickable in Obsidian. If `curated_page` and `asset` exist only in frontmatter, the human cannot navigate from raw → source or raw → local file. Always duplicate these as clickable markdown links in the body of every raw capture, immediately after the title/metadata block. Use the body link template from the Raw File Frontmatter Convention section.
 16. **Ingesting the title node only.** Using OTSL, DocTags, Docling, or OKF to explain DocLang without checking whether those terms already have pages (and creating them if not) is an incomplete ingest. Definitional closure is mandatory; Maxim should not have to ask "did you create the neighboring pages?"
-17. **Hub links everything it mentions.** On an organizing or pedagogical-ladder page, a clickable mention of a second-circle concept (Software Architecture, a dimension, a nested pattern) becomes an Obsidian graph neighbor and flattens depth 1. Detail belongs on the member page. On the hub: link first-circle members; keep known titles in an unlinked "kept as prose" list; label illustrations as not promoted.
+17. **Silent prose is ambiguous.** Any concept-like term that does explanatory work must have an explicit promotion status on the curated page: existing vault concept kept as prose, illustration/non-node intentionally kept as prose, or unresolved promotion question. On organizing or pedagogical-ladder pages, a clickable mention of a second-circle concept (Software Architecture, a dimension, a nested pattern) becomes an Obsidian graph neighbor and flattens depth 1. Detail belongs on the member page. On the hub: link first-circle members; keep known titles in an unlinked "kept as prose" list; label illustrations as not promoted. The explicit-status rule also applies to ordinary leaf pages; do not assume that prose alone records the decision.
 18. **Course-packaging tags.** Do not tag pages `course`, `module-01`, `prerequisite`, `introduced`, or `developed`. Those labels are meaningless outside the ingest batch. Use topic facets. Record the producer artifact in `sources:`.
 
 ## Verification Checklist
@@ -594,6 +595,7 @@ They are not canonical schema documents and must not introduce competing ontolog
 - [ ] Curated source page links every non-deferred person page
 - [ ] The ingest produced graph-useful entities and explicit relations, not only a summary
 - [ ] Definitional closure: every genuine concept dependency is existing+linked, operator-approved+created, or deliberately retained as prose/facet; unresolved promotion questions are reported to the operator
+- [ ] Every curated page explicitly classifies concept-like explanatory terms as existing vault concepts kept as prose, illustrations/non-nodes intentionally kept as prose, or unresolved promotion questions
 - [ ] Organizing/hub pages: outgoing markdown links are first-circle members plus grounding source only; second-circle titles are unlinked and listed as kept-as-prose; illustrations are labeled not-promoted
 - [ ] For structurally rich sources, concepts were separated from framework/taxonomy/technique nodes where justified
 - [ ] Global retrieval surfaces updated where needed

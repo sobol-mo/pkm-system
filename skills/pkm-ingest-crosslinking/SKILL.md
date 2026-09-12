@@ -1,7 +1,7 @@
 ---
 name: pkm-ingest-crosslinking
 description: Systematic cross-referencing of new PKM entities against the existing vault during source ingestion. Date verification and vault entity lookup before creating pages or adding relations.
-version: 1.0.0
+version: 1.0.1
 author: Hermes Agent
 license: MIT
 metadata:
@@ -36,7 +36,7 @@ After saving the raw capture and before creating curated pages:
    - On an organizing/hub page, existing concept matches stay unlinked prose unless they are first-circle members
 4. **If an existing page matches an ONTOLOGY entity** (person, quote, concept), prefer linking to it over re-creating the entity. Do NOT create a duplicate person page or quote page. Linking is not the same as starring every match from a hub.
 5. **Only create new pages** for entities that have NO existing vault representation.
-6. **Definitional closure on our prose, not only on the source.** After the curated page is drafted, extract the terms *we used to explain the node*. Search the vault for those terms too. If they do not exist and they are graph-worthy, create them in the same ingest. Source-entity extraction is not enough: a page can mention only DocLang in the source title while its body teaches via OTSL and DocTags.
+6. **Definitional closure on our prose, not only on the source.** After the curated page is drafted, extract the terms *we used to explain the node*. Search the vault for those terms too. If they do not exist and they are graph-worthy, create them in the same ingest. Source-entity extraction is not enough: a page can mention only DocLang in the source title while its body teaches via OTSL and DocTags. For every concept-like explanatory term, record an explicit promotion status on the page: existing vault concept kept as prose, illustration/non-node intentionally kept as prose, or unresolved promotion question. Exception: on a hub, second-circle vocabulary should stay unlinked *on the hub* and be linked on the member page that owns the detail.
 
 ## Pitfalls
 
@@ -59,5 +59,5 @@ After saving the raw capture and before creating curated pages:
 - [ ] A second-pass ontology audit was done for Level 2+ sources: missed techniques, cases, meta-principles, people, quotes, and practical life tools
 - [ ] Every existing match was classified: linked from the page that owns it, kept as hub prose, or recorded as not-promoted — not blindly starred from every new page
 - [ ] No duplicate pages were created for entities that already exist in the vault
-- [ ] Definitional terms on new curated pages were searched, then linked or created; hub pages were checked so outgoing links are first-circle only
+- [ ] Definitional terms on new curated pages were searched, then linked or created; every concept-like explanatory term has an explicit prose/non-node or unresolved-promotion classification; hub pages were checked so outgoing links are first-circle only
 - [ ] `check_vault_health.py` run post-ingest confirms no new issues
