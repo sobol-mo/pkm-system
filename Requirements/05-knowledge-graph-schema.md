@@ -247,9 +247,11 @@ Represent knowledge from general to specific.
 Prefer:
 - parent node -> immediate organizing node
 - organizing node -> direct members
-- leaf node -> immediate parent plus only semantically necessary cross-domain links
+- leaf node -> the concepts that directly define or semantically constitute it, plus only semantically necessary cross-domain links
 
-Do not default to parent -> every descendant.
+A concept page is not linkless by default. Its first-line links are the direct definitional dependencies without which the page would be materially incomplete: its immediate parent concept, explicit contrast, constitutive mechanism, or other concept doing essential definitional work. Concepts that merely explain a first-line dependency, provide a derivative detail, or serve as an example belong in prose on the current page and should be linked from the page that owns that detail when such a page exists.
+
+Do not default to parent -> every descendant or leaf -> every explanatory neighbor.
 If an intermediate taxonomy, framework, or collection node already exists, route traversal through it.
 In teaching-oriented or hierarchy-first branches, do not default to sibling-to-sibling links inside the same taxonomy level.
 Treat same-level contrast links as optional overlays, not as part of the base structural spine.
