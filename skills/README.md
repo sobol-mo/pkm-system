@@ -10,14 +10,17 @@ These skills are stored here so agents working directly in the project clone can
 |-------|---------|
 | `pkm/` | Router for PKM tasks |
 | `pkm-ingest/` | Ingest raw sources into curated wiki pages |
+| `pkm-ingest-crosslinking/` | Hub-depth and second-circle link policy during ingest |
 | `pkm-query/` | Answer questions from curated wiki content |
 | `pkm-lint/` | Check contradictions, stale claims, orphans, and schema consistency |
+| `pkm-ontology-refinement/` | Sparse teaching-spine surgery for buried contrasts without full ingest |
 | `multimodal-source-ingest/` | Overlay for image/audio/video source ingestion |
 | `pkm-system-boundaries/` | Boundary decisions between system artifacts and PKM knowledge state |
 | `obsidian/` | Low-level vault filesystem operations used by PKM workflows |
 | `sync-vault/` | Set up Knowledge Vault synchronization across devices via Syncthing |
 | `comparative-source-ingestion/` | Ingest external systems into the PKM with explicit comparison against the local architecture |
 | `schema-driven-vault-maintenance/` | Add deterministic operational governance to the vault without replacing the semantic ontology |
+| `source-ingestion-integrity/` | Integrity checks when external sources enter the vault |
 | `project-knowledge-handoff/` | Decide reusable knowledge yield and validate immutable project-to-PKM handoff contracts |
 | `session-close-bundle/` | Close PKM work blocks and Hermes sessions while preserving project and STATE continuity |
 
