@@ -229,6 +229,15 @@ Before any action:
 A real directory (not a symlink) inside `~/.hermes/skills/note-taking/` whose name overlaps with PKM project concerns.
 The opposite — a project-owned skill that has no bridge symlink — is not drift, just a missing bridge.
 
+### Repair when drift is a real runtime skill dir
+
+1. Compare digests of the full runtime skill tree with any existing project copy; preserve unique content.
+2. Copy/move the skill into `pkm-system/skills/<name>/` (canonical).
+3. Replace the runtime path with a symlink to that project directory; run `check_pkm_drift.py` until clean.
+4. Update `pkm-system/AGENTS.md` and `skills/README.md` skill lists in the same change.
+5. Commit **inside the pkm-system git root**, not the parent `agents-projects` portfolio checkout. On VPS the tree may be a nested standalone repo (often gitignored from the portfolio monorepo); `git -C .../pkm-system status` and push that remote. Use agent commit identity (`git-agent-commit` from the pkm-system cwd, or the projects commit helper aimed at the pkm-system path).
+6. Missing bridge alone: only add the symlink — that is not a drift alert condition.
+
 ## Obsidian graph-view boundary
 
 When the vault is meant to be visually shown in Obsidian, distinguish navigation pages from ontology pages.
